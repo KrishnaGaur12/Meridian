@@ -3,15 +3,7 @@
 **Meridian Buildathon 2026 Submission**
 *An AI-powered dispute & fraud-risk intelligence platform for merchants*
 
-## Project Demo
 
- **[Watch the Project Demo on YouTube](https://www.youtube.com/watch?v=3cHDvWRjT7s)**
-
-## Project Presentation
-
- **[View / Download Presentation](./docs/presentation.pptx)**
-
----
 
 ## 1.  Executive Summary
 
@@ -499,19 +491,7 @@ Full technical documentation for this project:
 
 ---
 
-## 19.  Built By
-
-**Gurram Jagan Bhasker**
-
-*Project created for the Meridian Buildathon 2026*
-
-- **LinkedIn:** [linkedin.com/in/gurramjaganbhasker](https://www.linkedin.com/in/gurramjaganbhasker/)
-- **Email:** [jaganbhaskergurram@gmail.com](mailto:jaganbhaskergurram@gmail.com)
-- **GitHub:** [github.com/Jaganbhasker1122](https://github.com/Jaganbhasker1122)
-
----
-
-## 20.  Final Statement
+## 19.  Final Statement
 
 Meridian AI Risk Manager was built to tackle a real, tedious, high-stakes problem in payments: helping merchants navigate disputes with actual data-driven support instead of guesswork. It combines fraud ML scoring, LLM-based evidence reasoning, and a merchant-controlled review workflow into one coherent product — end to end, from dispute intake to final outcome.
 
