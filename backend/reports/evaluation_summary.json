@@ -1,0 +1,123 @@
+{
+  "system_name": "Razorpay AI Risk Manager",
+  "fraud_detection_model": {
+    "model_file": "fraud_pipeline.joblib",
+    "test_sample_count": 400,
+    "class_distribution": {
+      "legitimate_count": 320,
+      "fraud_count": 80
+    },
+    "optimal_threshold": 0.5,
+    "precision": 0.2935,
+    "recall": 0.3375,
+    "f1_score": 0.314,
+    "roc_auc": 0.5976,
+    "pr_auc": 0.2987,
+    "confusion_matrix": {
+      "true_negatives": 255,
+      "false_positives": 65,
+      "false_negatives": 53,
+      "true_positives": 27
+    },
+    "threshold_sweep": {
+      "0.3": {
+        "precision": 0.2025,
+        "recall": 1.0,
+        "f1": 0.3368
+      },
+      "0.4": {
+        "precision": 0.2364,
+        "recall": 0.7625,
+        "f1": 0.3609
+      },
+      "0.5": {
+        "precision": 0.2935,
+        "recall": 0.3375,
+        "f1": 0.314
+      },
+      "0.6": {
+        "precision": 0.375,
+        "recall": 0.15,
+        "f1": 0.2143
+      },
+      "0.7": {
+        "precision": 0.5,
+        "recall": 0.0625,
+        "f1": 0.1111
+      }
+    }
+  },
+  "win_probability_model": {
+    "model_file": "win_pipeline.joblib",
+    "test_sample_count": 400,
+    "class_distribution": {
+      "merchant_lost_count": 92,
+      "merchant_won_count": 308
+    },
+    "optimal_threshold": 0.5,
+    "precision": 0.8739,
+    "recall": 0.9448,
+    "f1_score": 0.908,
+    "roc_auc": 0.8688,
+    "pr_auc": 0.9406,
+    "brier_score": 0.1125,
+    "confusion_matrix": {
+      "true_negatives": 50,
+      "false_positives": 42,
+      "false_negatives": 17,
+      "true_positives": 291
+    }
+  },
+  "feature_importances": {
+    "fraud_model": {
+      "feat_5": 0.122,
+      "feat_2": 0.0904,
+      "feat_23": 0.0824,
+      "feat_22": 0.0682,
+      "feat_11": 0.0674,
+      "feat_0": 0.0663,
+      "feat_1": 0.0658,
+      "feat_6": 0.0634,
+      "feat_3": 0.0629,
+      "feat_9": 0.0499,
+      "feat_10": 0.035,
+      "feat_8": 0.0331,
+      "feat_12": 0.0242,
+      "feat_17": 0.0235,
+      "feat_16": 0.0232,
+      "feat_4": 0.0215,
+      "feat_13": 0.0211,
+      "feat_14": 0.0176,
+      "feat_7": 0.0162,
+      "feat_15": 0.0117,
+      "feat_20": 0.0109,
+      "feat_21": 0.0105,
+      "feat_19": 0.0076,
+      "feat_18": 0.005
+    },
+    "win_model": {
+      "feat_2": 0.1365,
+      "feat_7": 0.1365,
+      "feat_18": 0.1311,
+      "feat_19": 0.1194,
+      "feat_8": 0.0812,
+      "feat_1": 0.0777,
+      "feat_0": 0.077,
+      "feat_4": 0.0438,
+      "feat_3": 0.0413,
+      "feat_6": 0.0385,
+      "feat_5": 0.0271,
+      "feat_21": 0.0167,
+      "feat_20": 0.0154,
+      "feat_9": 0.01,
+      "feat_10": 0.0094,
+      "feat_14": 0.0072,
+      "feat_16": 0.0066,
+      "feat_15": 0.0062,
+      "feat_17": 0.0061,
+      "feat_11": 0.0055,
+      "feat_12": 0.0038,
+      "feat_13": 0.0031
+    }
+  }
+}

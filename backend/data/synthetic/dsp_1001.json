@@ -1,0 +1,59 @@
+{
+  "dispute_id": "DSP_1001",
+  "transaction_id": "TXN_9001",
+  "merchant_id": "MERCH_801",
+  "customer_id": "CUST_501",
+  "dispute_reason": "GOODS_NOT_RECEIVED",
+  "transaction_amount": 4999.0,
+  "dispute_amount": 4999.0,
+  "transaction_timestamp": "2026-08-15T14:30:00",
+  "dispute_timestamp": "2026-08-25T10:15:00",
+  "customer_dispute_count": 0,
+  "merchant_dispute_rate": 0.012,
+  "merchant_historical_win_rate": 0.78,
+  "previous_disputes_won_count": 14,
+  "dispute_velocity_24h": 0,
+  "is_duplicate_flag": 0,
+  "merchant_high_risk_flag": 0,
+  "customer_account_age_days": 180,
+  "merchant_claim": "Item was dispatched via Bluedart tracking #BD987654 and delivered on 18-Aug-2026.",
+  "customer_claim": "I have not received my order.",
+  "available_evidence": [
+    {
+      "document_id": "DOC_INV_01",
+      "document_type": "invoice",
+      "content": "Invoice #INV-2026-01 for Customer CUST_501. Amount INR 4999. Order ORD_9001.",
+      "order_id": "ORD_9001",
+      "customer_id": "CUST_501",
+      "dispute_id": "DSP_1001",
+      "timestamp": "2026-08-15T14:30:00"
+    },
+    {
+      "document_id": "DOC_SHP_01",
+      "document_type": "shipping_proof",
+      "content": "Bluedart Courier Waybill BD987654. Shipped from Mumbai to Customer CUST_501 Delhi.",
+      "order_id": "ORD_9001",
+      "customer_id": "CUST_501",
+      "dispute_id": "DSP_1001",
+      "timestamp": "2026-08-16T09:00:00"
+    },
+    {
+      "document_id": "DOC_POD_01",
+      "document_type": "proof_of_delivery",
+      "content": "Proof of delivery BD987654 signed by CUST_501 on 2026-08-18T16:20:00.",
+      "order_id": "ORD_9001",
+      "customer_id": "CUST_501",
+      "dispute_id": "DSP_1001",
+      "timestamp": "2026-08-18T16:20:00"
+    },
+    {
+      "document_id": "DOC_COMM_01",
+      "document_type": "customer_communication",
+      "content": "Customer email acknowledging item arrival and asking for usage instructions.",
+      "order_id": "ORD_9001",
+      "customer_id": "CUST_501",
+      "dispute_id": "DSP_1001",
+      "timestamp": "2026-08-19T11:00:00"
+    }
+  ]
+}

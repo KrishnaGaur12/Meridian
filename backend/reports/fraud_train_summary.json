@@ -1,0 +1,63 @@
+{
+  "best_model_name": "Random Forest",
+  "best_validation_roc_auc": 0.6618,
+  "optimal_threshold": 0.5,
+  "optimal_val_f1": 0.4,
+  "benchmark_comparison": {
+    "Dummy (Stratified)": {
+      "roc_auc": 0.4974,
+      "pr_auc": 0.1992,
+      "f1_at_50": 0.1915,
+      "precision_at_50": 0.1957,
+      "recall_at_50": 0.1875
+    },
+    "Logistic Regression": {
+      "roc_auc": 0.6433,
+      "pr_auc": 0.3032,
+      "f1_at_50": 0.384,
+      "precision_at_50": 0.3117,
+      "recall_at_50": 0.5
+    },
+    "Random Forest": {
+      "roc_auc": 0.6618,
+      "pr_auc": 0.3106,
+      "f1_at_50": 0.4,
+      "precision_at_50": 0.3684,
+      "recall_at_50": 0.4375
+    },
+    "XGBoost": {
+      "roc_auc": 0.5932,
+      "pr_auc": 0.2635,
+      "f1_at_50": 0.3793,
+      "precision_at_50": 0.3235,
+      "recall_at_50": 0.4583
+    }
+  },
+  "threshold_sweep": {
+    "0.3": {
+      "f1": 0.3404,
+      "precision": 0.2051,
+      "recall": 1.0
+    },
+    "0.4": {
+      "f1": 0.3834,
+      "precision": 0.2552,
+      "recall": 0.7708
+    },
+    "0.5": {
+      "f1": 0.4,
+      "precision": 0.3684,
+      "recall": 0.4375
+    },
+    "0.6": {
+      "f1": 0.1739,
+      "precision": 0.2857,
+      "recall": 0.125
+    },
+    "0.7": {
+      "f1": 0.0,
+      "precision": 0.0,
+      "recall": 0.0
+    }
+  }
+}

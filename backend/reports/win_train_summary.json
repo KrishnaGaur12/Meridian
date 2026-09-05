@@ -1,0 +1,58 @@
+{
+  "best_model_name": "Random Forest",
+  "best_validation_roc_auc": 0.9106,
+  "optimal_threshold": 0.5,
+  "benchmark_comparison": {
+    "Dummy (Stratified)": {
+      "roc_auc": 0.4393,
+      "pr_auc": 0.7502,
+      "brier_score": 0.3917,
+      "f1_at_50": 0.7473
+    },
+    "Logistic Regression": {
+      "roc_auc": 0.9053,
+      "pr_auc": 0.9672,
+      "brier_score": 0.0947,
+      "f1_at_50": 0.9316
+    },
+    "Random Forest": {
+      "roc_auc": 0.9106,
+      "pr_auc": 0.972,
+      "brier_score": 0.0991,
+      "f1_at_50": 0.9247
+    },
+    "XGBoost": {
+      "roc_auc": 0.9007,
+      "pr_auc": 0.9667,
+      "brier_score": 0.1,
+      "f1_at_50": 0.9067
+    }
+  },
+  "threshold_sweep": {
+    "0.3": {
+      "f1": 0.8959,
+      "precision": 0.8114,
+      "recall": 1.0
+    },
+    "0.4": {
+      "f1": 0.9123,
+      "precision": 0.8505,
+      "recall": 0.9838
+    },
+    "0.5": {
+      "f1": 0.9247,
+      "precision": 0.89,
+      "recall": 0.9622
+    },
+    "0.6": {
+      "f1": 0.912,
+      "precision": 0.9,
+      "recall": 0.9243
+    },
+    "0.7": {
+      "f1": 0.8796,
+      "precision": 0.9128,
+      "recall": 0.8486
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "dispute_id": "DSP_1002",
+  "transaction_id": "TXN_9002",
+  "merchant_id": "MERCH_802",
+  "customer_id": "CUST_502",
+  "dispute_reason": "UNAUTHORIZED_TRANSACTION",
+  "transaction_amount": 35000.0,
+  "dispute_amount": 35000.0,
+  "transaction_timestamp": "2026-08-28T02:15:00",
+  "dispute_timestamp": "2026-08-28T06:00:00",
+  "customer_dispute_count": 4,
+  "merchant_dispute_rate": 0.045,
+  "merchant_historical_win_rate": 0.35,
+  "previous_disputes_won_count": 2,
+  "dispute_velocity_24h": 3,
+  "is_duplicate_flag": 1,
+  "merchant_high_risk_flag": 1,
+  "customer_account_age_days": 2,
+  "merchant_claim": "Order processed through gateway.",
+  "customer_claim": "Card stolen. Unauthorized charge.",
+  "available_evidence": [
+    {
+      "document_id": "DOC_INV_02",
+      "document_type": "invoice",
+      "content": "Invoice #INV-2026-02 Amount INR 35000.",
+      "order_id": "ORD_9002",
+      "customer_id": "CUST_502",
+      "dispute_id": "DSP_1002",
+      "timestamp": "2026-08-28T02:15:00"
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "model_version": "fraud_v2",
+  "dataset": "Public transaction fraud dataset (5,000 rows \u00d7 15 columns)",
+  "dataset_disclaimer": "Public transaction fraud dataset used for fraud-model experimentation; no private Razorpay data was used.",
+  "benchmark_comparison": {
+    "DummyClassifier": {
+      "pr_auc": 0.0983,
+      "roc_auc": 0.5114,
+      "f1_at_50": 0.1216,
+      "precision_at_50": 0.1139,
+      "recall_at_50": 0.1304,
+      "brier_score": 0.1808
+    },
+    "LogisticRegression": {
+      "pr_auc": 0.6647,
+      "roc_auc": 0.9649,
+      "f1_at_50": 0.6184,
+      "precision_at_50": 0.4638,
+      "recall_at_50": 0.9275,
+      "brier_score": 0.0771
+    },
+    "RandomForest": {
+      "pr_auc": 0.7872,
+      "roc_auc": 0.9768,
+      "f1_at_50": 0.6533,
+      "precision_at_50": 0.5,
+      "recall_at_50": 0.942,
+      "brier_score": 0.0688
+    },
+    "XGBoost": {
+      "pr_auc": 0.8167,
+      "roc_auc": 0.9796,
+      "f1_at_50": 0.7273,
+      "precision_at_50": 0.5981,
+      "recall_at_50": 0.9275,
+      "brier_score": 0.0477
+    }
+  },
+  "selected_model": "XGBoost",
+  "held_out_test_metrics": {
+    "pr_auc": 0.8559,
+    "roc_auc": 0.9841,
+    "f1": 0.7229,
+    "precision": 0.6,
+    "recall": 0.9091,
+    "brier_score": 0.0404,
+    "confusion_matrix": [
+      [
+        638,
+        40
+      ],
+      [
+        6,
+        60
+      ]
+    ]
+  },
+  "held_out_test_support": {
+    "total_test_samples": 744,
+    "positive_fraud_samples": 66,
+    "fraud_rate": 0.0887
+  },
+  "v1_vs_v2_comparison": {
+    "v1_fraud_model": {
+      "dataset_type": "Synthetic dispute-centric payload (2,000 samples)",
+      "test_roc_auc": 0.5976,
+      "test_pr_auc": 0.2987,
+      "test_f1": 0.314
+    },
+    "v2_fraud_model": {
+      "dataset_type": "Public transaction-level fraud dataset (5,000 samples)",
+      "test_roc_auc": 0.9841,
+      "test_pr_auc": 0.8559,
+      "test_f1": 0.7229
+    },
+    "conclusion": "Fraud Model V2 significantly outperforms Fraud V1 across PR-AUC, ROC-AUC, and F1-Score because it leverages pre-authorization transaction-level velocity, device type, merchant category, and country risk signals."
+  }
+}
