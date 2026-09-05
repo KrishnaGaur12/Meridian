@@ -43,36 +43,36 @@ export const DashboardPage: React.FC = () => {
     return (
       <div className="space-y-4 animate-in fade-in duration-150 flex-1">
         <div className="space-y-1">
-          <Skeleton className="h-6 w-56" />
-          <Skeleton className="h-4 w-40" />
+          <Skeleton className="h-6 w-56 bg-slate-800/50" />
+          <Skeleton className="h-4 w-40 bg-slate-800/50" />
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          <Skeleton className="h-20" />
-          <Skeleton className="h-20" />
-          <Skeleton className="h-20" />
-          <Skeleton className="h-20" />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <Skeleton className="h-24 bg-slate-800/50" />
+          <Skeleton className="h-24 bg-slate-800/50" />
+          <Skeleton className="h-24 bg-slate-800/50" />
+          <Skeleton className="h-24 bg-slate-800/50" />
         </div>
-        <Skeleton className="h-48" />
+        <Skeleton className="h-64 bg-slate-800/50" />
       </div>
     );
   }
 
   if (error && !data) {
     return (
-      <Card className="p-6 text-center max-w-lg mx-auto my-6 flex-1 flex flex-col items-center justify-center">
-        <div className="w-9 h-9 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mx-auto mb-2 font-bold text-sm">
+      <div className="p-6 text-center max-w-lg mx-auto my-6 flex-1 flex flex-col items-center justify-center cyber-card rounded-2xl">
+        <div className="w-12 h-12 rounded-full bg-rose-900/30 text-rose-400 flex items-center justify-center mx-auto mb-3 font-bold text-lg border border-rose-500/30">
           !
         </div>
-        <h3 className="text-sm font-semibold text-slate-900">Couldn't load dashboard data</h3>
-        <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
+        <h3 className="text-sm font-semibold text-slate-200">Couldn't load dashboard data</h3>
+        <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
           {error}
         </p>
-        <div className="mt-4">
-          <Button onClick={loadData} variant="primary" size="sm">
+        <div className="mt-5">
+          <Button onClick={loadData} variant="primary" size="sm" className="bg-cyan-600 hover:bg-cyan-500">
             Try again
           </Button>
         </div>
-      </Card>
+      </div>
     );
   }
 
@@ -88,276 +88,251 @@ export const DashboardPage: React.FC = () => {
       totalRecoveredAmount: 0,
       currency: 'INR',
     },
-    buckets: {
-      actionRequired: [],
-      reviewRecommended: [],
-      aiHandling: [],
-      submitted: [],
-      resolved: [],
-    },
-    needsAttentionDisputes: [],
-    recentDisputes: [],
-    resolvedDisputes: [],
-    allDisputes: [],
+    buckets: { actionRequired: [], reviewRecommended: [], aiHandling: [], submitted: [], resolved: [] },
+    needsAttentionDisputes: [], recentDisputes: [], resolvedDisputes: [], allDisputes: [],
   };
 
-  // Filter disputes according to active attention bucket tab
   const displayedDisputes =
-    activeAttentionTab === 'ACTION_REQUIRED'
-      ? buckets.actionRequired
-      : activeAttentionTab === 'REVIEW_RECOMMENDED'
-      ? buckets.reviewRecommended
-      : activeAttentionTab === 'AI_HANDLING'
-      ? buckets.aiHandling
-      : activeAttentionTab === 'SUBMITTED'
-      ? buckets.submitted
-      : needsAttentionDisputes.length > 0
-      ? needsAttentionDisputes
-      : allDisputes.filter(
-          (d) =>
-            d.status !== 'WON' &&
-            d.status !== 'LOST' &&
-            d.status !== 'CLOSED' &&
-            d.workflow_stage !== 'RESOLVED'
-        );
+    activeAttentionTab === 'ACTION_REQUIRED' ? buckets.actionRequired
+      : activeAttentionTab === 'REVIEW_RECOMMENDED' ? buckets.reviewRecommended
+      : activeAttentionTab === 'AI_HANDLING' ? buckets.aiHandling
+      : activeAttentionTab === 'SUBMITTED' ? buckets.submitted
+      : needsAttentionDisputes.length > 0 ? needsAttentionDisputes
+      : allDisputes.filter(d => d.status !== 'WON' && d.status !== 'LOST' && d.status !== 'CLOSED' && d.workflow_stage !== 'RESOLVED');
 
   return (
-    <div className="space-y-4 flex-1 flex flex-col">
+    <div className="space-y-6 flex-1 flex flex-col">
       {/* 1. Header & Dynamic Greeting */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-1 border-b border-slate-200/60">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-4 border-b border-slate-700/50 relative">
+        <div className="absolute -bottom-px left-0 w-1/3 h-px bg-gradient-to-r from-cyan-500/50 to-transparent"></div>
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold text-slate-900 tracking-tight">
-              {getGreeting()}, Acme Merchant
+          <div className="flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-white tracking-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+              {getGreeting()}, Nexus Electronics
             </h1>
             <span
-              className={`px-2 py-0.5 text-[10px] font-bold rounded-full border ${
+              className={`px-2.5 py-0.5 text-[10px] font-bold rounded-md border ${
                 isLive
-                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                  : 'bg-slate-100 text-slate-600 border-slate-200'
+                  ? 'bg-emerald-900/40 text-emerald-300 border-emerald-500/50 shadow-[0_0_10px_-2px_rgba(16,185,129,0.3)]'
+                  : 'bg-slate-800 text-slate-300 border-slate-600'
               }`}
             >
-              {isLive ? 'LIVE RAZORPAY MODE' : 'DEMO WORKSPACE'}
+              {isLive ? 'LIVE GATEWAY MODE' : 'DEMO WORKSPACE'}
             </span>
           </div>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Automated chargeback triage, AI evidence synthesis, and representation management.
+          <p className="text-sm text-slate-400 mt-1.5 max-w-2xl">
+            Automated chargeback triage, AI evidence synthesis, and representation management framework.
           </p>
         </div>
 
         {/* Primary Operational CTA */}
         {needsAttentionDisputes.length > 0 && (
-          <div className="flex items-center gap-2.5">
-            <span className="text-xs font-medium text-slate-600">
-              <strong className="text-indigo-600 font-bold">{needsAttentionDisputes.length}</strong> cases ready for merchant review
+          <div className="flex items-center gap-3 bg-violet-900/20 p-2 pl-4 rounded-xl border border-violet-500/20">
+            <span className="text-sm font-medium text-violet-200">
+              <strong className="text-violet-400 font-black text-lg drop-shadow-[0_0_5px_rgba(139,92,246,0.5)]">{needsAttentionDisputes.length}</strong> cases ready for review
             </span>
-            <Button
+            <button
               onClick={() => {
-                const el = document.getElementById('needs-attention-queue');
-                el?.scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('needs-attention-queue')?.scrollIntoView({ behavior: 'smooth' });
               }}
-              variant="primary"
-              size="sm"
+              className="bg-violet-600 hover:bg-violet-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-[0_0_15px_-3px_rgba(139,92,246,0.5)] transition-all"
             >
-              Review Cases &darr;
-            </Button>
+              Review Queue &darr;
+            </button>
           </div>
         )}
       </div>
 
       {/* 2. Merchant Attention State Metric Buckets */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Bucket 1: ACTION REQUIRED */}
-        <Card
+        <div
           onClick={() => setActiveAttentionTab('ACTION_REQUIRED')}
-          className={`p-3.5 border transition cursor-pointer ${
+          className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 ${
             activeAttentionTab === 'ACTION_REQUIRED'
-              ? 'border-rose-500 bg-rose-50/60 ring-1 ring-rose-300'
-              : 'border-rose-200 bg-rose-50/20 hover:bg-rose-50/40'
+              ? 'bg-rose-900/40 border border-rose-500 shadow-[0_0_20px_-5px_rgba(244,63,94,0.4)] transform -translate-y-1'
+              : 'cyber-card hover:cyber-card-danger'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-rose-800 uppercase tracking-wide font-mono">
+            <span className="text-[11px] font-bold text-rose-300 uppercase tracking-widest font-mono">
               Action Required
             </span>
-            <span className="w-2 h-2 rounded-full bg-rose-500" />
+            <span className="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)] animate-pulse" />
           </div>
-          <div className="text-2xl font-black text-rose-900 mt-1">
+          <div className="text-4xl font-black text-white mt-3 tracking-tight drop-shadow-md">
             {stats.actionRequiredCount}
           </div>
-          <div className="text-[11px] text-rose-700 mt-0.5 font-medium">
+          <div className="text-xs text-rose-200 mt-1.5 font-medium opacity-80">
             Immediate evidence or blocker
           </div>
-        </Card>
+        </div>
 
         {/* Bucket 2: REVIEW RECOMMENDED */}
-        <Card
+        <div
           onClick={() => setActiveAttentionTab('REVIEW_RECOMMENDED')}
-          className={`p-3.5 border transition cursor-pointer ${
+          className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 ${
             activeAttentionTab === 'REVIEW_RECOMMENDED'
-              ? 'border-amber-500 bg-amber-50/60 ring-1 ring-amber-300'
-              : 'border-amber-200 bg-amber-50/20 hover:bg-amber-50/40'
+              ? 'bg-amber-900/40 border border-amber-500 shadow-[0_0_20px_-5px_rgba(245,158,11,0.4)] transform -translate-y-1'
+              : 'cyber-card hover:cyber-card-warning'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-amber-800 uppercase tracking-wide font-mono">
+            <span className="text-[11px] font-bold text-amber-300 uppercase tracking-widest font-mono">
               Review Recommended
             </span>
-            <span className="w-2 h-2 rounded-full bg-amber-500" />
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
           </div>
-          <div className="text-2xl font-black text-amber-900 mt-1">
+          <div className="text-4xl font-black text-white mt-3 tracking-tight drop-shadow-md">
             {stats.reviewRecommendedCount}
           </div>
-          <div className="text-[11px] text-amber-700 mt-0.5 font-medium">
-            AI evaluated · Ready for merchant sign-off
+          <div className="text-xs text-amber-200 mt-1.5 font-medium opacity-80">
+            AI evaluated · Ready for sign-off
           </div>
-        </Card>
+        </div>
 
         {/* Bucket 3: AI HANDLING */}
-        <Card
+        <div
           onClick={() => setActiveAttentionTab('AI_HANDLING')}
-          className={`p-3.5 border transition cursor-pointer ${
+          className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 ${
             activeAttentionTab === 'AI_HANDLING'
-              ? 'border-blue-500 bg-blue-50/60 ring-1 ring-blue-300'
-              : 'border-blue-200 bg-blue-50/20 hover:bg-blue-50/40'
+              ? 'bg-violet-900/40 border border-violet-500 shadow-[0_0_20px_-5px_rgba(139,92,246,0.4)] transform -translate-y-1'
+              : 'cyber-card hover:cyber-card-ai'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-blue-800 uppercase tracking-wide font-mono">
+            <span className="text-[11px] font-bold text-violet-300 uppercase tracking-widest font-mono">
               AI Handling
             </span>
-            <span className="w-2 h-2 rounded-full bg-blue-500" />
+            <span className="w-2.5 h-2.5 rounded-full bg-violet-500 shadow-[0_0_8px_rgba(139,92,246,0.8)]" />
           </div>
-          <div className="text-2xl font-black text-blue-900 mt-1">
+          <div className="text-4xl font-black text-white mt-3 tracking-tight drop-shadow-md">
             {stats.aiHandlingCount}
           </div>
-          <div className="text-[11px] text-blue-700 mt-0.5 font-medium">
+          <div className="text-xs text-violet-200 mt-1.5 font-medium opacity-80">
             Background evidence retrieval
           </div>
-        </Card>
+        </div>
 
         {/* Bucket 4: SUBMITTED */}
-        <Card
+        <div
           onClick={() => setActiveAttentionTab('SUBMITTED')}
-          className={`p-3.5 border transition cursor-pointer ${
+          className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 ${
             activeAttentionTab === 'SUBMITTED'
-              ? 'border-slate-800 bg-slate-100 ring-1 ring-slate-400'
-              : 'border-slate-200 bg-white hover:bg-slate-50'
+              ? 'bg-cyan-900/40 border border-cyan-500 shadow-[0_0_20px_-5px_rgba(6,182,212,0.4)] transform -translate-y-1'
+              : 'cyber-card hover:border-cyan-500/40'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-700 uppercase tracking-wide font-mono">
+            <span className="text-[11px] font-bold text-cyan-300 uppercase tracking-widest font-mono">
               Submitted
             </span>
-            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            <span className="w-2.5 h-2.5 rounded-full bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
           </div>
-          <div className="text-2xl font-black text-slate-900 mt-1">
+          <div className="text-4xl font-black text-white mt-3 tracking-tight drop-shadow-md">
             {stats.submittedCount}
           </div>
-          <div className="text-[11px] text-slate-500 mt-0.5 font-medium">
-            Awaiting Razorpay gateway review
+          <div className="text-xs text-cyan-200 mt-1.5 font-medium opacity-80">
+            Awaiting Gateway review
           </div>
-        </Card>
+        </div>
       </div>
 
-      {/* 3. Primary Operational Queue: Attention-Filtered Cases */}
-      <div id="needs-attention-queue" className="space-y-3 pt-1">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+      {/* 3. Primary Operational Queue */}
+      <div id="needs-attention-queue" className="space-y-4 pt-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h2 className="text-base font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <h2 className="text-xl font-bold text-white tracking-wide flex items-center gap-3">
               <span>Merchant Review Queue</span>
               {activeAttentionTab !== 'ALL' && (
-                <span className="text-xs font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full font-mono">
-                  Filtered: {activeAttentionTab.replace(/_/g, ' ')}
+                <span className="text-[10px] font-bold text-cyan-300 bg-cyan-900/50 border border-cyan-500/30 px-2 py-0.5 rounded uppercase tracking-widest shadow-[0_0_8px_rgba(6,182,212,0.2)]">
+                  Filter: {activeAttentionTab.replace(/_/g, ' ')}
                 </span>
               )}
             </h2>
-            <p className="text-xs text-slate-500">
-              Click any card to enter the Merchant Control Center and review AI findings
+            <p className="text-xs text-slate-400 mt-1">
+              Select a case to enter the Merchant Control Center and review AI findings
             </p>
           </div>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-3">
             {activeAttentionTab !== 'ALL' && (
               <button
                 onClick={() => setActiveAttentionTab('ALL')}
-                className="text-xs text-indigo-600 hover:text-indigo-800 font-semibold cursor-pointer underline mr-2"
+                className="text-xs text-rose-400 hover:text-rose-300 font-semibold cursor-pointer underline transition-colors"
               >
                 Clear filter
               </button>
             )}
-            <span className="text-xs font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200">
+            <span className="text-xs font-semibold text-cyan-400 bg-cyan-900/30 px-3 py-1.5 rounded-lg border border-cyan-500/30 shadow-[0_0_10px_rgba(6,182,212,0.1)]">
               {displayedDisputes.length} {displayedDisputes.length === 1 ? 'case' : 'cases'}
             </span>
           </div>
         </div>
 
         {displayedDisputes.length === 0 ? (
-          <Card className="p-8 text-center bg-white border-slate-200">
-            <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-2 font-bold text-xs">
+          <div className="p-12 text-center cyber-card rounded-2xl flex flex-col items-center justify-center">
+            <div className="w-12 h-12 rounded-full bg-emerald-900/30 text-emerald-400 flex items-center justify-center mb-4 font-bold text-lg border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
               ✓
             </div>
-            <h3 className="text-xs font-semibold text-slate-900">Queue is clear</h3>
-            <p className="text-[11px] text-slate-500 mt-0.5">
+            <h3 className="text-lg font-bold text-white tracking-wide">Queue is clear</h3>
+            <p className="text-sm text-slate-400 mt-2">
               No dispute cases match the selected attention state.
             </p>
-          </Card>
+          </div>
         ) : (
-          <div className="grid gap-2.5">
+          <div className="grid gap-3">
             {displayedDisputes.map((d) => {
               const priority = formatPriority(d.urgency_level, d.remaining_hours, d.merchant_attention_state);
               const statusInfo = formatStatus(d.status, d.workflow_stage, d.merchant_attention_state);
               const deadlineStr = formatDeadlineText(d.respond_by, d.remaining_hours);
 
               return (
-                <Card
+                <div
                   key={d.dispute_id}
-                  hoverEffect
-                  className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 border-slate-200 bg-white"
+                  className="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 cyber-card rounded-xl hover:border-cyan-500/50 group"
                 >
-                  <div className="space-y-1.5 flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-bold text-xs sm:text-sm text-slate-900 font-mono">{d.dispute_id}</span>
-                      <span className="text-xs font-semibold text-slate-700">· {formatReasonCode(d.reason_code)}</span>
-                      <span className="text-xs font-bold text-slate-900">· {formatCurrency(d.amount, d.currency || 'INR')}</span>
+                  <div className="space-y-2.5 flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <span className="font-bold text-sm text-white font-mono">{d.dispute_id}</span>
+                      <span className="text-xs font-semibold text-slate-400">· {formatReasonCode(d.reason_code)}</span>
+                      <span className="text-xs font-bold text-emerald-400">· {formatCurrency(d.amount, d.currency || 'INR')}</span>
 
-                      <div className="flex items-center gap-1.5 ml-auto sm:ml-2">
-                        <span className={`px-2 py-0.5 text-[10px] sm:text-[11px] font-bold rounded border ${priority.colorClass}`}>
+                      <div className="flex items-center gap-2 ml-auto sm:ml-4">
+                        <span className={`px-2 py-0.5 text-[10px] font-bold rounded border ${priority.colorClass.replace('bg-rose-50', 'bg-rose-900/30 text-rose-300 border-rose-500/50')}`}>
                           {priority.label}
                         </span>
-                        <span className={`px-2 py-0.5 text-[10px] sm:text-[11px] font-semibold rounded border ${statusInfo.colorClass}`}>
+                        <span className={`px-2 py-0.5 text-[10px] font-bold rounded border ${statusInfo.colorClass.replace('bg-blue-50', 'bg-blue-900/30 text-blue-300 border-blue-500/50')}`}>
                           {statusInfo.label}
                         </span>
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-y-0.5 gap-x-3.5 text-xs text-slate-500">
-                      <span className="font-semibold text-rose-700">{deadlineStr}</span>
-                      <span>Customer: <strong className="text-slate-800 font-medium">{d.customer_id}</strong></span>
-                      <span>Transaction: <strong className="text-slate-800 font-medium">{d.transaction_id}</strong></span>
-                      <span className="font-mono text-[10px] bg-slate-100 px-1.5 py-0.2 rounded text-slate-600">
+                    <div className="flex flex-wrap items-center gap-y-1 gap-x-4 text-xs text-slate-400">
+                      <span className="font-semibold text-rose-400 drop-shadow-[0_0_5px_rgba(244,63,94,0.3)]">{deadlineStr}</span>
+                      <span>Customer: <strong className="text-slate-200 font-medium">{d.customer_id}</strong></span>
+                      <span>Txn: <strong className="text-slate-200 font-medium">{d.transaction_id}</strong></span>
+                      <span className="font-mono text-[9px] bg-slate-800 px-1.5 py-0.5 rounded text-cyan-300 border border-slate-700">
                         {d.merchant_attention_state || 'REVIEW_RECOMMENDED'}
                       </span>
                     </div>
 
                     {d.attention_reason && (
-                      <p className="text-xs text-slate-600 bg-slate-50 p-2 rounded-md border border-slate-100 leading-relaxed">
+                      <p className="text-xs text-slate-300 bg-slate-900/50 p-2.5 rounded-lg border border-slate-700/50 leading-relaxed">
                         {d.attention_reason}
                       </p>
                     )}
                   </div>
 
                   <div className="shrink-0 flex items-center justify-end">
-                    <Button
+                    <button
                       onClick={() => navigate(`/disputes/${d.dispute_id}`)}
-                      variant="primary"
-                      size="sm"
-                      className="w-full sm:w-auto font-semibold shadow-xs"
+                      className="bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold px-4 py-2 rounded-lg shadow-[0_0_15px_-3px_rgba(6,182,212,0.5)] transition-all group-hover:scale-105"
                     >
-                      Open Review &rarr;
-                    </Button>
+                      Open Terminal &rarr;
+                    </button>
                   </div>
-                </Card>
+                </div>
               );
             })}
           </div>
@@ -365,71 +340,77 @@ export const DashboardPage: React.FC = () => {
       </div>
 
       {/* 4. Recent Activity & Historical Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 pb-8">
         {/* Recent Activity */}
-        <Card className="p-4 bg-white border-slate-200">
-          <div className="flex items-center justify-between mb-2 pb-1.5 border-b border-slate-100">
-            <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wide font-mono">Recent Activity</h3>
-            <span className="text-[10px] text-slate-400 font-mono">Live event stream</span>
+        <div className="p-5 cyber-card rounded-2xl flex flex-col h-full">
+          <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-700/50 relative">
+            <h3 className="text-xs font-bold text-white uppercase tracking-widest font-mono">Recent Activity</h3>
+            <span className="text-[10px] text-cyan-400 font-mono flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+              Live stream
+            </span>
           </div>
 
-          <div className="space-y-1.5">
+          <div className="space-y-1 flex-1">
             {recentDisputes.length === 0 ? (
-              <p className="text-xs text-slate-400 py-2">No recent dispute activity recorded.</p>
+              <p className="text-xs text-slate-500 py-4 text-center">No recent activity detected.</p>
             ) : (
-              recentDisputes.slice(0, 4).map((d) => (
+              recentDisputes.slice(0, 5).map((d) => (
                 <div
                   key={d.dispute_id}
-                  className="flex items-center justify-between text-xs py-1 border-b border-slate-100 last:border-0"
+                  className="flex items-center justify-between text-xs py-2.5 border-b border-slate-800/50 last:border-0 hover:bg-slate-800/30 px-2 rounded-md transition-colors"
                 >
-                  <div className="flex items-center gap-1.5 min-w-0">
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 shrink-0" />
-                    <span className="text-slate-700 truncate text-xs">
-                      Dispute {d.status === 'WON' ? 'won' : d.status === 'LOST' ? 'lost' : d.workflow_stage === 'SUBMITTED' ? 'submitted' : 'received'} · <strong className="font-semibold text-slate-900 font-mono">{d.dispute_id}</strong>
+                  <div className="flex items-center gap-3 min-w-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0 shadow-[0_0_8px_rgba(167,139,250,0.8)]" />
+                    <span className="text-slate-300 truncate text-[12px]">
+                      Dispute {d.status === 'WON' ? 'won' : d.status === 'LOST' ? 'lost' : d.workflow_stage === 'SUBMITTED' ? 'submitted' : 'received'} · <strong className="font-semibold text-white font-mono">{d.dispute_id}</strong>
                     </span>
                   </div>
-                  <span className="text-slate-400 shrink-0 text-[10px] ml-2 font-mono">
+                  <span className="text-slate-500 shrink-0 text-[10px] ml-3 font-mono">
                     {formatDate(d.created_at)}
                   </span>
                 </div>
               ))
             )}
           </div>
-        </Card>
+        </div>
 
         {/* Dispute History Summary */}
-        <Card className="p-4 flex flex-col justify-between bg-white border-slate-200">
+        <div className="p-5 flex flex-col justify-between cyber-card rounded-2xl h-full">
           <div>
-            <div className="flex items-center justify-between mb-1 pb-1.5 border-b border-slate-100">
-              <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wide font-mono">Resolved Archive</h3>
-              <Link to="/history" className="text-xs font-semibold text-indigo-600 hover:text-indigo-700">
-                View all &rarr;
+            <div className="flex items-center justify-between mb-3 pb-3 border-b border-slate-700/50">
+              <h3 className="text-xs font-bold text-white uppercase tracking-widest font-mono">Resolved Archive</h3>
+              <Link to="/history" className="text-[10px] font-bold text-cyan-400 hover:text-cyan-300 transition-colors uppercase tracking-widest">
+                Access Data &rarr;
               </Link>
             </div>
-            <p className="text-xs text-slate-500">
-              Access closed, won, lost, or conceded cases without cluttering your active review queue.
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Access closed, won, lost, or conceded cases without cluttering your active operational queue.
             </p>
 
-            <div className="mt-3 p-2.5 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between text-xs">
+            <div className="mt-5 p-3.5 bg-slate-900/60 rounded-xl border border-slate-700/50 flex items-center justify-between">
               <div>
-                <span className="text-slate-500 text-[11px]">Resolved Cases</span>
-                <div className="text-sm font-bold text-slate-900">{stats.resolvedCount} cases</div>
+                <span className="text-slate-500 text-[10px] uppercase tracking-wider font-mono">Resolved Cases</span>
+                <div className="text-xl font-black text-white mt-0.5 tracking-tight">{stats.resolvedCount} <span className="text-sm font-normal text-slate-500">cases</span></div>
               </div>
               <div className="text-right">
-                <span className="text-slate-500 text-[11px]">Recovered Value</span>
-                <div className="text-sm font-bold text-emerald-700">
+                <span className="text-slate-500 text-[10px] uppercase tracking-wider font-mono">Recovered Value</span>
+                <div className="text-xl font-black text-emerald-400 mt-0.5 tracking-tight drop-shadow-[0_0_5px_rgba(52,211,153,0.3)]">
                   {formatCurrency(stats.totalRecoveredAmount, stats.currency)}
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="mt-3 pt-2 border-t border-slate-100 flex justify-end">
-            <Button onClick={() => navigate('/history')} variant="outline" size="sm">
-              Open History Archive &rarr;
-            </Button>
+          <div className="mt-6 pt-4 border-t border-slate-700/50 flex justify-end">
+            <button 
+              onClick={() => navigate('/history')}
+              className="bg-transparent border border-cyan-500/30 text-cyan-400 hover:bg-cyan-900/30 text-xs font-bold px-4 py-2 rounded-lg transition-all"
+            >
+              Open Archive Database
+            </button>
           </div>
-        </Card>
+        </div>
       </div>
     </div>
   );

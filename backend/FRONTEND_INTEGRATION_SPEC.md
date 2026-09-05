@@ -1,5 +1,5 @@
 # BACKEND ARCHITECTURE & FRONTEND INTEGRATION SPECIFICATION
-## Razorpay AI Risk Manager — Merchant-First AI Chargeback Operations Platform
+## Meridian AI Risk Manager — Merchant-First AI Chargeback Operations Platform
 
 > **VERSION**: 2.0  
 > **TARGET AUDIENCE**: Frontend Engineers, Full-Stack Developers, & Integration Specialists  
@@ -10,7 +10,7 @@
 
 ## 1. EXECUTIVE BACKEND ARCHITECTURE OVERVIEW
 
-The **Razorpay AI Risk Manager Backend** is an event-driven AI orchestration engine built on **FastAPI (Python 3.11+)**, **SQLAlchemy ORM**, **SQLite**, and **Scikit-Learn / XGBoost ML Models**.
+The **Meridian AI Risk Manager Backend** is an event-driven AI orchestration engine built on **FastAPI (Python 3.11+)**, **SQLAlchemy ORM**, **SQLite**, and **Scikit-Learn / XGBoost ML Models**.
 
 It transforms payment chargeback management from manual spreadsheet processing into an automated, proactive pipeline.
 
@@ -48,8 +48,8 @@ It transforms payment chargeback management from manual spreadsheet processing i
    - Dynamically recalculates risk scores, evidence completeness, win probability, Next Best Action, and readiness upon every evidence mutation (add/update/delete).
 2. **Strict 3-Tier Data Architecture**:
    - `DEMO`: Seeded showcase scenario records.
-   - `SIMULATED_RAZORPAY`: Local simulation disputes created via the `/demo` simulation generator.
-   - `REAL_RAZORPAY`: Reserved tier for future external webhook integrations.
+   - `SIMULATED_Meridian`: Local simulation disputes created via the `/demo` simulation generator.
+   - `REAL_Meridian`: Reserved tier for future external webhook integrations.
 3. **Human-in-the-Loop Submission Policy**:
    - AI generates rebuttal text and package metadata, but final submission requires explicit merchant sign-off (`POST /disputes/{id}/submit`).
 4. **Strict Dispute Case Isolation**:
@@ -72,10 +72,10 @@ It transforms payment chargeback management from manual spreadsheet processing i
 | `reason_code` | String | Yes | `product_not_received`, `fraudulent_transaction`, `duplicate_charge`, `refund_not_processed` |
 | `reason_description` | String | No | Detailed customer/bank dispute claim statement |
 | `status` | String | Yes | Bank Status: `OPEN`, `UNDER_REVIEW`, `WON`, `LOST`, `CLOSED` |
-| `phase` | String | Yes | Razorpay Phase: `retrieval`, `chargeback`, `pre_arbitration`, `arbitration`, `fraud` |
+| `phase` | String | Yes | Meridian Phase: `retrieval`, `chargeback`, `pre_arbitration`, `arbitration`, `fraud` |
 | `respond_by` | String | No | ISO 8601 UTC deadline string (e.g., `2026-09-07T20:00:00Z`) |
 | `workflow_stage` | String | Yes | `DISPUTE_RAISED`, `EVIDENCE_COLLECTION`, `MERCHANT_REVIEW`, `READY_FOR_SUBMISSION`, `SUBMITTED`, `RESOLVED` |
-| `case_source` | String | Yes | Data tier: `DEMO`, `SIMULATED_RAZORPAY`, `REAL_RAZORPAY` |
+| `case_source` | String | Yes | Data tier: `DEMO`, `SIMULATED_Meridian`, `REAL_Meridian` |
 | `merchant_attention_state` | String | Yes | Operational Attention Queue: `ACTION_REQUIRED`, `REVIEW_RECOMMENDED`, `AI_HANDLING`, `WAITING` |
 | `ai_last_checked` | String | No | ISO timestamp when AI Autopilot last processed the case |
 | `created_at` | String | Yes | ISO timestamp of record creation |
@@ -149,8 +149,8 @@ It transforms payment chargeback management from manual spreadsheet processing i
 
 ### 3. `case_source` (3-Tier Data Architecture)
 - `DEMO`: Seeded showcase dataset.
-- `SIMULATED_RAZORPAY`: Local simulation created via `/demo/simulate-dispute`.
-- `REAL_RAZORPAY`: External live webhook data stream.
+- `SIMULATED_Meridian`: Local simulation created via `/demo/simulate-dispute`.
+- `REAL_Meridian`: External live webhook data stream.
 
 ---
 
@@ -161,7 +161,7 @@ It transforms payment chargeback management from manual spreadsheet processing i
 #### 1. List Disputes
 - **HTTP Method**: `GET`
 - **Path**: `/disputes`
-- **Query Parameters**: `case_source` (optional: `DEMO`, `SIMULATED_RAZORPAY`, `REAL_RAZORPAY`)
+- **Query Parameters**: `case_source` (optional: `DEMO`, `SIMULATED_Meridian`, `REAL_Meridian`)
 - **Response Model**: `List[DisputeResponseSchema]`
 - **Status Code**: `200 OK`
 - **Description**: Returns all dispute cases with calculated remaining hours, deadline urgency, amount, and attention state.
@@ -176,7 +176,7 @@ It transforms payment chargeback management from manual spreadsheet processing i
     "reason_code": "product_not_received",
     "reason_description": "Customer claims non-delivery",
     "phase": "chargeback",
-    "case_source": "SIMULATED_RAZORPAY"
+    "case_source": "SIMULATED_Meridian"
   }
   ```
 - **Response Model**: `DisputeResponseSchema`
@@ -308,7 +308,7 @@ It transforms payment chargeback management from manual spreadsheet processing i
 
 ---
 
-### C. Razorpay Demo Simulation Router (`/demo`)
+### C. Meridian Demo Simulation Router (`/demo`)
 
 #### 1. List Eligible Simulation Transactions
 - **HTTP Method**: `GET`
@@ -316,7 +316,7 @@ It transforms payment chargeback management from manual spreadsheet processing i
 - **Status Code**: `200 OK`
 - **Description**: Returns all database transactions with flag `has_active_simulated_dispute`.
 
-#### 2. Simulate Incoming Razorpay Dispute
+#### 2. Simulate Incoming Meridian Dispute
 - **HTTP Method**: `POST`
 - **Path**: `/demo/simulate-dispute`
 - **Request Body**:
@@ -329,7 +329,7 @@ It transforms payment chargeback management from manual spreadsheet processing i
   }
   ```
 - **Status Code**: `201 Created`
-- **Description**: Instantly creates a `SIMULATED_RAZORPAY` dispute, triggers AI Autopilot analysis, and returns complete initial snapshot.
+- **Description**: Instantly creates a `SIMULATED_Meridian` dispute, triggers AI Autopilot analysis, and returns complete initial snapshot.
 
 ---
 
@@ -406,8 +406,8 @@ When a merchant uploads evidence in the UI:
 3. Render toast/banner displaying the exact Impact Delta ("Win probability increased from 62% to 87%!").
 4. Refresh command center or local state to reflect updated queue and readiness.
 
-### 4. Razorpay Simulation Workflow (`RazorpayDemoPage.tsx`)
-1. User clicks "Simulate Dispute" on Razorpay Demo page.
+### 4. Meridian Simulation Workflow (`MeridianDemoPage.tsx`)
+1. User clicks "Simulate Dispute" on Meridian Demo page.
 2. Frontend calls `POST /demo/simulate-dispute`.
 3. Backend creates case, runs AI pipeline, and logs initial timeline events.
 4. Frontend redirects user to `/disputes/:id` workspace or updates dashboard queues instantly.
@@ -428,7 +428,7 @@ When a merchant uploads evidence in the UI:
 ## 7. SUMMARY CHECKLIST FOR FRONTEND DEVELOPERS
 
 - [x] **Base URL**: Ensure Axios `baseURL` points to `http://localhost:8000`.
-- [x] **Dispute List Filters**: Filter disputes by `case_source` (`DEMO`, `SIMULATED_RAZORPAY`, `REAL_RAZORPAY`).
+- [x] **Dispute List Filters**: Filter disputes by `case_source` (`DEMO`, `SIMULATED_Meridian`, `REAL_Meridian`).
 - [x] **Dashboard Cards**: Group disputes by `merchant_attention_state` (`ACTION_REQUIRED`, `REVIEW_RECOMMENDED`, `AI_HANDLING`, `WAITING`).
 - [x] **Dispute Detail**: Use `GET /disputes/{id}/command-center` for optimal load performance.
 - [x] **Evidence Modals**: Post to `/evidence` and handle `impact_delta` in response for instant visual feedback.

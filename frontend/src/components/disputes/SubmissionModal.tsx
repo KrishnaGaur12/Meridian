@@ -81,12 +81,12 @@ export const SubmissionModal: React.FC<SubmissionModalProps> = ({
         step === 'confirm'
           ? 'Confirm & Dispatch Response Package'
           : step === 'success'
-          ? 'Rebuttal Submitted to Razorpay Gateway'
+          ? 'Rebuttal Submitted to Gateway'
           : 'Gateway Outcome Recorded'
       }
       subtitle={
         step === 'confirm'
-          ? 'Review package summary before official transmission through Razorpay gateway boundary'
+          ? 'Review package summary before official transmission through Gateway boundary'
           : step === 'success'
           ? 'Defense representation dispatched successfully'
           : 'Simulated Card Network Resolution Received'
@@ -95,7 +95,7 @@ export const SubmissionModal: React.FC<SubmissionModalProps> = ({
       {step === 'confirm' && (
         <div className="space-y-4 text-xs">
           <p className="text-slate-600 leading-relaxed">
-            You are about to transmit this chargeback representation to Razorpay. The package will undergo local gateway verification and enter <strong>Awaiting Review</strong> state.
+            You are about to transmit this chargeback representation to the Gateway. The package will undergo local gateway verification and enter <strong>Awaiting Review</strong> state.
           </p>
 
           <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-slate-700">
@@ -134,7 +134,7 @@ export const SubmissionModal: React.FC<SubmissionModalProps> = ({
               onClick={handleConfirmSubmit}
               className="font-semibold shadow-xs"
             >
-              Confirm & Submit to Razorpay
+              Confirm & Submit to Gateway
             </Button>
           </div>
         </div>

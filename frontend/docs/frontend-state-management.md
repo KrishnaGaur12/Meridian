@@ -29,7 +29,7 @@ interface DatabaseModeContextType {
 
 ### 2.2 Synchronization Workflow
 - When user clicks **"Demo Mode" / "Live Mode"**:
-  1. `localStorage.setItem('razorpay_database_mode', newMode)`
+  1. `localStorage.setItem('Meridian_database_mode', newMode)`
   2. `api.defaults.headers.common['X-Database-Mode'] = newMode`
   3. `setModeVersion(v => v + 1)` triggers page-level re-fetches via `useEffect` dependencies.
   4. Top notification banner shows `"Synchronizing workspace with LIVE database..."` during the 300ms transition.

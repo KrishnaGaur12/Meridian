@@ -25,7 +25,7 @@ export const SimulatorMerchantsPage: React.FC = () => {
           <tbody className="divide-y divide-slate-100">
             <tr className="hover:bg-slate-50/80 transition">
               <td className="px-3.5 py-2.5 font-mono font-bold text-slate-900">MERCHANT_001</td>
-              <td className="px-3.5 py-2.5 font-semibold text-slate-800">Acme Store</td>
+              <td className="px-3.5 py-2.5 font-semibold text-slate-800">Nexus Electronics</td>
               <td className="px-3.5 py-2.5 text-slate-600">Retail & E-commerce</td>
               <td className="px-3.5 py-2.5">
                 <span className="px-2 py-0.5 text-[10px] font-semibold text-emerald-700 bg-emerald-50 rounded border border-emerald-200">

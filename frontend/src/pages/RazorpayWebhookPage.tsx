@@ -182,7 +182,7 @@ export const RazorpayWebhookPage: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <span className="font-bold text-sm tracking-tight text-white">
-                Razorpay Webhook Simulator
+                Gateway Webhook Simulator
               </span>
               <span className="px-2 py-0.5 text-[10px] font-bold rounded-md bg-indigo-950 text-indigo-300 border border-indigo-700/60 font-mono">
                 EXTERNAL GATEWAY SIMULATOR
@@ -221,10 +221,10 @@ export const RazorpayWebhookPage: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-200">
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
-              Razorpay Webhook
+              Gateway Webhook
             </h1>
             <p className="text-xs text-slate-500 mt-0.5">
-              Simulate Razorpay payment and dispute webhook events against the live application backend.
+              Simulate Gateway payment and dispute webhook events against the live application backend.
             </p>
           </div>
         </div>

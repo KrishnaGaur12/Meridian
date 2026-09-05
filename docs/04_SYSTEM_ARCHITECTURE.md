@@ -1,4 +1,4 @@
-# SYSTEM ARCHITECTURE — RAZORPAY AI RISK MANAGER
+# SYSTEM ARCHITECTURE — Meridian AI RISK MANAGER
 
 ## 1. HIGH-LEVEL SYSTEM ARCHITECTURE
 
@@ -62,7 +62,7 @@
 │  │ • Transaction Repository   │  │ • EvidenceEngine                     │ │
 │  │ • Assessment Repository    │  │ • ChargebackPackageService           │ │
 │  └────────────────────────────┘  │ • RiskEngine                         │ │
-│                                   │ • DeepSeekClient                     │ │
+│                                   │ • GeminiClient                     │ │
 │                                   │ • PromptBuilder                      │ │
 │                                   │ • ResponseParser                     │ │
 │                                   │ • EvidenceFileProcessor              │ │
@@ -72,7 +72,7 @@
 │  │ ML/AI Services                                                         │ │
 │  │ • FraudModelV2 (XGBoost inference)                                     │ │
 │  │ • WinProbabilityModel (XGBoost inference)                              │ │
-│  │ • EvidenceAnalyzer (DeepSeek LLM calls)                                │ │
+│  │ • EvidenceAnalyzer (Gemini LLM calls)                                │ │
 │  │ • PromptBuilder (evidence → prompt construction)                       │ │
 │  └────────────────────────────────────────────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────────────────────────┘
@@ -97,7 +97,7 @@
 │  │ • risk_assessments — Fraud risk scores                               │  │
 │  │ • dispute_assessments — AI case analysis results                     │  │
 │  │ • chargeback_packages — Generated response packages                  │  │
-│  │ • webhook_events — Razorpay webhook records                          │  │
+│  │ • webhook_events — Meridian webhook records                          │  │
 │  │                                                                       │  │
 │  │ Features:                                                            │  │
 │  │ • Auto-incrementing timestamps (UTC ISO format)                      │  │
@@ -112,9 +112,9 @@
 │                    EXTERNAL SERVICES                                         │
 │                                                                              │
 │  ┌──────────────────────────────────────────────────────────────────────┐  │
-│  │ DeepSeek LLM API                    │                                │  │
-│  │ Base URL: https://api.deepseek.com  │                                │  │
-│  │ Model: deepseek-chat                │                                │  │
+│  │ Gemini LLM API                    │                                │  │
+│  │ Base URL: https://api.Gemini.com  │                                │  │
+│  │ Model: Gemini-chat                │                                │  │
 │  │ Purpose: Evidence analysis & validation                              │  │
 │  │                                                                       │  │
 │  │ Features:                                                            │  │
@@ -233,7 +233,7 @@
 │  ├── services/                                                │
 │  │  └── ai/                                                   │
 │  │     ├── service.py (AI orchestration)                      │
-│  │     ├── deepseek_client.py (LLM API client)               │
+│  │     ├── Gemini_client.py (LLM API client)               │
 │  │     ├── evidence_analysis_service.py (evidence analysis)  │
 │  │     ├── prompt_builder.py (prompt construction)            │
 │  │     ├── response_parser.py (JSON parsing)                  │
@@ -355,7 +355,7 @@
        └─→ Trigger AI Analysis
 
 ┌──────────────────────────┐
-│ DeepSeek LLM Analysis    │
+│ Gemini LLM Analysis    │
 └──────┬───────────────────┘
        │
        ├─→ PromptBuilder
@@ -364,8 +364,8 @@
        │   ├── Dispute context (reason, amount)
        │   └── Instructions (completeness, contradictions, validation)
        │
-       ├─→ DeepSeekClient (chat_completion)
-       │   ├── HTTP POST to api.deepseek.com
+       ├─→ GeminiClient (chat_completion)
+       │   ├── HTTP POST to api.Gemini.com
        │   ├── JSON mode enabled
        │   ├── Temperature: 0.2
        │   ├── Max tokens: 1500
@@ -414,7 +414,7 @@
              ├── ml_recommendation (CONTEST/ACCEPT/INVESTIGATE)
              ├── ai_recommendation (CONTEST/ACCEPT/INVESTIGATE)
              ├── ml_results_json
-             ├── deepseek_results_json
+             ├── Gemini_results_json
              ├── evidence_analysis_json
              └── conflict_detected (if ML ≠ AI)
 
@@ -454,7 +454,7 @@ dispute.status = "SUBMITTED"
 dispute.workflow_stage = "SUBMITTED"
 chargeback_package.package_status = "READY_FOR_SUBMISSION"
 
-Ready for Razorpay to review and process
+Ready for Meridian to review and process
 ```
 
 ## 5. ML/AI PROCESSING PIPELINE
@@ -500,7 +500,7 @@ AI EVIDENCE ANALYSIS:
   ↓
   PromptBuilder (construct LLM prompt)
   ↓
-  DeepSeek API (deepseek-chat model)
+  Gemini API (Gemini-chat model)
   ├── Temperature: 0.2
   ├── Max Tokens: 1500
   ├── Response Format: JSON

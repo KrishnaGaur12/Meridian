@@ -22,9 +22,9 @@ source .venv/bin/activate
 # 3. Install production dependencies
 pip install -r requirements.txt
 
-# 4. Configure environment variables (optional for live DeepSeek AI)
+# 4. Configure environment variables (optional for live Gemini AI)
 cp .env.example .env
-# Edit .env and set DEEPSEEK_API_KEY=your_key_here
+# Edit .env and set Gemini_API_KEY=your_key_here
 ```
 
 ### 1.3 Running the Development Server
@@ -69,10 +69,10 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4 --proxy-headers --forwar
 
 | Variable | Required | Default Value | Description |
 |---|---|---|---|
-| `DEEPSEEK_API_KEY` | Optional | `""` | DeepSeek LLM API Key (if omitted, falls back to deterministic rule generators). |
-| `DEEPSEEK_BASE_URL` | Optional | `https://api.deepseek.com` | DeepSeek OpenAI-compatible base URL. |
-| `DEEPSEEK_MODEL` | Optional | `deepseek-chat` | DeepSeek model identifier. |
-| `DEEPSEEK_TIMEOUT_SECONDS` | Optional | `15` | Maximum HTTP timeout for AI requests. |
+| `Gemini_API_KEY` | Optional | `""` | Gemini LLM API Key (if omitted, falls back to deterministic rule generators). |
+| `Gemini_BASE_URL` | Optional | `https://api.Gemini.com` | Gemini OpenAI-compatible base URL. |
+| `Gemini_MODEL` | Optional | `Gemini-chat` | Gemini model identifier. |
+| `Gemini_TIMEOUT_SECONDS` | Optional | `15` | Maximum HTTP timeout for AI requests. |
 | `AI_CACHE_TTL_SECONDS` | Optional | `3600` | In-memory cache duration in seconds. |
 | `OLLAMA_URL` | Optional | `http://localhost:11434` | URL for local Ollama server if enabled. |
 | `OLLAMA_DEFAULT_MODEL` | Optional | `llama3.2` | Local model name for Ollama. |

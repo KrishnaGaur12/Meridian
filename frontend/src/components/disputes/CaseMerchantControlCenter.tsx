@@ -626,7 +626,7 @@ export const CaseMerchantControlCenter: React.FC<CaseMerchantControlCenterProps>
               done: dispute.workflow_stage === 'RESOLVED',
             },
             {
-              label: 'Razorpay Review',
+              label: 'Gateway Review',
               current: dispute.status === 'UNDER_REVIEW' || dispute.workflow_stage === 'SUBMITTED',
               done: dispute.status === 'WON' || dispute.status === 'LOST',
             },
@@ -1270,7 +1270,7 @@ export const CaseMerchantControlCenter: React.FC<CaseMerchantControlCenterProps>
               </div>
               <div className="flex justify-between">
                 <span>Gateway Target:</span>
-                <strong className="text-slate-900 font-mono text-[11px]">Razorpay Boundary</strong>
+                <strong className="text-slate-900 font-mono text-[11px]">Gateway Boundary</strong>
               </div>
             </div>
           </div>
@@ -1313,7 +1313,7 @@ export const CaseMerchantControlCenter: React.FC<CaseMerchantControlCenterProps>
 
             {isReadyToSubmit ? (
               <p className="text-xs text-slate-600">
-                All evidence has been explicitly approved by the merchant. You may now review and transmit your representation package to Razorpay.
+                All evidence has been explicitly approved by the merchant. You may now review and transmit your representation package to the Gateway.
               </p>
             ) : (
               <div className="space-y-1 text-xs text-amber-900">

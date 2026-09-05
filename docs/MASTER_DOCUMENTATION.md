@@ -1,4 +1,4 @@
-# MASTER DOCUMENTATION INDEX — RAZORPAY AI RISK MANAGER
+# MASTER DOCUMENTATION INDEX — Meridian AI RISK MANAGER
 
 **Complete Forensic Audit Package**
 **Buildathon 2026 Submission Documentation**
@@ -117,8 +117,8 @@ This documentation package is organized into 35 comprehensive sections as requir
 
 ### PART 11-15: ML/AI COMPONENTS
 
-**11_DEEPSEEK_AI_AUDIT.md**
-- DeepSeek API integration
+**11_Gemini_AI_AUDIT.md**
+- Gemini API integration
 - Prompt engineering
 - Response handling
 - Real vs mocked execution
@@ -274,7 +274,7 @@ This documentation package is organized into 35 comprehensive sections as requir
 - Database ER diagram
 - Fraud pipeline
 - Evidence pipeline
-- DeepSeek pipeline
+- Gemini pipeline
 - Security architecture
 - Deployment architecture
 - End-to-end sequence diagram
@@ -363,14 +363,14 @@ This documentation package is organized into 35 comprehensive sections as requir
 2. Then: DATABASE_ARCHITECTURE.md
 3. Then: API_DOCUMENTATION.md
 4. Then: SECURITY_AUDIT.md
-5. Deep-dive: DEEPSEEK_AI_AUDIT.md, FRAUD_MODEL_METRICS.md
+5. Deep-dive: Gemini_AI_AUDIT.md, FRAUD_MODEL_METRICS.md
 
 #### 🔬 **ML/AI Specialists**
 1. Start: FRAUD_MODEL_METRICS.md
 2. Then: WIN_PROBABILITY_MODEL.md
 3. Then: AI_EVALUATION.md
 4. Then: FALSE_POSITIVE_ANALYSIS.md, FALSE_NEGATIVE_ANALYSIS.md
-5. Then: DEEPSEEK_AI_AUDIT.md
+5. Then: Gemini_AI_AUDIT.md
 
 #### 🚀 **DevOps/Deployment**
 1. Start: SYSTEM_ARCHITECTURE.md
@@ -396,19 +396,19 @@ This documentation package is organized into 35 comprehensive sections as requir
 - Database schema design
 - Input validation and error handling
 - Fraud ML model implementation
-- DeepSeek LLM integration
+- Gemini LLM integration
 - Evidence upload and storage
 - Dispute workflow states
 
 ### ⚠️ PARTIALLY WORKING
-- DeepSeek integration (works if API available)
+- Gemini integration (works if API available)
 - Evidence analysis pipeline (untested accuracy)
 - Performance (scalability unproven)
 - Error recovery (incomplete)
 - Testing (coverage unknown)
 
 ### ❌ NOT WORKING
-- Live Razorpay integration
+- Live Meridian integration
 - Image OCR (no library)
 - Production deployment
 - Authentication/authorization
@@ -432,10 +432,10 @@ This documentation package is organized into 35 comprehensive sections as requir
 | Total Tables | 11 | ✅ Implemented |
 | API Endpoints | 50+ | ✅ Implemented |
 | ML Models | 2 (Fraud, Win) | ✅ Implemented |
-| External APIs | 1 (DeepSeek) | ⚠️ Works when available |
+| External APIs | 1 (Gemini) | ⚠️ Works when available |
 | Fraud Model ROC-AUC | 0.87 (claimed) | ❓ Unverified |
 | Dispute Listing Latency | 50-2000ms | ⚠️ Slow at scale |
-| AI Analysis Latency | 2-5s | ⚠️ DeepSeek dependent |
+| AI Analysis Latency | 2-5s | ⚠️ Gemini dependent |
 | Frontend Test Coverage | 0% | ❌ Missing |
 | Security Score | 3/10 | ❌ Not production-ready |
 | Buildathon Readiness | 58/100 | ⚠️ Promising but gaps |
@@ -453,12 +453,12 @@ This documentation package is organized into 35 comprehensive sections as requir
 - [ ] Optimize dispute listing (query analysis)
 - [ ] Implement OCR for image evidence
 - [ ] Add comprehensive error recovery
-- [ ] Fix fallback when DeepSeek unavailable
+- [ ] Fix fallback when Gemini unavailable
 
 ### Priority 3: Live Integration
-- [ ] Implement Razorpay API webhook handling
+- [ ] Implement Meridian API webhook handling
 - [ ] Real dispute data integration (read-only)
-- [ ] Test with actual Razorpay disputes
+- [ ] Test with actual Meridian disputes
 
 ### Priority 4: Production Readiness
 - [ ] Add authentication (JWT)
@@ -482,7 +482,7 @@ This documentation package is organized into 35 comprehensive sections as requir
 1. **Problem Statement (1 min)** — Show need for dispute management
 2. **System Overview (2 min)** — Architecture diagrams
 3. **Live Demo (5 min)** — Dashboard → Dispute → Evidence → AI Analysis → Submission
-4. **AI Innovation (2 min)** — DeepSeek evidence analysis, completeness scoring
+4. **AI Innovation (2 min)** — Gemini evidence analysis, completeness scoring
 5. **Results (1 min)** — Metrics, win probability, recommendations
 6. **Business Impact (1 min)** — ROI, merchant benefits
 
@@ -500,7 +500,7 @@ This documentation package is organized into 35 comprehensive sections as requir
 ### 📊 Jury Concerns to Address Proactively
 - "Why should we trust the AI analysis?" → Show prompt engineering, grounding
 - "How do you scale this?" → Show pagination, async processing, database design
-- "What if DeepSeek is down?" → Show graceful fallback strategy
+- "What if Gemini is down?" → Show graceful fallback strategy
 - "Is this better than manual review?" → Show time savings, consistency, accuracy
 - "How do merchants use this?" → Walk through demo with merchant perspective
 
@@ -568,4 +568,4 @@ For questions about this audit or the project:
 
 **END OF MASTER DOCUMENTATION INDEX**
 
-*This audit represents a complete, honest assessment of the Razorpay AI Risk Manager project. Every claim is verified against source code or marked [NOT VERIFIED]. The project has significant strengths but also critical gaps before production deployment.*
+*This audit represents a complete, honest assessment of the Meridian AI Risk Manager project. Every claim is verified against source code or marked [NOT VERIFIED]. The project has significant strengths but also critical gaps before production deployment.*

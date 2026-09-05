@@ -51,7 +51,7 @@ The output inside `dist/` consists entirely of static assets (HTML, CSS, JS, SVG
 server {
     listen 80;
     server_name merchant.yourdomain.com;
-    root /var/www/razorpay-frontend/dist;
+    root /var/www/Meridian-frontend/dist;
     index index.html;
 
     location / {

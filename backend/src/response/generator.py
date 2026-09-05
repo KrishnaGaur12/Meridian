@@ -220,7 +220,7 @@ class ConfigurableResponseGenerator(BaseResponseGenerator):
 
     def __init__(self):
         self.provider = os.getenv("AI_PROVIDER", "deepseek").lower()
-        self.model = os.getenv("AI_MODEL", os.getenv("DEEPSEEK_MODEL", "deepseek-chat"))
+        self.model = os.getenv("AI_MODEL", os.getenv("DEEPSEEK_MODEL", "gemini-2.0-flash"))
         self.api_key = os.getenv("AI_API_KEY", os.getenv("DEEPSEEK_API_KEY", None))
         self.mock_fallback = MockResponseGenerator()
 

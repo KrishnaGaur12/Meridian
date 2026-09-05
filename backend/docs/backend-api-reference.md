@@ -1,6 +1,6 @@
 # Backend API Reference
 
-Comprehensive specification of all 38 REST API endpoints in the Razorpay AI Risk Manager backend.
+Comprehensive specification of all 38 REST API endpoints in the Meridian AI Risk Manager backend.
 
 ---
 
@@ -126,7 +126,7 @@ Comprehensive specification of all 38 REST API endpoints in the Razorpay AI Risk
 ### `GET /disputes`
 - **Purpose**: Lists dispute cases with calculated deadline urgency, filtering, and pagination.
 - **Query Parameters**:
-  - `case_source` (`DEMO`, `SIMULATED_RAZORPAY`, `REAL_RAZORPAY`)
+  - `case_source` (`DEMO`, `SIMULATED_Meridian`, `REAL_Meridian`)
   - `status` (`OPEN`, `UNDER_REVIEW`, `WON`, `LOST`, `CLOSED`)
   - `workflow_stage` (`DISPUTE_RAISED`, `MERCHANT_REVIEW`, `SUBMITTED`, etc.)
   - `merchant_attention_state` (`ACTION_REQUIRED`, `REVIEW_RECOMMENDED`, `AI_HANDLING`, `WAITING`)
@@ -169,7 +169,7 @@ Comprehensive specification of all 38 REST API endpoints in the Razorpay AI Risk
 ## 5. Evidence Engine
 
 ### `POST /disputes/{dispute_id}/evidence/upload`
-- **Purpose**: Uploads evidence file, extracts text, computes SHA-256 hash, and triggers DeepSeek AI verification.
+- **Purpose**: Uploads evidence file, extracts text, computes SHA-256 hash, and triggers Gemini AI verification.
 - **Form Data**:
   - `file`: Multipart binary document (PDF, PNG, JPG, TXT, DOCX)
   - `evidence_type`: Optional preferred type
@@ -187,7 +187,7 @@ Comprehensive specification of all 38 REST API endpoints in the Razorpay AI Risk
 - **Source**: `src/api/routes/evidence.py:979`
 
 ### `POST /disputes/{dispute_id}/evidence/{evidence_id}/verify`
-- **Purpose**: Explicitly triggers or retries DeepSeek AI evidence verification.
+- **Purpose**: Explicitly triggers or retries Gemini AI evidence verification.
 - **Response `200 OK`**: `EvidenceAnalysisResultSchema`.
 - **Source**: `src/api/routes/evidence.py:681`
 
@@ -201,7 +201,7 @@ Comprehensive specification of all 38 REST API endpoints in the Razorpay AI Risk
   - `DISPUTE_CREATED`
   - `DISPUTE_ANALYSIS_STARTED`
   - `ML_ANALYSIS_COMPLETED`
-  - `DEEPSEEK_ANALYSIS_COMPLETED`
+  - `Gemini_ANALYSIS_COMPLETED`
   - `DISPUTE_ANALYSIS_COMPLETED`
   - `EVIDENCE_APPROVED`
   - `DISPUTE_STAGE_CHANGED`

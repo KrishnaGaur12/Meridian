@@ -232,7 +232,7 @@ export const FinalReviewSection: React.FC<FinalReviewSectionProps> = ({
         {!isReadOnly && (
           <div className="pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="text-xs text-slate-500">
-              Only explicitly approved evidence will be packaged and transmitted to Razorpay.
+              Only explicitly approved evidence will be packaged and transmitted to the Gateway.
             </div>
 
             <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end">

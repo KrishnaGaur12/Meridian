@@ -13,7 +13,7 @@
 ```typescript
 api.interceptors.request.use(
   (config) => {
-    const savedMode = localStorage.getItem('razorpay_database_mode') || 'DEMO';
+    const savedMode = localStorage.getItem('Meridian_database_mode') || 'DEMO';
     config.headers['X-Database-Mode'] = savedMode;
     return config;
   },
@@ -70,7 +70,7 @@ api.interceptors.response.use(
 
 ### 2.3 Simulation Service (`src/services/simulationService.ts`)
 - `getAvailableTransactions()`: `GET /webhooks/transactions` (fallback: `/demo/available-transactions`)
-- `simulateDispute(payload)`: `POST /webhooks/razorpay` (fallback: `/demo/simulate-dispute`)
+- `simulateDispute(payload)`: `POST /webhooks/Meridian` (fallback: `/demo/simulate-dispute`)
 
 ### 2.4 Server-Sent Events Hook (`src/hooks/useRealtimeEvents.ts`)
 - **SSE Stream URL:** `${API_BASE_URL}/events`
@@ -78,7 +78,7 @@ api.interceptors.response.use(
   - `DISPUTE_CREATED`
   - `DISPUTE_ANALYSIS_STARTED`
   - `ML_ANALYSIS_COMPLETED`
-  - `DEEPSEEK_ANALYSIS_COMPLETED`
+  - `Gemini_ANALYSIS_COMPLETED`
   - `DISPUTE_ANALYSIS_COMPLETED`
   - `EVIDENCE_APPROVED`
   - `DISPUTE_STAGE_CHANGED`

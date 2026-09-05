@@ -138,7 +138,7 @@ export const SimulatorPage: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
-              Razorpay Payment & Dispute Simulator
+              Gateway Payment & Dispute Simulator
             </h1>
             <span
               className={`px-2.5 py-0.5 text-[10px] font-bold rounded-full border ${

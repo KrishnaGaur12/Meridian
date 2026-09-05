@@ -101,7 +101,7 @@
          │mime_type    │  │ai_recommend     │
          │file_size    │  │conflict_detect  │
          │doc_hash     │  │ml_results_json  │
-         │content_hash │  │deepseek_results │
+         │content_hash │  │Gemini_results │
          │raw_content  │  │evidence_analysis│
          │extracted_tx │  │model_versions   │
          │content_json │  │generated_at     │
@@ -351,7 +351,7 @@ CREATE TABLE disputes (
     phase VARCHAR DEFAULT 'chargeback',
     respond_by VARCHAR,
     workflow_stage VARCHAR DEFAULT 'DISPUTE_RAISED',
-    case_source VARCHAR DEFAULT 'SIMULATED_RAZORPAY',
+    case_source VARCHAR DEFAULT 'SIMULATED_Meridian',
     merchant_attention_state VARCHAR DEFAULT 'ACTION_REQUIRED',
     ai_last_checked VARCHAR,
     created_at VARCHAR
@@ -366,7 +366,7 @@ CREATE TABLE disputes (
 - `workflow_stage` — DISPUTE_RAISED, EVIDENCE_COLLECTION, AI_ANALYSIS, MERCHANT_REVIEW, SUBMITTED
 - `respond_by` — Deadline timestamp
 - `merchant_attention_state` — ACTION_REQUIRED, REVIEW_RECOMMENDED, AI_HANDLING, WAITING
-- `case_source` — DEMO, SIMULATED_RAZORPAY, REAL_RAZORPAY
+- `case_source` — DEMO, SIMULATED_Meridian, REAL_Meridian
 
 **Indexes:**
 - dispute_id (PK)
@@ -460,7 +460,7 @@ CREATE TABLE evidence (
 - `evidence_type` — delivery_proof, order_confirmation, communication, payment_receipt, customer_complaint_response, invoice, shipping_label, return_documentation, tracking, photo_proof, etc.
 - `verification_status` — UNVERIFIED, VERIFIED, INVALID, UNREADABLE, REJECTED, NEEDS_REVIEW, FAILED
 - `approval_status` — PENDING_APPROVAL, APPROVED, REJECTED
-- `ai_analysis_json` — DeepSeek AI analysis results
+- `ai_analysis_json` — Gemini AI analysis results
 - `extracted_text` — OCR/PDF text extraction
 - `is_deleted` — Soft delete flag
 
@@ -525,7 +525,7 @@ CREATE TABLE dispute_assessments (
     ai_recommendation VARCHAR,
     conflict_detected INTEGER DEFAULT 0,
     ml_results_json TEXT DEFAULT '{}',
-    deepseek_results_json TEXT DEFAULT '{}',
+    Gemini_results_json TEXT DEFAULT '{}',
     evidence_analysis_json TEXT DEFAULT '{}',
     model_versions_json TEXT DEFAULT '{}',
     generated_at VARCHAR

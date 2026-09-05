@@ -105,7 +105,7 @@ export const formatStatus = (
 
   if (normalizedStage === 'SUBMITTED' || normalizedStatus === 'UNDER_REVIEW' || attentionState === 'WAITING') {
     return {
-      label: 'Awaiting Razorpay Review',
+      label: 'Awaiting Gateway Review',
       colorClass: 'text-blue-700 bg-blue-50 border-blue-200',
       isActionable: false,
     };

@@ -256,7 +256,7 @@ export const CaseMerchantReviewTab: React.FC<CaseMerchantReviewTabProps> = ({
       >
         <div className="space-y-3 text-xs text-slate-600">
           <p>
-            The case will be marked as <strong>Resolved (Conceded)</strong> and no submission will be made to Razorpay.
+            The case will be marked as <strong>Resolved (Conceded)</strong> and no submission will be made to the Gateway.
           </p>
           <div>
             <label className="block font-medium text-slate-700 mb-1">Reason for Acceptance</label>

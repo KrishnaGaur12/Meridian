@@ -1,12 +1,12 @@
-# Razorpay AI Risk Manager
+# Meridian AI Risk Manager
 
 An intelligent, lightweight, end-to-end payment dispute and chargeback risk management system designed for high-accuracy decisioning, explainability, cross-entity document isolation, and fraud detection. Built specifically for resource-constrained environments (Intel i3 11th Gen, 8 GB RAM, CPU-only, ₹0 budget).
 
 ---
 
-## 🏗️ Technical Audit & System Overview
+## Technical Audit & System Overview
 
-Unlike systems that rely on uncoordinated ML models or expensive black-box LLM APIs, **Razorpay AI Risk Manager** is **ONE unified AI risk engine** combining deterministic rules, vector retrieval, data validation, gradient-boosted ML models, and explainable summary generation.
+Unlike systems that rely on uncoordinated ML models or expensive black-box LLM APIs, **Meridian AI Risk Manager** is **ONE unified AI risk engine** combining deterministic rules, vector retrieval, data validation, gradient-boosted ML models, and explainable summary generation.
 
 ```
                                   DISPUTE PAYLOAD (JSON / CLI)
@@ -49,10 +49,10 @@ Unlike systems that rely on uncoordinated ML models or expensive black-box LLM A
 
 ---
 
-## 🏆 Model Benchmarks & Comparison
+## Model Benchmarks & Comparison
 
 ### 1. Fraud Detection Model V2 (Public Dataset — 5,000 Transactions)
-> **Disclaimer**: *Public transaction fraud dataset used for fraud-model experimentation; no private Razorpay data was used.*
+> **Disclaimer**: *Public transaction fraud dataset used for fraud-model experimentation; no private Meridian data was used.*
 
 - **Data Splitting**: Customer-level grouped split (`GroupShuffleSplit` on `customer_id`) ensuring zero customer overlap across splits.
 - **Split Sizes**: Train (3,537 transactions, 692 customers), Val (719 transactions, 148 customers), Held-Out Test (744 transactions, 149 customers).
@@ -102,7 +102,7 @@ Unlike systems that rely on uncoordinated ML models or expensive black-box LLM A
 
 ---
 
-## 📈 Generated Visual & Metrics Reports
+## Generated Visual & Metrics Reports
 
 All evaluation metrics and matplotlib charts are exported to `reports/`:
 
@@ -116,7 +116,7 @@ All evaluation metrics and matplotlib charts are exported to `reports/`:
 
 ---
 
-## 🚀 Quickstart & Scenario CLI Instructions
+## Quickstart & Scenario CLI Instructions
 
 ### 1. Setup Virtual Environment
 
@@ -166,8 +166,8 @@ python main.py --scenario 1 --json
 
 ---
 
-## 📌 Data Provenance & Scientific Honesty Disclaimer
+## Data Provenance & Scientific Honesty Disclaimer
 
-- **Dataset Provenance**: *Public transaction fraud dataset used for fraud-model experimentation; no private Razorpay data was used.*
+- **Dataset Provenance**: *Public transaction fraud dataset used for fraud-model experimentation; no private Meridian data was used.*
 - **Zero Customer Leakage**: Customer-level grouped splitting ensures zero `customer_id` overlap between training, validation, and testing sets.
 - **Model Separation**: Fraud V2 predicts transaction fraud probability, while Win Probability predicts merchant dispute win probability. They operate as distinct complementary signals without score conflation.

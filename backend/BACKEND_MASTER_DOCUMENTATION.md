@@ -1,11 +1,11 @@
-# RAZORPAY AI RISK MANAGER & DISPUTE INTELLIGENCE ENGINE
+# Meridian AI RISK MANAGER & DISPUTE INTELLIGENCE ENGINE
 ## Master Backend Technical Documentation & Forensic Architecture Package
 
 ---
 
 > **Document Status**: Production Verified against Backend Codebase  
-> **Backend Version**: 2.0.0 (FastAPI + SQLAlchemy + XGBoost/Scikit-Learn ML + DeepSeek AI + SQLite Dual-Engine)  
-> **Repository Root**: `d:\Github Projects\Razorpay AI Risk Manager\AI Chargeback Evidence Responce`  
+> **Backend Version**: 2.0.0 (FastAPI + SQLAlchemy + XGBoost/Scikit-Learn ML + Gemini AI + SQLite Dual-Engine)  
+> **Repository Root**: `d:\Github Projects\Meridian AI Risk Manager\AI Chargeback Evidence Responce`  
 > **Target Audience**: Buildathon Jury, Technical Interviewers, Backend Engineers, AI/ML Engineers, Cybersecurity Reviewers  
 > **Source Grounding**: 100% Traceable to source files, database schemas, model pipelines, and 176 passing automated tests.
 
@@ -56,7 +56,7 @@
 ## 1. Executive Overview
 
 ### 1.1 What the Backend Is
-The **Razorpay AI Risk Manager & Dispute Management Engine** is a high-performance, asynchronous RESTful backend service built on Python 3.11+/FastAPI and SQLAlchemy. It acts as an autonomous risk decisioning engine, chargeback representment package builder, and AI evidence verifier.
+The **Meridian AI Risk Manager & Dispute Management Engine** is a high-performance, asynchronous RESTful backend service built on Python 3.11+/FastAPI and SQLAlchemy. It acts as an autonomous risk decisioning engine, chargeback representment package builder, and AI evidence verifier.
 
 ### 1.2 Problem It Solves
 When a cardholder files a chargeback dispute through a card network (Visa, Mastercard, RuPay, Amex), the merchant faces tight representment deadlines (3 to 7 days). Merchants typically suffer from:
@@ -65,11 +65,11 @@ When a cardholder files a chargeback dispute through a card network (Visa, Maste
 3. Incomplete, unverified evidence submissions resulting in automatic dispute loss and financial chargeback fees.
 4. Hallucinated or non-grounded defense statements that violate card network rules.
 
-This backend solves these challenges by combining **deterministic machine learning** (XGBoost Fraud Model V2 and Random Forest Win Probability Model) with **evidence document parsing** (PDF/DOCX/OCR-free image inspection) and **grounded DeepSeek LLM intelligence** with strict anti-hallucination validation gates.
+This backend solves these challenges by combining **deterministic machine learning** (XGBoost Fraud Model V2 and Random Forest Win Probability Model) with **evidence document parsing** (PDF/DOCX/OCR-free image inspection) and **grounded Gemini LLM intelligence** with strict anti-hallucination validation gates.
 
 ### 1.3 Target Users & Consuming Clients
 - **Merchants / Risk Analysts**: Interacting via frontend web applications (e.g. RiskDesk dashboard) or REST API clients.
-- **Automated Webhook Ingestion**: Ingesting real-time `payment.dispute.created` webhook payloads from Razorpay or external gateways.
+- **Automated Webhook Ingestion**: Ingesting real-time `payment.dispute.created` webhook payloads from Meridian or external gateways.
 - **CLI Automation**: Supporting terminal-based dispute evaluation via `python main.py --scenario <1-5>`.
 
 ### 1.4 Business Workflow Supported
@@ -83,7 +83,7 @@ Automated Data Linkage (Customer ↔ Transaction ↔ Payment ↔ Order ↔ Fulfi
 Multi-Model Risk Decisioning (Fraud V2 XGBoost + Win Probability Random Forest)
        │
        ▼
-Evidence Collection & Verification (OCR/Parsing + DeepSeek AI Verification)
+Evidence Collection & Verification (OCR/Parsing + Gemini AI Verification)
        │
        ▼
 Merchant Review & Next Best Action Execution
@@ -103,7 +103,7 @@ Simulated Gateway Submission & Deterministic Lifecycle Resolution
 - **Dual-Tier ML Decisioning**:
   - **Fraud Model V2**: Pre-authorization XGBoost model predicting fraud probability from 12 transaction-level features (trained on 10,000 samples, PR-AUC: 0.8559, ROC-AUC: 0.9841).
   - **Win Probability Model**: Random Forest model trained on 13 dispute-level features including completeness scores and evidence quality (PR-AUC: 0.9406, ROC-AUC: 0.8688).
-- **Grounded DeepSeek LLM Language Layer**: DeepSeek chat API integration (`deepseek-chat`) producing merchant-friendly explanations, evidence gap guidance, and formal representment defense statements.
+- **Grounded Gemini LLM Language Layer**: Gemini chat API integration (`Gemini-chat`) producing merchant-friendly explanations, evidence gap guidance, and formal representment defense statements.
 - **Full Document Content Extraction**: Native parser for PDF (via `pypdf`), DOCX, CSV, TXT, JSON, and Image metadata (via `Pillow`).
 - **Post-LLM Anti-Hallucination Claim Validation**: `ClaimEvidenceValidator` strips unsupported assertions and enforces that every claimed fact cites a verified evidence document.
 - **Real-Time Event Distribution**: Server-Sent Events (`/events`) streaming dispute lifecycle state updates and dashboard syncs.
@@ -120,10 +120,10 @@ The backend models the entire merchant payment dispute and chargeback defense do
 | **Transaction** | `src/database/models.py:Transaction` | Financial charge authorization record holding payment parameters and 12 ML feature attributes. |
 | **Payment** | `src/database/models.py:Payment` | Gateway payment capture record holding card network, last 4 digits, AVS match (`Y`/`N`), CVV match (`Y`/`N`), and bank authorization code. |
 | **Order & Fulfillment** | `src/database/models.py:Order`, `Fulfillment` | Merchant order description and logistics fulfillment details (carrier, tracking number, dispatched timestamp, delivery timestamp, delivery status). |
-| **Dispute** | `src/database/models.py:Dispute` | Chargeback case filed against a transaction, containing reason code, Razorpay phase, deadline (`respond_by`), internal workflow stage, and attention state. |
+| **Dispute** | `src/database/models.py:Dispute` | Chargeback case filed against a transaction, containing reason code, Meridian phase, deadline (`respond_by`), internal workflow stage, and attention state. |
 | **Dispute Event** | `src/database/models.py:DisputeEvent` | Immutable chronological audit trail entry tracking actions by `SYSTEM`, `AI_ENGINE`, `MERCHANT`, or `LOCAL_GATEWAY`. |
 | **Evidence** | `src/database/models.py:Evidence` | Physical or digital evidence record (file path, MIME type, cryptographic hashes, extracted text, structured facts, approval status, and AI verification status). |
-| **Dispute Assessment** | `src/database/models.py:DisputeAssessment` | Versioned snapshot storing ML risk scores, win probabilities, confidence calculations, and DeepSeek AI reasoning. |
+| **Dispute Assessment** | `src/database/models.py:DisputeAssessment` | Versioned snapshot storing ML risk scores, win probabilities, confidence calculations, and Gemini AI reasoning. |
 | **Chargeback Package** | `src/database/models.py:ChargebackPackage` | Structured defense representation bundle containing rebuttal text, evidence citations, transaction metadata, and submission reference ID. |
 | **Webhook Event** | `src/database/models.py:WebhookEvent` | Incoming gateway webhook payload record supporting idempotency keys. |
 
@@ -136,7 +136,7 @@ The backend models the entire merchant payment dispute and chargeback defense do
 ```
 +--------------------------------------------------------------------------------------------------+
 |                                    CLIENT / INTEGRATION LAYER                                    |
-|   - RiskDesk Web UI (React/Vite)               - Razorpay Gateway Webhooks (HTTP POST)           |
+|   - RiskDesk Web UI (React/Vite)               - Meridian Gateway Webhooks (HTTP POST)           |
 |   - CLI Interface (main.py)                    - Real-time Event Consumers (SSE /events)         |
 +--------------------------------------------------------------------------------------------------+
                                                  │
@@ -168,7 +168,7 @@ The backend models the entire merchant payment dispute and chargeback defense do
                     ▼                            ▼                             ▼
 +-----------------------+    +-----------------------+    +------------------------+
 |   MACHINE LEARNING    |    |   EVIDENCE & FILES    |    |    AI LANGUAGE LAYER   |
-| - Fraud Model V2      |    | - EvidenceEngine      |    | - DeepSeekClient       |
+| - Fraud Model V2      |    | - EvidenceEngine      |    | - GeminiClient       |
 |   (XGBoost Pipeline)  |    | - FileProcessor (PDF, |    |   (OpenAI-compatible)  |
 | - Win Probability     |    |   DOCX, TXT, Image)   |    | - PromptBuilder        |
 |   (Random Forest)     |    | - EvidenceFactory     |    | - EvidenceAnalysisSvc  |
@@ -214,8 +214,8 @@ The backend models the entire merchant payment dispute and chargeback defense do
 - **Files**: `src/evidence/file_processor.py`, `src/evidence/engine.py`, `src/evidence/validators.py`.
 
 #### 5. AI Language Layer (`src/services/ai/`)
-- **Purpose**: Constructs strict, prompt-engineered payloads sent to DeepSeek API (`deepseek-chat`). Evaluates document validity, explains decisions to merchants, and drafts rebuttals.
-- **Files**: `src/services/ai/deepseek_client.py`, `src/services/ai/prompt_builder.py`, `src/services/ai/evidence_analysis_service.py`, `src/services/ai/fallback.py`.
+- **Purpose**: Constructs strict, prompt-engineered payloads sent to Gemini API (`Gemini-chat`). Evaluates document validity, explains decisions to merchants, and drafts rebuttals.
+- **Files**: `src/services/ai/Gemini_client.py`, `src/services/ai/prompt_builder.py`, `src/services/ai/evidence_analysis_service.py`, `src/services/ai/fallback.py`.
 
 #### 6. Database & Persistence Layer (`src/database/`)
 - **Purpose**: Manages SQLAlchemy ORM entities, runs SQLite schema migrations on startup, handles connection pooling with `check_same_thread=False`, and enforces query performance via eager loading (`joinedload`).
@@ -229,7 +229,7 @@ The backend models the entire merchant payment dispute and chargeback defense do
 .
 ├── config/
 │   ├── __init__.py
-│   └── settings.py               # Global settings, paths, thresholds, DeepSeek configs, and enums
+│   └── settings.py               # Global settings, paths, thresholds, Gemini configs, and enums
 ├── data/
 │   ├── app_database.db           # Legacy demo DB alias
 │   ├── demo_database.db          # Isolated Demo database
@@ -276,7 +276,7 @@ The backend models the entire merchant payment dispute and chargeback defense do
 │   │       ├── risk.py           # /transactions/{id}/risk-assessment endpoint
 │   │       ├── system.py         # /system mode and /system/reset-live endpoints
 │   │       ├── transactions.py   # /transactions listing and creation endpoints
-│   │       └── webhooks.py       # /webhooks Razorpay webhook ingestion endpoints
+│   │       └── webhooks.py       # /webhooks Meridian webhook ingestion endpoints
 │   ├── chargeback/
 │   │   ├── package_generator.py  # Assembles final representment package dictionary
 │   │   ├── schemas.py            # Pydantic schemas for chargeback packages
@@ -328,8 +328,8 @@ The backend models the entire merchant payment dispute and chargeback defense do
 │   ├── services/
 │   │   ├── ai/
 │   │   │   ├── cache.py          # In-memory TTL cache with dispute invalidation
-│   │   │   ├── deepseek_client.py# DeepSeek API HTTP client
-│   │   │   ├── evidence_analysis_service.py # DeepSeek evidence verification pipeline
+│   │   │   ├── Gemini_client.py# Gemini API HTTP client
+│   │   │   ├── evidence_analysis_service.py # Gemini evidence verification pipeline
 │   │   │   ├── evidence_reasoner.py # Granular evidence gap analyzer
 │   │   │   ├── fallback.py       # Deterministic fallback generators
 │   │   │   ├── prompt_builder.py # Anti-hallucination prompt construction
@@ -368,7 +368,7 @@ The backend models the entire merchant payment dispute and chargeback defense do
 | **Document Processing**| PyPDF | `>=6.0.0` | `requirements.txt:14`, `src/evidence/file_processor.py:19` | Extracting raw text from uploaded PDF evidence documents. |
 | **Image Processing** | Pillow (PIL) | `>=10.0.0` | `requirements.txt:15`, `src/evidence/file_processor.py:16` | Inspecting image dimensions, formats, and verifying image document integrity. |
 | **Multipart Parsing** | python-multipart | `>=0.0.9` | `requirements.txt:16`, `src/api/routes/evidence.py:11` | Handling multipart form data for file uploads (`UploadFile`). |
-| **LLM Client** | DeepSeek HTTP Client | Native `urllib.request` / `httpx>=0.24.0` | `src/services/ai/deepseek_client.py:10` | Timeout-bounded HTTP client communicating with DeepSeek `chat/completions`. |
+| **LLM Client** | Gemini HTTP Client | Native `urllib.request` / `httpx>=0.24.0` | `src/services/ai/Gemini_client.py:10` | Timeout-bounded HTTP client communicating with Gemini `chat/completions`. |
 | **Local LLM Option** | Ollama API Client | Native `urllib.request` | `src/components/contradiction.py:140` | Optional local LLM integration for semantic contradiction checks (`llama3.2`). |
 | **Test Framework** | Pytest | `>=7.4.0` | `requirements.txt:7`, `tests/` | Unit, integration, and end-to-end test execution. |
 
@@ -387,7 +387,7 @@ The execution flow during startup is managed via FastAPI's `@asynccontextmanager
       ▼
 3. Configuration loading (config/settings.py)
    - Creates required directories (data/raw, data/processed, data/synthetic, data/uploads, models, reports)
-   - Auto-loads .env file for environment variables (DEEPSEEK_API_KEY, etc.)
+   - Auto-loads .env file for environment variables (Gemini_API_KEY, etc.)
       │
       ▼
 4. Database initialization via lifespan(app_instance: FastAPI) in main.py
@@ -487,8 +487,8 @@ The backend provides **38 distinct API routes** across 12 functional sub-routers
 | `POST` | `/disputes/{dispute_id}/evidence/upload` | Context-aware | Uploads file (PDF/DOCX/TXT/Image), extracts text, runs AI verification (`src/api/routes/evidence.py:267`). |
 | `PATCH` / `PUT` | `/disputes/{dispute_id}/evidence/{evidence_id}` | Context-aware | Edits evidence metadata, resets approval status, triggers reassessment (`src/api/routes/evidence.py:420`). |
 | `PUT` / `POST` | `/disputes/{dispute_id}/evidence/{evidence_id}/file` | Context-aware | Replaces evidence document file with re-extraction and re-verification (`src/api/routes/evidence.py:546`). |
-| `POST` | `/disputes/{dispute_id}/evidence/{evidence_id}/verify` | Context-aware | Explicitly triggers or retries DeepSeek AI evidence verification (`src/api/routes/evidence.py:681`). |
-| `GET` | `/disputes/{dispute_id}/evidence/{evidence_id}/analysis` | Context-aware | Retrieves persisted DeepSeek evidence verification analysis (`src/api/routes/evidence.py:723`). |
+| `POST` | `/disputes/{dispute_id}/evidence/{evidence_id}/verify` | Context-aware | Explicitly triggers or retries Gemini AI evidence verification (`src/api/routes/evidence.py:681`). |
+| `GET` | `/disputes/{dispute_id}/evidence/{evidence_id}/analysis` | Context-aware | Retrieves persisted Gemini evidence verification analysis (`src/api/routes/evidence.py:723`). |
 | `DELETE` | `/disputes/{dispute_id}/evidence/{evidence_id}` | Context-aware | Soft-deletes evidence item (`is_deleted = 1`) and recalculates readiness (`src/api/routes/evidence.py:764`). |
 | `POST` | `/disputes/{dispute_id}/evidence/{evidence_id}/approve` | Context-aware | Merchant approves evidence item for representment bundle (`src/api/routes/evidence.py:848`). |
 | `POST` | `/disputes/{dispute_id}/evidence/{evidence_id}/reject` | Context-aware | Merchant rejects evidence item, excluding it from representment (`src/api/routes/evidence.py:979`). |
@@ -497,7 +497,7 @@ The backend provides **38 distinct API routes** across 12 functional sub-routers
 | Method | Route | Auth / Mode | Description & Source Location |
 |---|---|---|---|
 | `GET` | `/webhooks/transactions` | LIVE only | Retrieves dispute-eligible live transactions (`src/api/routes/webhooks.py:53`). |
-| `POST` | `/webhooks/razorpay` | LIVE only | Primary Razorpay webhook endpoint with idempotency handling (`src/api/routes/webhooks.py:247`). |
+| `POST` | `/webhooks/Meridian` | LIVE only | Primary Meridian webhook endpoint with idempotency handling (`src/api/routes/webhooks.py:247`). |
 | `POST` | `/webhooks/disputes` | LIVE only | Webhook simulator dispute creator in Live DB (`src/api/routes/webhooks.py:256`). |
 | `GET` | `/events` | Public | Server-Sent Events (SSE) stream broadcasting real-time updates (`src/api/routes/events.py:80`). |
 | `GET` | `/events/recent` | Public | Returns recently broadcasted events (`src/api/routes/events.py:133`). |
@@ -529,7 +529,7 @@ Step 4: Evidence Inspection & Upload
    GET /disputes/{id}/evidence -> Lists available vs missing mandatory documents.
    POST /disputes/{id}/evidence/upload -> Merchant uploads missing proof (e.g. proof_of_delivery PDF).
    - Backend extracts text and key facts (tracking number, delivery timestamp).
-   - DeepSeek verifies authenticity and matching facts.
+   - Gemini verifies authenticity and matching facts.
    - Authoritative analyze_dispute() automatically recalculates win probability.
 
 Step 5: Evidence Approval
@@ -565,14 +565,14 @@ Step 9: Resolution Outcome
 
 ## 9. Dispute Lifecycle
 
-### 9.1 Razorpay Bank Statuses (`RazorpayDisputeStatus`)
+### 9.1 Meridian Bank Statuses (`MeridianDisputeStatus`)
 - `open`: Dispute raised by cardholder, response window active.
 - `under_review`: Merchant defense submitted, under bank/issuer arbitration.
 - `won`: Issuer ruled in merchant favor; funds retained.
 - `lost`: Issuer ruled in cardholder favor; chargeback finalized.
 - `closed`: Dispute conceded or administratively closed.
 
-### 9.2 Razorpay Dispute Phases (`RazorpayDisputePhase`)
+### 9.2 Meridian Dispute Phases (`MeridianDisputePhase`)
 - `retrieval`: Preliminary issuer inquiry (Response deadline: 5 days).
 - `chargeback`: Formal financial dispute (Response deadline: 7 days).
 - `pre_arbitration`: Merchant contested retrieval, second review (Response deadline: 5 days).
@@ -634,12 +634,12 @@ Uploaded File (Bytes)
        │
        ├──> Content Hashing: Deterministic SHA-256(text + facts) for AI call deduplication
        │
-       └──> DeepSeek AI Verification: Evaluates authenticity, relevance, completeness, and contradictions
+       └──> Gemini AI Verification: Evaluates authenticity, relevance, completeness, and contradictions
 ```
 
 ### 10.3 Verification Status Lifecycle
 - `UNVERIFIED`: Uploaded or mapped from database, pending AI or merchant review.
-- `VERIFIED`: Authenticated by DeepSeek LLM or validated by automated rule checkers.
+- `VERIFIED`: Authenticated by Gemini LLM or validated by automated rule checkers.
 - `NEEDS_REVIEW`: Partially relevant or missing critical corroborating timestamps.
 - `INVALID` / `UNREADABLE`: Empty file, corrupted format, or failed extension validation.
 - `REJECTED`: Fails verification or rejected by merchant.
@@ -652,14 +652,14 @@ Uploaded File (Bytes)
 
 | Question | Forensic Repository Reality | Source Evidence |
 |---|---|---|
-| **Is DeepSeek genuinely integrated?** | **YES**. Integrated via `DeepSeekClient` communicating with `https://api.deepseek.com/chat/completions`. | `src/services/ai/deepseek_client.py:48-126` |
-| **Which DeepSeek model is used?** | `deepseek-chat` (configurable via `DEEPSEEK_MODEL`). | `config/settings.py:74`, `src/services/ai/deepseek_client.py:56` |
-| **Does DeepSeek analyze actual evidence content?** | **YES**. `PromptBuilder.build_evidence_analysis_prompt` injects up to 8,000 characters of extracted text and extracted structured facts. | `src/services/ai/prompt_builder.py:180-216` |
+| **Is Gemini genuinely integrated?** | **YES**. Integrated via `GeminiClient` communicating with `https://api.Gemini.com/chat/completions`. | `src/services/ai/Gemini_client.py:48-126` |
+| **Which Gemini model is used?** | `Gemini-chat` (configurable via `Gemini_MODEL`). | `config/settings.py:74`, `src/services/ai/Gemini_client.py:56` |
+| **Does Gemini analyze actual evidence content?** | **YES**. `PromptBuilder.build_evidence_analysis_prompt` injects up to 8,000 characters of extracted text and extracted structured facts. | `src/services/ai/prompt_builder.py:180-216` |
 | **How are PDFs processed?** | Extracted page-by-page via `pypdf.PdfReader` with UTF-8 fallback. | `src/evidence/file_processor.py:68-106` |
 | **How are images processed?** | Inspected via `Pillow` for dimension, format, and mode metadata (OCR is OCR-free metadata extraction). | `src/evidence/file_processor.py:107-123` |
 | **Is duplicate AI analysis prevented?** | **YES**. `compute_content_hash` creates SHA-256 of text+facts; cached in DB and in-memory TTL cache (`AICacheManager`). | `src/services/ai/evidence_analysis_service.py:138-149`, `src/services/ai/cache.py:40` |
-| **What happens when DeepSeek is down/unconfigured?** | Fails gracefully to deterministic rule-based generators (`FallbackGenerator`) without crashing. | `src/services/ai/fallback.py`, `src/services/ai/evidence_analysis_service.py:202-235` |
-| **Are timeouts and error handling enforced?** | **YES**. Default 15s timeout (`DEEPSEEK_TIMEOUT_SECONDS`), caught via `urllib.error.HTTPError`, `URLError`, `TimeoutError`. | `src/services/ai/deepseek_client.py:128-151` |
+| **What happens when Gemini is down/unconfigured?** | Fails gracefully to deterministic rule-based generators (`FallbackGenerator`) without crashing. | `src/services/ai/fallback.py`, `src/services/ai/evidence_analysis_service.py:202-235` |
+| **Are timeouts and error handling enforced?** | **YES**. Default 15s timeout (`Gemini_TIMEOUT_SECONDS`), caught via `urllib.error.HTTPError`, `URLError`, `TimeoutError`. | `src/services/ai/Gemini_client.py:128-151` |
 | **Is JSON output schema-validated?** | **YES**. Strict validation via Pydantic (`EvidenceAnalysisResultSchema`, `MerchantDisputeExplanation`, `StructuredAIResponse`). | `src/services/ai/schemas.py:14-162` |
 | **Can AI hallucinate facts in rebuttals?** | **NO**. `ClaimEvidenceValidator` inspects generated claims against database evidence, stripping unsupported statements. | `src/response/validator.py:12-111` |
 
@@ -687,7 +687,7 @@ Uploaded File (Bytes)
 
 ### 12.1 Evidence Verification System Instructions
 ```
-You are Razorpay's Senior AI Evidence Verification Engine.
+You are Meridian's Senior AI Evidence Verification Engine.
 Your role is to rigorously inspect uploaded chargeback evidence documents, extract verifiable facts, and determine whether the evidence genuinely substantiates the merchant's defense against the dispute.
 
 CRITICAL OPERATIONAL RULES:
@@ -724,8 +724,8 @@ CRITICAL REBUTTAL RULES:
 3. Context Construction
    Dispute Context (ID, reason, phase, amount, order status, fulfillment status) assembled.
 
-4. DeepSeek API Execution
-   PromptBuilder constructs JSON-mode message list -> POST to https://api.deepseek.com/chat/completions (temp=0.1, max_tokens=1500).
+4. Gemini API Execution
+   PromptBuilder constructs JSON-mode message list -> POST to https://api.Gemini.com/chat/completions (temp=0.1, max_tokens=1500).
 
 5. Response Parsing & Schema Validation
    ResponseParser strips potential markdown fences -> Validated against EvidenceAnalysisResultSchema.
@@ -849,7 +849,7 @@ The backend enforces explicit database indexes created via `_run_migrations`:
 | **Malicious File Uploads** | **IMPLEMENTED** | Strict file extension allowlist (`.pdf`, `.png`, `.jpg`, `.jpeg`, `.webp`, `.txt`, `.csv`, `.json`, `.doc`, `.docx`) and 15MB file size limit (`src/evidence/file_processor.py:29-33`). |
 | **Prompt Injection** | **PARTIAL** | `PromptBuilder.sanitize_context` strips internal keys and database fields; `ClaimEvidenceValidator` rejects any LLM claim unsupported by database facts. |
 | **CORS Configuration** | **IMPLEMENTED** | Explicitly restricted in `main.py:52-61` to `http://localhost:5173` and `http://127.0.0.1:5173`. |
-| **Secret Redaction** | **IMPLEMENTED** | Secrets loaded via `.env`; `DEEPSEEK_API_KEY` is not logged or exposed over API endpoints. |
+| **Secret Redaction** | **IMPLEMENTED** | Secrets loaded via `.env`; `Gemini_API_KEY` is not logged or exposed over API endpoints. |
 | **Rate Limiting** | **MISSING** | No rate-limiting middleware currently configured on FastAPI router. |
 | **Authentication / JWT** | **MISSING** | Endpoints are open to internal network clients without token verification. |
 
@@ -877,7 +877,7 @@ The backend implements a 4-tier exception handling architecture:
 4. Unhandled Exception:    Returns HTTP 500 with {"detail": "An internal server error occurred.", "error_code": "INTERNAL_SERVER_ERROR"}
 ```
 
-Domain-specific exceptions (`DeepSeekClientError`, `ValueError`) in routes are caught and converted to explicit HTTP status codes (HTTP 400 for bad parameters, HTTP 404 for missing records, HTTP 422 for unreadable evidence approval).
+Domain-specific exceptions (`GeminiClientError`, `ValueError`) in routes are caught and converted to explicit HTTP status codes (HTTP 400 for bad parameters, HTTP 404 for missing records, HTTP 422 for unreadable evidence approval).
 
 ---
 
@@ -886,7 +886,7 @@ Domain-specific exceptions (`DeepSeekClientError`, `ValueError`) in routes are c
 - **FastAPI Endpoints**: Standard routes are defined as synchronous `def` functions, allowing FastAPI/Starlette to execute them safely in an external threadpool without blocking the async event loop.
 - **Real-Time SSE Stream**: Implemented as an asynchronous generator `async def event_generator()` inside `async def event_stream_endpoint(request: Request)` utilizing `asyncio.Queue` and non-blocking `asyncio.wait_for`.
 - **Database Thread Safety**: SQLite engines configured with `connect_args={"check_same_thread": False}` allowing multi-threaded session access.
-- **DeepSeek API Calls**: Synchronous HTTP POST requests wrapped in `urllib.request.urlopen` with a strict 15-second timeout, ensuring worker threads are never hung indefinitely.
+- **Gemini API Calls**: Synchronous HTTP POST requests wrapped in `urllib.request.urlopen` with a strict 15-second timeout, ensuring worker threads are never hung indefinitely.
 
 ---
 
@@ -909,7 +909,7 @@ The `EventBroadcaster` singleton distributes real-time events across all active 
 - `DISPUTE_CREATED`: Fired on new dispute creation via API or webhook.
 - `DISPUTE_ANALYSIS_STARTED`: Fired when AI/ML pipeline starts.
 - `ML_ANALYSIS_COMPLETED`: Fired after Fraud V2 and Win Model predictions complete.
-- `DEEPSEEK_ANALYSIS_COMPLETED`: Fired after DeepSeek reasoning completes.
+- `Gemini_ANALYSIS_COMPLETED`: Fired after Gemini reasoning completes.
 - `DISPUTE_ANALYSIS_COMPLETED`: Fired with full snapshot.
 - `EVIDENCE_APPROVED`: Fired upon evidence sign-off.
 - `DISPUTE_STAGE_CHANGED`: Fired on stage advancement or submission.
@@ -930,7 +930,7 @@ The `EventBroadcaster` singleton distributes real-time events across all active 
 1. **API Routes & Database Integration**: `test_api_database.py`, `test_api_routes.py`, `test_api_integration_production.py`.
 2. **ML Models & Predictions**: `test_fraud_v2.py`, `test_fraud_v2_integration.py`, `test_models.py`, `test_evidence_approval_and_real_ml.py`.
 3. **Evidence Lifecycle & Factory**: `test_evidence_engine.py`, `test_evidence_ai_verification.py`, `test_backend_evidence_lifecycle_fix.py`.
-4. **DeepSeek AI & Fallback**: `test_deepseek_ai_service.py`, `test_ai_response.py`, `test_delivery_fabrication_fix.py`.
+4. **Gemini AI & Fallback**: `test_Gemini_ai_service.py`, `test_ai_response.py`, `test_delivery_fabrication_fix.py`.
 5. **Dispute Lifecycle & Gate**: `test_dispute_lifecycle.py`, `test_real_dispute_lifecycle_architecture.py`, `test_e2e_workflow.py`, `test_live_backend_e2e.py`.
 
 ---
@@ -958,10 +958,10 @@ Populated via `src/database/live_seed.py`:
 
 | Variable | Type | Default Value | Purpose | Source Location |
 |---|---|---|---|---|
-| `DEEPSEEK_API_KEY` | String | `""` | Secret API key for DeepSeek LLM. | `config/settings.py:72` |
-| `DEEPSEEK_BASE_URL` | String | `https://api.deepseek.com` | Base URL for DeepSeek OpenAI-compatible API. | `config/settings.py:73` |
-| `DEEPSEEK_MODEL` | String | `deepseek-chat` | Model name for chat completions. | `config/settings.py:74` |
-| `DEEPSEEK_TIMEOUT_SECONDS` | Integer | `15` | Request timeout in seconds for DeepSeek calls. | `config/settings.py:75` |
+| `Gemini_API_KEY` | String | `""` | Secret API key for Gemini LLM. | `config/settings.py:72` |
+| `Gemini_BASE_URL` | String | `https://api.Gemini.com` | Base URL for Gemini OpenAI-compatible API. | `config/settings.py:73` |
+| `Gemini_MODEL` | String | `Gemini-chat` | Model name for chat completions. | `config/settings.py:74` |
+| `Gemini_TIMEOUT_SECONDS` | Integer | `15` | Request timeout in seconds for Gemini calls. | `config/settings.py:75` |
 | `AI_CACHE_TTL_SECONDS` | Integer | `3600` | In-memory TTL cache duration in seconds. | `config/settings.py:76` |
 | `OLLAMA_URL` | String | `http://localhost:11434` | Base URL for local Ollama server. | `config/settings.py:78` |
 | `OLLAMA_DEFAULT_MODEL` | String | `llama3.2` | Model name for local Ollama analysis. | `config/settings.py:79` |
@@ -997,7 +997,7 @@ Populated via `src/database/live_seed.py`:
 
 1. **Sub-50ms Dispute Listing**: `GET /disputes` avoids eager-loading heavy evidence text BLOBs and aggregates metadata efficiently.
 2. **Eager Load on Detail**: `GET /disputes/{id}/command-center` executes in a single optimized joined query (`joinedload`), eliminating N+1 database queries.
-3. **AI Latency Isolation**: DeepSeek calls take ~1.2s to 2.5s; all results are persisted in `dispute_assessments` and `evidence.ai_analysis_json`. Subsequent page visits load instantly from the database.
+3. **AI Latency Isolation**: Gemini calls take ~1.2s to 2.5s; all results are persisted in `dispute_assessments` and `evidence.ai_analysis_json`. Subsequent page visits load instantly from the database.
 4. **Fast File Extraction**: Native PyPDF and Pillow in-memory byte buffer parsing executes in under 20ms for standard receipts.
 
 ---
@@ -1006,8 +1006,8 @@ Populated via `src/database/live_seed.py`:
 
 | Failure Mode | Detection Mechanism | Backend Behavior | Client / API Response | Recovery Action |
 |---|---|---|---|---|
-| **DeepSeek API Down / Timeout** | `urllib.error.HTTPError` or `TimeoutError` after 15s | `AIService` catches exception; routes to `FallbackGenerator`. | Returns valid JSON with `"is_fallback": true` and `"ai_source": "FALLBACK"`. | Normal operation resumes automatically when DeepSeek API recovers. |
-| **DeepSeek Unconfigured** | `DEEPSEEK_API_KEY` is empty string | Skips network call; executes deterministic rule fallbacks. | Returns valid rule-based explanation without error. | Add `DEEPSEEK_API_KEY` to `.env` file. |
+| **Gemini API Down / Timeout** | `urllib.error.HTTPError` or `TimeoutError` after 15s | `AIService` catches exception; routes to `FallbackGenerator`. | Returns valid JSON with `"is_fallback": true` and `"ai_source": "FALLBACK"`. | Normal operation resumes automatically when Gemini API recovers. |
+| **Gemini Unconfigured** | `Gemini_API_KEY` is empty string | Skips network call; executes deterministic rule fallbacks. | Returns valid rule-based explanation without error. | Add `Gemini_API_KEY` to `.env` file. |
 | **Database Unavailable** | `SQLAlchemyError` raised | Intercepted by `main.py` custom exception handler. | HTTP 400 Bad Request with sanitized `DATABASE_ERROR` message. | Check SQLite file permissions or restore DB file. |
 | **Corrupted / Invalid File Upload** | `EvidenceFileProcessor.validate_file` | File rejected; not saved to DB or storage. | HTTP 400 Bad Request with explanation of invalid format. | Merchant uploads valid PDF, PNG, or JPEG file. |
 | **Premature Submission Attempt** | `get_case_readiness_and_gate` check | Submission blocked by hard validation gate. | HTTP 400 Bad Request with detailed array of blocking issues. | Merchant resolves blockers (approves evidence, generates response). |
@@ -1020,7 +1020,7 @@ Populated via `src/database/live_seed.py`:
 ### Scenario: Live Dispute Ingestion, Evidence Verification, and Representment Submission
 
 1. **Gateway Webhook Ingestion**:
-   - `POST /webhooks/razorpay` with `transaction_id = "txn_8aK9pL2xM4v1wQ"`, `reason_code = "product_not_received"`.
+   - `POST /webhooks/Meridian` with `transaction_id = "txn_8aK9pL2xM4v1wQ"`, `reason_code = "product_not_received"`.
    - Webhook event stored with idempotency key; dispute `DSP_...` created in `live_database.db`.
    - `DISPUTE_CREATED` event broadcasted via SSE.
 2. **Initial Autonomous AI Analysis**:
@@ -1029,7 +1029,7 @@ Populated via `src/database/live_seed.py`:
 3. **Merchant Uploads Delivery Proof**:
    - Merchant posts PDF tracking receipt via `POST /disputes/{id}/evidence/upload`.
    - `EvidenceFileProcessor` extracts courier `Blue Dart`, tracking `BD772910456IN`, delivery status `DELIVERED`.
-   - DeepSeek verifies matching order timestamp and sets `verification_status = "VERIFIED"`.
+   - Gemini verifies matching order timestamp and sets `verification_status = "VERIFIED"`.
 4. **Merchant Approves Evidence**:
    - Merchant clicks approve: `POST /disputes/{id}/evidence/{evidence_id}/approve`.
    - `approval_status = "APPROVED"`; dispute stage advances to `MERCHANT_REVIEW`.
@@ -1083,7 +1083,7 @@ Populated via `src/database/live_seed.py`:
 | **Authentication** | Open API endpoints without JWT validation. | `main.py`, `src/api/routes/` | Anyone with network access can call endpoints. | Implement OAuth2 / JWT bearer token authentication. |
 | **Database Engine** | Embedded SQLite. | `src/database/database.py:34-35` | Write concurrency limited under extreme enterprise loads. | Migrate connection strings to PostgreSQL / MySQL for distributed deployment. |
 | **Image OCR** | Metadata extraction via Pillow (no deep OCR engine like Tesseract/EasyOCR). | `src/evidence/file_processor.py:107-123` | Scanned image receipts without embedded text cannot have raw text extracted. | Integrate `pytesseract` or AWS Textract for full optical character recognition. |
-| **Async Task Queue** | Synchronous worker thread execution via FastAPI threadpool. | `src/services/ai/deepseek_client.py` | Long LLM API calls hold an HTTP worker thread during request execution. | Integrate Celery / Redis background workers for asynchronous job dispatch. |
+| **Async Task Queue** | Synchronous worker thread execution via FastAPI threadpool. | `src/services/ai/Gemini_client.py` | Long LLM API calls hold an HTTP worker thread during request execution. | Integrate Celery / Redis background workers for asynchronous job dispatch. |
 
 ---
 
@@ -1102,10 +1102,10 @@ Populated via `src/database/live_seed.py`:
 |                                  RECOMMENDED FUTURE ARCHITECTURE                                 |
 +--------------------------------------------------------------------------------------------------+
 | 1. Distributed Database: PostgreSQL 16 with Row-Level Security (RLS) for multi-tenant isolation. |
-| 2. Asynchronous Queue: Celery + Redis for background DeepSeek AI verification and batch jobs.    |
+| 2. Asynchronous Queue: Celery + Redis for background Gemini AI verification and batch jobs.    |
 | 3. Optical Character Recognition: Tesseract OCR / AWS Textract for scanned physical receipts.    |
 | 4. Security & RBAC: OAuth2 JWT Token verification, granular merchant role permissions.           |
-| 5. Production Razorpay Gateway Webhook Verification: HMAC-SHA256 signature verification.         |
+| 5. Production Meridian Gateway Webhook Verification: HMAC-SHA256 signature verification.         |
 | 6. Containerization: Production Multi-stage Dockerfile and docker-compose orchestration.        |
 +--------------------------------------------------------------------------------------------------+
 ```
@@ -1118,19 +1118,19 @@ Populated via `src/database/live_seed.py`:
 1. **What is the backend's primary purpose?** To provide autonomous fraud risk scoring, evidence collection and verification, and formal chargeback representment defense generation for merchants.
 2. **What business problem does it solve?** Prevents merchant financial loss from chargebacks by automating evidence gathering, risk decisioning, and rebuttal drafting before deadlines elapse.
 3. **Who consumes it?** The RiskDesk merchant dashboard (React/Vite), webhook dispatchers, and automated risk CLI workflows.
-4. **What are its major modules?** API Router, Evidence Engine, Machine Learning Subsystem (Fraud V2 & Win Model), AI Language Layer (DeepSeek), Autopilot Engine, Database Repositories.
+4. **What are its major modules?** API Router, Evidence Engine, Machine Learning Subsystem (Fraud V2 & Win Model), AI Language Layer (Gemini), Autopilot Engine, Database Repositories.
 5. **What architectural pattern is used?** Layered service-repository architecture with pipeline orchestration and dependency injection.
 6. **What is the main entry point?** `main.py` (FastAPI `app` instance and CLI `main()` function).
 7. **How does startup work?** `lifespan()` initializes tables on Demo and Live SQLite databases, runs schema migrations, and populates seed data if empty.
 8. **What happens during shutdown?** Active SQLite sessions are closed cleanly by Python runtime garbage collection and connection teardown.
 9. **What are the main dependencies?** FastAPI, SQLAlchemy, Scikit-Learn, XGBoost, Joblib, PyPDF, Pillow, Pydantic.
-10. **What are the major external integrations?** DeepSeek OpenAI-compatible chat API (`https://api.deepseek.com`), optional local Ollama LLM (`http://localhost:11434`).
+10. **What are the major external integrations?** Gemini OpenAI-compatible chat API (`https://api.Gemini.com`), optional local Ollama LLM (`http://localhost:11434`).
 11. **What are the core domain objects?** Customer, Transaction, Payment, Order, Fulfillment, Dispute, DisputeEvent, Evidence, DisputeAssessment, ChargebackPackage, WebhookEvent.
 12. **What is the request lifecycle?** Client HTTP Request -> CORS / Exception Handlers -> Router -> Pydantic Validation -> Service / Pipeline Layer -> Repository -> SQLite Database -> JSON Response.
 13. **Where is business logic located?** In `src/pipeline/`, `src/services/`, `src/evidence/`, `src/actions/`, and `src/chargeback/`.
 14. **Where is validation performed?** Request level via Pydantic (`src/schemas/api_schemas.py`), feature level via `src/schemas/transaction_input.py`, post-LLM level via `src/response/validator.py`.
 15. **Where is persistence performed?** Exclusively in `src/database/repository.py` using SQLAlchemy ORM sessions.
-16. **Where are external API calls performed?** `src/services/ai/deepseek_client.py` and `src/components/contradiction.py`.
+16. **Where are external API calls performed?** `src/services/ai/Gemini_client.py` and `src/components/contradiction.py`.
 17. **What parts are synchronous?** File extraction, database queries, ML model inferences, and HTTP API call handlers.
 18. **What parts are asynchronous?** FastAPI ASGI request loop and Server-Sent Events broadcaster (`/events`).
 19. **Are background jobs used?** BackgroundTasks supported in FastAPI; currently operations execute deterministically within the pipeline service.
@@ -1181,11 +1181,11 @@ Populated via `src/database/live_seed.py`:
 60. **How are statuses persisted?** In string enum columns (`status`, `phase`, `workflow_stage`, `verification_status`, `approval_status`).
 
 ### AI / ML
-61. **Is DeepSeek actually integrated?** Yes, via `DeepSeekClient` in `src/services/ai/deepseek_client.py`.
-62. **Which DeepSeek model is used?** `deepseek-chat`.
+61. **Is Gemini actually integrated?** Yes, via `GeminiClient` in `src/services/ai/Gemini_client.py`.
+62. **Which Gemini model is used?** `Gemini-chat`.
 63. **Where is the AI client initialized?** In `AIService`, `EvidenceAnalysisService`, and `AIResponseGenerator`.
-64. **Where is the actual API request made?** In `DeepSeekClient.chat_completion()` via HTTP POST.
-65. **What evidence content reaches DeepSeek?** Up to 8,000 characters of extracted text and structured key entities.
+64. **Where is the actual API request made?** In `GeminiClient.chat_completion()` via HTTP POST.
+65. **What evidence content reaches Gemini?** Up to 8,000 characters of extracted text and structured key entities.
 66. **Is evidence metadata sent?** Yes, filename, MIME type, file size, and evidence type.
 67. **Is full extracted text sent?** Yes, complete parsed document text is provided in the prompt.
 68. **How are PDFs processed?** Page-by-page text extraction via `pypdf.PdfReader`.
@@ -1240,17 +1240,17 @@ Populated via `src/database/live_seed.py`:
 115. **Are sensitive files access-controlled?** Files stored in `data/uploads/` are not directly exposed without routing.
 
 ### Reliability / Performance / Deployment
-116. **What are the main performance bottlenecks?** External DeepSeek API latency (1.5s-2.5s) if un-cached.
-117. **What is the slowest API path?** First-time file upload with un-cached DeepSeek verification (~2.0s).
+116. **What are the main performance bottlenecks?** External Gemini API latency (1.5s-2.5s) if un-cached.
+117. **What is the slowest API path?** First-time file upload with un-cached Gemini verification (~2.0s).
 118. **What operations block requests?** None on the async event loop; synchronous tasks run in worker threads.
-119. **What happens if DeepSeek is down?** System automatically falls back to deterministic rule generators.
+119. **What happens if Gemini is down?** System automatically falls back to deterministic rule generators.
 120. **What happens if the database is down?** Intercepted by exception handler, returning sanitized HTTP 400.
 121. **What happens if evidence extraction fails?** Evidence marked as `UNREADABLE`, blocker raised for merchant.
 122. **What happens if AI output parsing fails?** ResponseParser triggers fallback generation seamlessly.
 123. **Are health checks implemented?** Yes, `/health` and `/ml/model-health`.
 124. **What logging exists?** Structured logging across routers, services, engines, and repositories.
 125. **How is the backend deployed?** Via Uvicorn ASGI server on Python 3.11+.
-126. **What environment variables are required?** `DEEPSEEK_API_KEY` (optional for live AI, falls back cleanly).
+126. **What environment variables are required?** `Gemini_API_KEY` (optional for live AI, falls back cleanly).
 127. **What is the production startup command?** `uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4`.
 128. **Are Dockerfiles present?** Not verified in backend source (planned).
 129. **Are migrations automatically applied?** Yes, executed during application startup in `init_db()`.
@@ -1263,13 +1263,13 @@ Populated via `src/database/live_seed.py`:
 | Topic / Component | Source File Path | Primary Classes / Functions | Verification Status |
 |---|---|---|---|
 | **Entry Point & Startup** | `main.py` | `lifespan`, `app`, `main` | IMPLEMENTED |
-| **Global Settings** | `config/settings.py` | `DisputeReason`, `RazorpayDisputeStatus`, `InternalWorkflowStage` | IMPLEMENTED |
+| **Global Settings** | `config/settings.py` | `DisputeReason`, `MeridianDisputeStatus`, `InternalWorkflowStage` | IMPLEMENTED |
 | **Database Schema** | `src/database/models.py` | `Customer`, `Transaction`, `Payment`, `Order`, `Fulfillment`, `Dispute`, `Evidence`, `DisputeAssessment` | IMPLEMENTED |
 | **Database Engine** | `src/database/database.py` | `init_db`, `_run_migrations`, `get_db`, `resolve_database_mode` | IMPLEMENTED |
 | **Data Repositories** | `src/database/repository.py` | `create_dispute`, `get_all_disputes`, `get_case_readiness_and_gate`, `submit_dispute_package` | IMPLEMENTED |
 | **Dispute Routes** | `src/api/routes/disputes.py` | `list_disputes_endpoint`, `get_dispute_case_analysis_endpoint`, `submit_dispute_endpoint` | IMPLEMENTED |
 | **Evidence Routes** | `src/api/routes/evidence.py` | `upload_dispute_evidence_file_endpoint`, `approve_dispute_evidence_endpoint`, `verify_dispute_evidence_ai_endpoint` | IMPLEMENTED |
-| **Webhook Routes** | `src/api/routes/webhooks.py` | `handle_razorpay_webhook_endpoint`, `list_live_webhook_transactions` | IMPLEMENTED |
+| **Webhook Routes** | `src/api/routes/webhooks.py` | `handle_Meridian_webhook_endpoint`, `list_live_webhook_transactions` | IMPLEMENTED |
 | **Real-time SSE** | `src/api/routes/events.py` | `EventBroadcaster`, `publish_realtime_event`, `event_stream_endpoint` | IMPLEMENTED |
 | **Analysis Pipeline** | `src/pipeline/analysis_service.py` | `analyze_dispute`, `determine_ml_recommendation`, `compute_deterministic_confidence` | IMPLEMENTED |
 | **AI Autopilot** | `src/pipeline/autopilot.py` | `AIAutopilot.reassess_dispute`, `compute_attention_state` | IMPLEMENTED |
@@ -1278,7 +1278,7 @@ Populated via `src/database/live_seed.py`:
 | **Evidence Engine** | `src/evidence/engine.py` | `EvidenceEngine.evaluate_dispute_evidence` | IMPLEMENTED |
 | **File Processing** | `src/evidence/file_processor.py` | `EvidenceFileProcessor.process_and_analyze`, `extract_content` | IMPLEMENTED |
 | **Evidence Factory** | `src/evidence/evidence_factory.py` | `EvidenceFactory.create_evidence_for_dispute` | IMPLEMENTED |
-| **DeepSeek Client** | `src/services/ai/deepseek_client.py`| `DeepSeekClient.chat_completion`, `is_available` | IMPLEMENTED |
+| **Gemini Client** | `src/services/ai/Gemini_client.py`| `GeminiClient.chat_completion`, `is_available` | IMPLEMENTED |
 | **AI Prompt Builder** | `src/services/ai/prompt_builder.py` | `PromptBuilder.build_evidence_analysis_prompt`, `build_response_draft_prompt` | IMPLEMENTED |
 | **AI Verification** | `src/services/ai/evidence_analysis_service.py` | `EvidenceAnalysisService.analyze_evidence`, `compute_content_hash` | IMPLEMENTED |
 | **AI Cache** | `src/services/ai/cache.py` | `AICacheManager.get`, `set`, `invalidate_dispute` | IMPLEMENTED |

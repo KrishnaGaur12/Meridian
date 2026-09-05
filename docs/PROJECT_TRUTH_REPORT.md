@@ -1,4 +1,4 @@
-# RAZORPAY AI RISK MANAGER — PROJECT TRUTH REPORT
+# Meridian AI RISK MANAGER — PROJECT TRUTH REPORT
 
 **Status:** FORENSIC SOURCE-CODE LEVEL AUDIT
 **Date:** September 2, 2026
@@ -38,13 +38,13 @@
 ✅ **Evidence Retrieval** — Can fetch evidence by ID and dispute ID
 ✅ **File Validation** — MIME type checking present in file processor
 
-### DeepSeek Integration
-✅ **API Client** — DeepSeekClient connects to deepseek-chat API
+### Gemini Integration
+✅ **API Client** — GeminiClient connects to Gemini-chat API
 ✅ **Request Formatting** — Properly constructs chat completions requests
 ✅ **JSON Mode** — Requests JSON-formatted responses
 ✅ **Timeout Handling** — 30-second timeout configured, enforced
 ✅ **Error Handling** — Gracefully handles API failures (returns None)
-✅ **Fallback Logic** — System continues if DeepSeek unavailable
+✅ **Fallback Logic** — System continues if Gemini unavailable
 
 ### API Endpoints
 ✅ **GET /disputes** — Returns list of disputes with filtering, pagination working
@@ -71,7 +71,7 @@
 ## 2. WHAT IS PARTIALLY WORKING ⚠️
 
 ### Evidence Analysis Pipeline
-⚠️ **DeepSeek Integration** — Works IF API key configured AND API available
+⚠️ **Gemini Integration** — Works IF API key configured AND API available
    - If API key missing: silently returns None
    - If API unavailable: falls back gracefully but no analysis produced
    - If response malformed: JSON parsing may fail
@@ -82,7 +82,7 @@
    - Scanned PDFs: Likely fails (requires Tesseract or similar)
    - ACTUAL STATUS: Text extraction only, no OCR
 
-⚠️ **AI Evidence Analysis** — Functional IF DeepSeek available
+⚠️ **AI Evidence Analysis** — Functional IF Gemini available
    - Prompt injection defense: [CLAIMS defensive design but UNTESTED]
    - Hallucination prevention: [IMPLEMENTED via grounding but UNVERIFIED]
    - JSON validation: [Schema validation present but error recovery incomplete]
@@ -110,7 +110,7 @@
 
 ### Error Recovery
 ⚠️ **Fallback Mechanisms** — Partial implementation
-   - DeepSeek fallback: Returns None (handled)
+   - Gemini fallback: Returns None (handled)
    - Database errors: Logged but may cascade
    - File processing failures: Basic error handling
    - Timeout handling: Implemented but incomplete retry logic
@@ -120,10 +120,10 @@
 
 ## 3. WHAT IS NOT WORKING ❌
 
-### Live Razorpay Integration
+### Live Meridian Integration
 ❌ **Real Webhook Handling** — Webhook endpoints exist but expect simulated data
-   - Razorpay credentials: Not configured (demo only)
-   - Real dispute data: No connection to live Razorpay API
+   - Meridian credentials: Not configured (demo only)
+   - Real dispute data: No connection to live Meridian API
    - Two-way sync: Not implemented
    - ACTUAL STATUS: Simulated/demo mode only
 
@@ -170,7 +170,7 @@
 ### Claim: "AI Analyzes Evidence for Completeness"
 **Status:** [PARTIALLY VERIFIED]
 **Evidence:** 
-- DeepSeekClient implemented ✓
+- GeminiClient implemented ✓
 - Prompt construction present ✓
 - But: Only works IF API key configured AND API available
 - Real execution: Requires actual test with real evidence
@@ -291,8 +291,8 @@ Could be extracted from model artifacts if requested.
 
 ## 6. ACTUAL AI METRICS
 
-### DeepSeek Integration
-**Model:** deepseek-chat
+### Gemini Integration
+**Model:** Gemini-chat
 
 **Configuration:**
 - Temperature: 0.2 (low randomness) ✓
@@ -324,9 +324,9 @@ Could be extracted from model artifacts if requested.
 |-----------|-----------|---------|---------|
 | GET /disputes | 50-100ms | 50-2000ms | Large dataset may be slow |
 | GET /disputes/{id} | 10-20ms | 10-50ms | Single query, fast |
-| POST /disputes/{id}/evidence | 1000-3000ms | 500-30000ms | Includes DeepSeek call |
+| POST /disputes/{id}/evidence | 1000-3000ms | 500-30000ms | Includes Gemini call |
 | GET /disputes/{id}/analysis | 2000-5000ms | 2000-30000ms | Full analysis pipeline |
-| POST /ai/analyze-evidence | 1000-3000ms | 500-30000ms | DeepSeek API bound |
+| POST /ai/analyze-evidence | 1000-3000ms | 500-30000ms | Gemini API bound |
 
 **Notes:**
 - No production load testing performed
@@ -352,7 +352,7 @@ Could be extracted from model artifacts if requested.
 - **File Type Validation** — MIME type checking present
 - **Error Sanitization** — Stack traces not exposed to clients
 - **Database Error Handling** — Generic error messages
-- **Timeout Protection** — DeepSeek request timeout (30s)
+- **Timeout Protection** — Gemini request timeout (30s)
 - **File Size Limits** — [Configured but value not verified]
 
 ### ⚠️ Partially Implemented
@@ -403,7 +403,7 @@ Could be extracted from model artifacts if requested.
 ### Bug #2: Evidence Analysis Inconsistency
 **Severity:** MEDIUM
 **Status:** PARTIAL FIX
-**Description:** DeepSeek may return different analyses for same evidence
+**Description:** Gemini may return different analyses for same evidence
 **Suspected Cause:** Temperature=0.2 still allows some variation + API stochasticity
 **Impact:** Non-deterministic results, cached vs fresh analysis inconsistency
 **Fix:** Implement caching, use temperature=0 if determinism required
@@ -418,7 +418,7 @@ Could be extracted from model artifacts if requested.
 ### Bug #4: Fallback Returns None for Evidence Analysis
 **Severity:** MEDIUM
 **Status:** PARTIAL
-**Description:** If DeepSeek unavailable, evidence analysis returns None
+**Description:** If Gemini unavailable, evidence analysis returns None
 **Impact:** Merchants get no guidance on evidence quality
 **Fix:** Implement rule-based fallback analysis
 
@@ -464,7 +464,7 @@ Could be extracted from model artifacts if requested.
 1. **Complete End-to-End System** — From dispute creation to submission
 2. **ML + AI Hybrid Approach** — Combines fraud detection + LLM analysis
 3. **Proper Software Architecture** — Clean separation: API → Service → Repository → ORM
-4. **Real-World Problem** — Solves actual Razorpay merchant pain point
+4. **Real-World Problem** — Solves actual Meridian merchant pain point
 5. **Production-Ready Code Structure** — Follows FastAPI best practices
 6. **Defensive AI Design** — Attempts to prevent hallucination
 7. **Comprehensive Database Schema** — Well-designed ORM models with relationships
@@ -477,7 +477,7 @@ Could be extracted from model artifacts if requested.
 ## 12. BIGGEST BUILDATHON WEAKNESSES 😟
 
 1. **Unverified Metrics** — Claims metrics without proof
-2. **No Live Razorpay Integration** — Demo/simulated only
+2. **No Live Meridian Integration** — Demo/simulated only
 3. **Performance Issues** — Dispute listing is slow
 4. **Missing OCR** — Claims image support, no OCR library
 5. **Limited Testing** — No frontend tests, coverage unknown
@@ -495,12 +495,12 @@ Could be extracted from model artifacts if requested.
 1. **Verify ML metrics** — Generate actual evaluation metrics for fraud and win models
 2. **Fix dispute loading** — Optimize database queries for performance
 3. **Add OCR** — Implement image text extraction (pytesseract)
-4. **Live Razorpay integration** — Connect to real Razorpay API (at least read-only)
+4. **Live Meridian integration** — Connect to real Meridian API (at least read-only)
 5. **API rate limiting** — Prevent abuse, protect system
 
 ### Priority 2 (Should Fix)
 6. **Frontend tests** — Add React component tests (>80% coverage)
-7. **Evidence analysis fallback** — Implement rule-based analysis when DeepSeek unavailable
+7. **Evidence analysis fallback** — Implement rule-based analysis when Gemini unavailable
 8. **Security: Authentication** — Add merchant authentication (OAuth or JWT)
 9. **Performance testing** — Load test with 1000+ disputes
 10. **Deployment configuration** — Create Docker + production setup guide
@@ -512,7 +512,7 @@ Could be extracted from model artifacts if requested.
 1. **Dashboard Overview** — Dispute list with fraud risk indicators
 2. **Dispute Case Details** — Multi-tab case view with timeline
 3. **Evidence Upload** — Upload PDF/image, show extraction
-4. **Live AI Analysis** — Trigger DeepSeek analysis, show JSON output
+4. **Live AI Analysis** — Trigger Gemini analysis, show JSON output
 5. **Evidence Completeness** — Show AI-detected gaps in evidence
 6. **Contradiction Detection** — Show example of contradictory evidence detected
 7. **Win Probability** — Display win prediction before submission
@@ -528,7 +528,7 @@ Could be extracted from model artifacts if requested.
 1. **Q: How does the system handle thousands of disputes simultaneously?**
    A: [NOT TESTED] Pagination implemented but scalability unproven. No horizontal scaling or caching.
 
-2. **Q: What happens when DeepSeek API is unavailable?**
+2. **Q: What happens when Gemini API is unavailable?**
    A: System falls back gracefully, returns None. Merchants get no AI guidance in that case.
 
 3. **Q: How are disputes prioritized for analysis?**
@@ -551,10 +551,10 @@ Could be extracted from model artifacts if requested.
    A: [NOT MEASURED] No confusion matrix or FPR metric available.
 
 ### Integration Questions
-9. **Q: How does this integrate with real Razorpay API?**
+9. **Q: How does this integrate with real Meridian API?**
    A: [SIMULATED ONLY] Webhook endpoints exist but expect demo data. No real integration.
 
-10. **Q: What data comes from real Razorpay vs simulated?**
+10. **Q: What data comes from real Meridian vs simulated?**
     A: 100% simulated. Demo scenarios stored in JSON files.
 
 ### Security Questions
@@ -566,7 +566,7 @@ Could be extracted from model artifacts if requested.
 
 ### Performance Questions
 13. **Q: What's the typical evidence analysis latency?**
-    A: 2-5 seconds including DeepSeek API call. Depends on API availability.
+    A: 2-5 seconds including Gemini API call. Depends on API availability.
 
 14. **Q: How do you handle concurrent evidence uploads?**
     A: [UNTESTED] SQLAlchemy connection pooling handles concurrency but not load-tested.
@@ -587,7 +587,7 @@ Could be extracted from model artifacts if requested.
 
 ### Business Questions
 19. **Q: What's the cost of running this system?**
-    A: DeepSeek API costs + server infrastructure. No cost analysis provided.
+    A: Gemini API costs + server infrastructure. No cost analysis provided.
 
 20. **Q: How many merchants can you support?**
     A: [UNTESTED] Theoretical limit depends on servers. No capacity analysis.
@@ -636,11 +636,11 @@ Could be extracted from model artifacts if requested.
 ✅ Complete end-to-end system from dispute to submission
 ✅ Proper FastAPI/React architecture
 ✅ ML models load and infer
-✅ DeepSeek LLM integration present
+✅ Gemini LLM integration present
 ✅ Database schema well-designed
 
 ### What Doesn't Work
-❌ Live Razorpay integration (demo only)
+❌ Live Meridian integration (demo only)
 ❌ No OCR for images
 ❌ Dispute loading slow under load
 ❌ No authentication/authorization

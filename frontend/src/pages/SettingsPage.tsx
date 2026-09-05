@@ -67,12 +67,12 @@ export const SettingsPage: React.FC = () => {
                   <label className="block text-xs font-medium text-slate-700 mb-1">Merchant Business Name</label>
                   <input
                     type="text"
-                    defaultValue="Acme Store"
+                    defaultValue="Nexus Electronics"
                     className="w-full text-xs bg-slate-50 border border-slate-200 rounded-lg p-2.5 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 text-slate-900 font-medium"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-slate-700 mb-1">Merchant ID (Razorpay MID)</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1">Merchant ID (Gateway MID)</label>
                   <input
                     type="text"
                     readOnly
@@ -84,7 +84,7 @@ export const SettingsPage: React.FC = () => {
                   <label className="block text-xs font-medium text-slate-700 mb-1">Support Email</label>
                   <input
                     type="email"
-                    defaultValue="disputes@acmestore.com"
+                    defaultValue="disputes@nexuselectronics.com"
                     className="w-full text-xs bg-slate-50 border border-slate-200 rounded-lg p-2.5 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 text-slate-900"
                   />
                 </div>
@@ -137,7 +137,7 @@ export const SettingsPage: React.FC = () => {
                   <input type="checkbox" defaultChecked className="mt-0.5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
                   <div>
                     <span className="font-medium text-slate-900 block">Human-in-the-Loop Approval Gate</span>
-                    <span className="text-slate-500 text-[11px]">Require explicit merchant review and confirmation before final submission to Razorpay.</span>
+                    <span className="text-slate-500 text-[11px]">Require explicit merchant review and confirmation before final submission to Gateway.</span>
                   </div>
                 </label>
               </div>
@@ -193,7 +193,7 @@ export const SettingsPage: React.FC = () => {
                 {[
                   { name: 'FedEx / Blue Dart Tracking API', status: 'Connected', desc: 'Auto-fetches recipient signature and timestamp proof' },
                   { name: 'Shopify / WooCommerce Order Sync', status: 'Connected', desc: 'Synchronizes order details, customer IP, and billing info' },
-                  { name: 'Razorpay Payment Gateway Webhook', status: 'Active (Live)', desc: 'Listens for real-time chargeback events and lifecycle transitions' },
+                  { name: 'Primary Payment Gateway Webhook', status: 'Active (Live)', desc: 'Listens for real-time chargeback events and lifecycle transitions' },
                 ].map((item, idx) => (
                   <div key={idx} className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center justify-between">
                     <div>

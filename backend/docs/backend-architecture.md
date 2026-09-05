@@ -2,12 +2,12 @@
 
 ## 1. Architectural Overview
 
-The **Razorpay AI Risk Manager** backend is structured around a decoupled, 6-layer architecture designed for high availability, deterministic risk analysis, and anti-hallucinatory AI defense generation.
+The **Meridian AI Risk Manager** backend is structured around a decoupled, 6-layer architecture designed for high availability, deterministic risk analysis, and anti-hallucinatory AI defense generation.
 
 ```
 +-------------------------------------------------------------------------------+
 |                            1. CLIENT & INTEGRATION                            |
-|  - RiskDesk Dashboard (Vite/React)       - Razorpay Gateway Webhooks (HTTP)  |
+|  - RiskDesk Dashboard (Vite/React)       - Meridian Gateway Webhooks (HTTP)  |
 |  - CLI Interface (main.py)               - Real-Time SSE Stream (/events)     |
 +-------------------------------------------------------------------------------+
                                         │
@@ -41,7 +41,7 @@ The **Razorpay AI Risk Manager** backend is structured around a decoupled, 6-lay
 |  5a. ML / AI ENGINES  |       | 5b. EVIDENCE PIPELINE |
 | - XGBoost Fraud V2    |       | - PyPDF Text Parser   |
 | - Win Model (RF-150)  |       | - Pillow Metadata     |
-| - DeepSeek LLM Client |       | - Fact Extractor      |
+| - Gemini LLM Client |       | - Fact Extractor      |
 | - Fallback Heuristics |       | - SHA-256 Hasher      |
 +-----------------------+       +-----------------------+
                     │                       │
@@ -68,7 +68,7 @@ The **Razorpay AI Risk Manager** backend is structured around a decoupled, 6-lay
   - `transactions.py` & `risk.py`: Transaction creation, retrieval, and risk scoring.
   - `disputes.py`: Dispute CRUD, timeline retrieval, readiness gate calculation, and submission.
   - `evidence.py`: Evidence uploading, parsing, verification, editing, replacing, approving, and deleting.
-  - `webhooks.py`: Real-time Razorpay webhook ingestion with idempotency.
+  - `webhooks.py`: Real-time Meridian webhook ingestion with idempotency.
   - `events.py`: Server-Sent Events (SSE) broadcaster.
   - `package.py` & `response.py`: Chargeback representment bundle generation.
   - `demo.py`: Demo scenario dispute simulation.
@@ -90,7 +90,7 @@ The **Razorpay AI Risk Manager** backend is structured around a decoupled, 6-lay
 ### 2.4 AI Language & Verification Subsystem
 - **Location**: `src/services/ai/`, `src/response/`
 - **Key Symbols**:
-  - `src.services.ai.deepseek_client.DeepSeekClient`: Timeout-bounded HTTP client for DeepSeek OpenAI-compatible chat completions.
+  - `src.services.ai.Gemini_client.GeminiClient`: Timeout-bounded HTTP client for Gemini OpenAI-compatible chat completions.
   - `src.services.ai.prompt_builder.PromptBuilder`: Constructs anti-hallucination prompts injecting parsed document text and dispute context.
   - `src.services.ai.evidence_analysis_service.EvidenceAnalysisService`: Evaluates evidence authenticity, relevance, and fact-matching.
   - `src.response.validator.ClaimEvidenceValidator`: Post-LLM verification gate that rejects any generated claim not backed by verified database evidence.

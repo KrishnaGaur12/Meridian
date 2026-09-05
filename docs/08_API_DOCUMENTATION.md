@@ -39,7 +39,7 @@ Request: GET /system/status
 Response: 200 OK
   {
     "mode": "demo",  // or "production"
-    "deepseek_enabled": true,
+    "Gemini_enabled": true,
     "ml_models_loaded": true,
     "database_status": "connected",
     "version": "2.0.0"
@@ -52,7 +52,7 @@ Configuration details
 Request: GET /system/config?include_api_keys=false
 Response: 200 OK
   {
-    "deepseek_model": "deepseek-chat",
+    "Gemini_model": "Gemini-chat",
     "fraud_model": "fraud_v2_pipeline.joblib",
     "win_model": "win_pipeline.joblib",
     "features": ["fraud_detection", "evidence_analysis", "win_probability"]
@@ -74,7 +74,7 @@ Query Params:
   - offset (int): skip N items
   - status (str): OPEN, UNDER_REVIEW, WON, LOST, CLOSED
   - workflow_stage (str): DISPUTE_RAISED, EVIDENCE_COLLECTION, AI_ANALYSIS, MERCHANT_REVIEW, SUBMITTED
-  - case_source (str): DEMO, SIMULATED_RAZORPAY, REAL_RAZORPAY
+  - case_source (str): DEMO, SIMULATED_Meridian, REAL_Meridian
   - merchant_attention_state (str): ACTION_REQUIRED, REVIEW_RECOMMENDED, AI_HANDLING, WAITING
   - search (str): search by dispute_id or transaction_id
 
@@ -121,7 +121,7 @@ Body: DisputeCreateSchema
     "reason_code": "chargeback",
     "reason_description": "Customer claims unauthorized transaction",
     "respond_by": "2026-09-09T10:00:00Z",
-    "case_source": "SIMULATED_RAZORPAY"
+    "case_source": "SIMULATED_Meridian"
   }
 
 Response: 201 Created - DisputeResponseSchema
@@ -156,7 +156,7 @@ Response: 200 OK - Array[DisputeTimelineEventSchema]
       "event_id": "EVT_001",
       "timestamp": "2026-09-02T10:00:00Z",
       "event_type": "DISPUTE_CREATED",
-      "title": "Dispute raised by Razorpay",
+      "title": "Dispute raised by Meridian",
       "description": "New chargeback dispute created",
       "actor_type": "SYSTEM",
       "previous_stage": null,
@@ -204,10 +204,10 @@ Status Codes:
 
 IMPORTANT: This endpoint triggers:
 1. Full fraud model evaluation
-2. DeepSeek LLM evidence analysis
+2. Gemini LLM evidence analysis
 3. Win probability calculation
 4. ML model consensus check
-May take 3-5 seconds if DeepSeek API involved
+May take 3-5 seconds if Gemini API involved
 ```
 
 #### POST /disputes/{dispute_id}/transition
@@ -264,7 +264,7 @@ Status Codes:
 ```
 
 #### POST /disputes/{dispute_id}/submit
-Submit dispute to Razorpay
+Submit dispute to Meridian
 ```
 Request: POST /disputes/{dispute_id}/submit
 Body: DisputeSubmitRequestSchema (optional)
@@ -350,7 +350,7 @@ Response: 200 OK - EvidenceDetailSchema
 Triggers:
   1. File extraction (PyPDF for PDF, OCR for images)
   2. Text extraction and storage
-  3. DeepSeek LLM analysis (async or background)
+  3. Gemini LLM analysis (async or background)
   4. Dispute assessment recalculation
 
 Status Codes:
@@ -509,7 +509,7 @@ Status Codes:
 ### 5. AI & RECOMMENDATION ENDPOINTS
 
 #### POST /ai/analyze-evidence
-Analyze evidence with DeepSeek
+Analyze evidence with Gemini
 ```
 Request: POST /ai/analyze-evidence
 Body:
@@ -536,11 +536,11 @@ Response: 200 OK - EvidenceAnalysisResultSchema
 Status Codes:
   - 200: Success
   - 400: Invalid input
-  - 503: DeepSeek unavailable (fallback response)
+  - 503: Gemini unavailable (fallback response)
   - 500: Server error
 
 Performance:
-  - Typical: 1-3 seconds (if DeepSeek available)
+  - Typical: 1-3 seconds (if Gemini available)
   - Fallback: <100ms (rule-based analysis)
 ```
 
@@ -684,7 +684,7 @@ Status Codes:
 - **404:** Not Found - Resource doesn't exist
 - **422:** Unprocessable Entity - Validation error
 - **500:** Internal Server Error - Server error
-- **503:** Service Unavailable - External service down (e.g., DeepSeek)
+- **503:** Service Unavailable - External service down (e.g., Gemini)
 
 ---
 
@@ -693,10 +693,10 @@ Status Codes:
 | Endpoint | Typical Latency | Max Latency | Notes |
 |----------|-----------------|-------------|-------|
 | GET /disputes | 50-200ms | 2000ms | May slow with large result sets |
-| GET /disputes/{id}/analysis | 2000-5000ms | 30000ms | Includes DeepSeek LLM call |
+| GET /disputes/{id}/analysis | 2000-5000ms | 30000ms | Includes Gemini LLM call |
 | POST /disputes/{id}/evidence | 500-2000ms | 35000ms | Includes file processing + AI analysis |
 | GET /transactions/{id}/risk | 10-50ms | 500ms | Fast model inference |
-| POST /ai/analyze-evidence | 1000-3000ms | 30000ms | DeepSeek API dependent |
+| POST /ai/analyze-evidence | 1000-3000ms | 30000ms | Gemini API dependent |
 
 ---
 

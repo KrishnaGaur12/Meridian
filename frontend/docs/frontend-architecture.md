@@ -1,7 +1,7 @@
 # Frontend Architecture Specification
 
 ## 1. System Overview
-The **Razorpay AI Risk Manager Frontend** is a Single-Page Application (SPA) constructed using **React 19**, **TypeScript 5.7**, **Vite 6**, and **Tailwind CSS v4**. It interfaces with a Python FastAPI backend over RESTful HTTP endpoints and an asynchronous Server-Sent Events (SSE) stream.
+The **Meridian AI Risk Manager Frontend** is a Single-Page Application (SPA) constructed using **React 19**, **TypeScript 5.7**, **Vite 6**, and **Tailwind CSS v4**. It interfaces with a Python FastAPI backend over RESTful HTTP endpoints and an asynchronous Server-Sent Events (SSE) stream.
 
 ---
 
@@ -33,7 +33,7 @@ The **Razorpay AI Risk Manager Frontend** is a Single-Page Application (SPA) con
   [<AppLayout />] (Shell)                    [Standalone Webhook Portal]
          │                                               │
    ┌─────┴───────────────┐                               ▼
-   ▼                     ▼                   [RazorpayWebhookPage (/webhooks)]
+   ▼                     ▼                   [MeridianWebhookPage (/webhooks)]
 [<Sidebar />]      [<Header />]
    │               (Mode Toggle, Search)
    │                     │
@@ -51,7 +51,7 @@ Dashboard  Disputes     DisputeDetail     History
            CaseOverviewTab    CaseMerchantControlCenter
                    │                     │
                    ▼                     ▼
-           CaseRazorpayReview     CaseOutcomeTab
+           CaseMeridianReview     CaseOutcomeTab
 ```
 
 ---
@@ -75,7 +75,7 @@ src/
 │   ├── DisputeDetailPage.tsx # Workspace Route Controller
 │   ├── HistoryPage.tsx       # Resolved Archives
 │   ├── SettingsPage.tsx      # Merchant Preferences
-│   └── RazorpayWebhookPage.tsx # Standalone Webhook Simulator
+│   └── MeridianWebhookPage.tsx # Standalone Webhook Simulator
 ├── services/
 │   ├── api.ts                # Axios Client Instance
 │   ├── cacheService.ts       # In-Memory Cache with TTL & Deduplication
@@ -107,5 +107,5 @@ Instead of executing 6 separate HTTP requests on the dispute detail page, the fr
 - Mutation methods (`uploadEvidenceFile`, `approveEvidence`, `submitDispute`) execute targeted prefix invalidation.
 
 ### 4.3 Real-Time SSE Synchronization (`useRealtimeEvents.ts`)
-- Automatically listens to backend events (`DISPUTE_CREATED`, `ML_ANALYSIS_COMPLETED`, `DEEPSEEK_ANALYSIS_COMPLETED`, `EVIDENCE_APPROVED`).
+- Automatically listens to backend events (`DISPUTE_CREATED`, `ML_ANALYSIS_COMPLETED`, `Gemini_ANALYSIS_COMPLETED`, `EVIDENCE_APPROVED`).
 - Re-fetches current workspace silently without triggering loading spinners or blocking user interaction.

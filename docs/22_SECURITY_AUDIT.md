@@ -1,4 +1,4 @@
-# SECURITY AUDIT — RAZORPAY AI RISK MANAGER
+# SECURITY AUDIT — Meridian AI RISK MANAGER
 
 **Audit Type:** DEFENSIVE SECURITY REVIEW (No offensive testing)
 **Date:** September 2, 2026
@@ -221,7 +221,7 @@ async def list_disputes(merchant_id: str = Depends(get_current_merchant)):
 ### Risk
 - No API abuse protection
 - No DoS protection
-- DeepSeek API calls not rate-limited
+- Gemini API calls not rate-limited
 
 ### Recommended Implementation
 ```python
@@ -241,7 +241,7 @@ async def list_disputes(request: Request):
 - **GET /disputes:** 100/minute
 - **POST /disputes:** 20/minute
 - **POST /disputes/{id}/evidence:** 10/minute
-- **POST /ai/analyze-evidence:** 5/minute (DeepSeek expensive)
+- **POST /ai/analyze-evidence:** 5/minute (Gemini expensive)
 
 ### Verdict: ❌ **MISSING** - Important for production
 
@@ -252,14 +252,14 @@ async def list_disputes(request: Request):
 ### Current Implementation
 ```python
 # config/settings.py
-DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "")
+Gemini_API_KEY = os.getenv("Gemini_API_KEY", "")
 
 # If not set in env, fallback to empty string
-# Then in deepseek_client.py:
+# Then in Gemini_client.py:
 if api_key is not None:
     self.api_key = api_key.strip()
 else:
-    self.api_key = (os.getenv("DEEPSEEK_API_KEY", DEEPSEEK_API_KEY) or "").strip()
+    self.api_key = (os.getenv("Gemini_API_KEY", Gemini_API_KEY) or "").strip()
 ```
 
 ### Issues
@@ -279,7 +279,7 @@ else:
 # Use HashiCorp Vault or AWS Secrets Manager
 from vault import get_secret
 
-DEEPSEEK_API_KEY = get_secret("deepseek/api_key")
+Gemini_API_KEY = get_secret("Gemini/api_key")
 ```
 
 ### Verdict: ⚠️ **HIGH RISK** - Not production-ready
@@ -456,7 +456,7 @@ if "STOP" in response or "ignore" in response.lower():
 # utils/logger.py
 logger = logging.getLogger("ComponentName")
 logger.info("Evidence uploaded: EVI_001")
-logger.warning("DeepSeek API failed")
+logger.warning("Gemini API failed")
 ```
 
 ### Coverage

@@ -417,7 +417,7 @@ export const RaiseDisputePage: React.FC = () => {
                 </div>
                 <div>
                   <span className="text-[10px] text-slate-400 block font-mono">Simulated Network</span>
-                  <span className="font-semibold text-slate-900">Razorpay Banking Gateway</span>
+                  <span className="font-semibold text-slate-900">Meridian Banking Gateway</span>
                 </div>
               </div>
             </div>

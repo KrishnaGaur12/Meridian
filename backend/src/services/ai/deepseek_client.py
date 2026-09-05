@@ -48,12 +48,12 @@ class DeepSeekClient:
         if base_url is not None:
             self.base_url = base_url.rstrip("/")
         else:
-            self.base_url = (os.getenv("DEEPSEEK_BASE_URL", DEEPSEEK_BASE_URL) or "https://api.deepseek.com").rstrip("/")
+            self.base_url = (os.getenv("DEEPSEEK_BASE_URL", DEEPSEEK_BASE_URL) or "https://generativelanguage.googleapis.com/v1beta/openai").rstrip("/")
 
         if model is not None:
             self.model = model.strip()
         else:
-            self.model = (os.getenv("DEEPSEEK_MODEL", DEEPSEEK_MODEL) or "deepseek-chat").strip()
+            self.model = (os.getenv("DEEPSEEK_MODEL", DEEPSEEK_MODEL) or "gemini-2.0-flash").strip()
 
         self.timeout = timeout if timeout is not None else int(os.getenv("DEEPSEEK_TIMEOUT_SECONDS", str(DEEPSEEK_TIMEOUT_SECONDS)))
 
@@ -85,7 +85,7 @@ class DeepSeekClient:
             "max_tokens": max_tokens
         }
 
-        if json_mode:
+        if json_mode and "generativelanguage.googleapis.com" not in self.base_url:
             payload["response_format"] = {"type": "json_object"}
 
         headers = {

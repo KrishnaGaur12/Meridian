@@ -27,7 +27,7 @@
 ### 2.1 CaseMerchantControlCenter (`CaseMerchantControlCenter.tsx`)
 The primary 85KB dispute operations component:
 - **Backend Lifecycle Stepper:** 11-step progress bar from dispute intake to final outcome.
-- **AI Verdict & Win Probability Card:** Win likelihood (0–100%), fraud score, confidence badge, positive/negative winning factor bullets, and DeepSeek explanation.
+- **AI Verdict & Win Probability Card:** Win likelihood (0–100%), fraud score, confidence badge, positive/negative winning factor bullets, and Gemini explanation.
 - **Evidence Management Workspace:**
   - *Add Evidence Modal:* Upload tab (PDF/PNG/JPG) + Manual tab (Carrier tracking).
   - *Edit Metadata Modal:* Edit title, description, and type.
@@ -41,7 +41,7 @@ The primary 85KB dispute operations component:
 ### 2.2 CaseOverviewTab (`CaseOverviewTab.tsx`)
 - High-level case summary containing 12 critical parameters, risk preview, attention banner, and chronological audit trail.
 
-### 2.3 CaseRazorpayReviewTab (`CaseRazorpayReviewTab.tsx`)
+### 2.3 CaseMeridianReviewTab (`CaseMeridianReviewTab.tsx`)
 - Displays gateway reference ID, submission timestamp, contested amount, and gateway outcome simulator button.
 
 ### 2.4 CaseOutcomeTab (`CaseOutcomeTab.tsx`)

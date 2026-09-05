@@ -2,7 +2,7 @@
 
 ## 1. Machine Learning Models Overview
 
-The Razorpay AI Risk Manager backend features two trained machine learning pipelines serialized via `joblib`:
+The Meridian AI Risk Manager backend features two trained machine learning pipelines serialized via `joblib`:
 
 ```
                            Incoming Dispute Event
@@ -28,8 +28,8 @@ The Razorpay AI Risk Manager backend features two trained machine learning pipel
                                      │
                                      ▼
                       +-----------------------------+
-                      |     DEEPSEEK AI REASONING   |
-                      | - DeepSeek-Chat (temp=0.1)  |
+                      |     Gemini AI REASONING   |
+                      | - Gemini-Chat (temp=0.1)  |
                       | - Anti-Hallucination Prompt |
                       | - Document Authenticity     |
                       | - Rebuttal Defense Drafting |
@@ -99,19 +99,19 @@ The Razorpay AI Risk Manager backend features two trained machine learning pipel
 
 ---
 
-## 4. DeepSeek AI Language Layer
+## 4. Gemini AI Language Layer
 
-- **HTTP Client**: `src.services.ai.deepseek_client.DeepSeekClient`
-- **Model**: `deepseek-chat`
-- **Base URL**: `https://api.deepseek.com`
-- **Timeout**: 15 seconds (`DEEPSEEK_TIMEOUT_SECONDS`)
+- **HTTP Client**: `src.services.ai.Gemini_client.GeminiClient`
+- **Model**: `Gemini-chat`
+- **Base URL**: `https://api.Gemini.com`
+- **Timeout**: 15 seconds (`Gemini_TIMEOUT_SECONDS`)
 - **JSON Enforcement**: `response_format={"type": "json_object"}`
 
 ### 4.1 Evidence Verification Pipeline
 1. `EvidenceAnalysisService.analyze_evidence()` extracts text and facts from database records.
 2. Checks SHA-256 content hash against previous runs.
 3. Formats prompt containing dispute context (amounts, dates, order description, carrier tracking) and up to 8,000 characters of evidence text.
-4. DeepSeek returns structured verification: `verification_status` (`VERIFIED`, `REJECTED`, `NEEDS_REVIEW`, `FAILED`), `confidence_score`, `authenticity_assessment`, `key_findings`, and `matched_dispute_facts`.
+4. Gemini returns structured verification: `verification_status` (`VERIFIED`, `REJECTED`, `NEEDS_REVIEW`, `FAILED`), `confidence_score`, `authenticity_assessment`, `key_findings`, and `matched_dispute_facts`.
 5. Persists result in `evidence.ai_analysis_json` and updates `evidence.verification_status`.
 
 ### 4.2 Post-LLM Claim Validation (`ClaimEvidenceValidator`)
@@ -123,7 +123,7 @@ The Razorpay AI Risk Manager backend features two trained machine learning pipel
 
 ## 5. Decision Rules & Heuristic Fallbacks
 
-When DeepSeek or external APIs are unavailable or unconfigured, the backend falls back to deterministic decision logic (`FallbackGenerator`):
+When Gemini or external APIs are unavailable or unconfigured, the backend falls back to deterministic decision logic (`FallbackGenerator`):
 
 ```python
 # Decision Rule Mapping

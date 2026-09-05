@@ -2,12 +2,12 @@
 
 ## 1. Common Diagnostics & Solutions
 
-### 1.1 DeepSeek AI Issues
+### 1.1 Gemini AI Issues
 
 #### Symptom: AI generations show `"is_fallback": true` or `"ai_source": "FALLBACK"`
-- **Cause 1**: `DEEPSEEK_API_KEY` is not set or empty in environment.
-  - **Resolution**: Add `DEEPSEEK_API_KEY=your_key` to `.env` or set in system environment variables.
-- **Cause 2**: DeepSeek API request timed out (>=15s) or returned HTTP 429/500.
+- **Cause 1**: `Gemini_API_KEY` is not set or empty in environment.
+  - **Resolution**: Add `Gemini_API_KEY=your_key` to `.env` or set in system environment variables.
+- **Cause 2**: Gemini API request timed out (>=15s) or returned HTTP 429/500.
   - **Resolution**: Check external network connectivity. The backend automatically produces deterministic rule-based output without failing the API request.
 
 #### Symptom: Evidence analysis returns `UNREADABLE` or `FAILED`

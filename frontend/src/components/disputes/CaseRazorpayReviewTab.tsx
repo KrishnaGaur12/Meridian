@@ -51,7 +51,7 @@ export const CaseRazorpayReviewTab: React.FC<CaseRazorpayReviewTabProps> = ({
               Step 6 · Gateway Review
             </span>
             <h2 className="text-base sm:text-lg font-bold text-slate-900 mt-0.5">
-              Awaiting Razorpay & Bank Review
+              Awaiting Gateway & Bank Review
             </h2>
           </div>
           <span className="px-2.5 py-0.5 text-xs font-bold rounded-md bg-blue-50 text-blue-700 border border-blue-200">
@@ -79,7 +79,7 @@ export const CaseRazorpayReviewTab: React.FC<CaseRazorpayReviewTabProps> = ({
           </div>
 
           <p className="text-slate-600 text-[11px] leading-relaxed pt-1 border-t border-blue-200/60">
-            The merchant representation rebuttal statement and verified evidence bundle have been transmitted across the Razorpay Gateway API boundary and forwarded to the cardholder issuing bank.
+            The merchant representation rebuttal statement and verified evidence bundle have been transmitted across the Gateway API boundary and forwarded to the cardholder issuing bank.
           </p>
         </div>
 

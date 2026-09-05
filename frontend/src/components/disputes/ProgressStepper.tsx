@@ -17,7 +17,7 @@ export const ProgressStepper: React.FC<ProgressStepperProps> = ({ stage, status,
     { id: 'EVIDENCE', label: 'Evidence' },
     { id: 'MERCHANT_REVIEW', label: 'Merchant Review' },
     { id: 'SUBMISSION', label: 'Submission' },
-    { id: 'RAZORPAY_REVIEW', label: 'Razorpay Review' },
+    { id: 'RAZORPAY_REVIEW', label: 'Gateway Review' },
     { id: 'OUTCOME', label: 'Outcome' },
   ];
 

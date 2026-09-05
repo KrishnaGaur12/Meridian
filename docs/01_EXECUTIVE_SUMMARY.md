@@ -1,22 +1,22 @@
-# RAZORPAY AI RISK MANAGER — EXECUTIVE SUMMARY
+# Meridian AI RISK MANAGER — EXECUTIVE SUMMARY
 
 ## PROJECT OVERVIEW
 
-**Project Name:** Razorpay AI Risk Manager & Evidence Engine (Chargeback Management System)
+**Project Name:** Meridian AI Risk Manager & Evidence Engine (Chargeback Management System)
 
 **Version:** 2.0.0
 
 **Technology Stack:**
 - **Backend:** Python, FastAPI, SQLAlchemy ORM, SQLite
 - **Frontend:** React 19, TypeScript, Vite, Tailwind CSS
-- **ML/AI:** XGBoost, Scikit-learn, Sentence Transformers, DeepSeek LLM API
+- **ML/AI:** XGBoost, Scikit-learn, Sentence Transformers, Gemini LLM API
 - **Key Libraries:** FAISS (vector search), PyPDF (document processing), Pillow (image processing)
 
 ---
 
 ## PROBLEM STATEMENT
 
-Merchants receiving chargebacks from Razorpay lack:
+Merchants receiving chargebacks from Meridian lack:
 1. **Visibility** into dispute status and requirements
 2. **Intelligence** about fraud vs. legitimate chargebacks
 3. **Guidance** on what evidence to collect and present
@@ -32,14 +32,14 @@ Current situation forces merchants to:
 
 ---
 
-## SOLUTION: RAZORPAY AI RISK MANAGER
+## SOLUTION: Meridian AI RISK MANAGER
 
 ### Core Innovation
 
 An intelligent **dispute management and evidence intelligence platform** that combines:
 
 1. **Fraud Risk Detection** — XGBoost model predicts transaction fraud probability
-2. **Dispute Evidence Intelligence** — DeepSeek LLM analyzes uploaded evidence for completeness, contradictions, and claim validity
+2. **Dispute Evidence Intelligence** — Gemini LLM analyzes uploaded evidence for completeness, contradictions, and claim validity
 3. **Win Probability Prediction** — ML model estimates likelihood of successful chargeback dispute based on evidence and claim
 4. **Merchant Decision Support** — Clear UI guiding merchants through dispute response workflow
 5. **Chargeback Package Generation** — Auto-generates formatted response packages ready for submission
@@ -54,7 +54,7 @@ An intelligent **dispute management and evidence intelligence platform** that co
 
 #### 2. **Evidence Intelligence Engine**
 - Merchants upload evidence (documents, screenshots, receipts, tracking info, etc.)
-- DeepSeek LLM analyzes evidence for:
+- Gemini LLM analyzes evidence for:
   - **Completeness** — Which required evidence is missing
   - **Verification** — Are claims in evidence actually supported?
   - **Contradictions** — Do pieces of evidence conflict with each other?
@@ -99,7 +99,7 @@ An intelligent **dispute management and evidence intelligence platform** that co
    - Evidence stored with metadata
 
 4. **Trigger AI Analysis**
-   - System sends evidence to DeepSeek for deep analysis
+   - System sends evidence to Gemini for deep analysis
    - AI checks completeness, identifies missing evidence
    - AI flags contradictions between evidence pieces
    - AI validates that claims are actually supported by evidence
@@ -119,9 +119,9 @@ An intelligent **dispute management and evidence intelligence platform** that co
    - System generates formatted response package
 
 8. **Submit**
-   - Merchant submits dispute to Razorpay
+   - Merchant submits dispute to Meridian
    - System records submission + creates chargeback package
-   - Razorpay reviews merchant's organized evidence
+   - Meridian reviews merchant's organized evidence
 
 ---
 
@@ -155,7 +155,7 @@ An intelligent **dispute management and evidence intelligence platform** that co
 │  ┌────────────────────────────────────────────────────────────────┐ │
 │  │ Services:                                                        │ │
 │  │ • FraudModel (XGBoost inference)                                │ │
-│  │ • DeepSeekClient (LLM API calls)                                │ │
+│  │ • GeminiClient (LLM API calls)                                │ │
 │  │ • EvidenceAnalysis (extract → prompt → analyze → validate)      │ │
 │  │ • WinProbabilityModel (XGBoost inference)                       │ │
 │  │ • PromptBuilder (construct AI prompts)                          │ │
@@ -173,9 +173,9 @@ An intelligent **dispute management and evidence intelligence platform** that co
          (ML Model Inference, AI API Calls)
                             
 ┌──────────────────┐  ┌──────────────────────┐  ┌──────────────────┐
-│  XGBoost Models  │  │  DeepSeek LLM API    │  │ Text Extraction  │
+│  XGBoost Models  │  │  Gemini LLM API    │  │ Text Extraction  │
 │  (Fraud, Win $)  │  │  (Evidence Analysis) │  │ (PyPDF, Pillow)  │
-│  /models/*.pkl   │  │  api.deepseek.com    │  │                  │
+│  /models/*.pkl   │  │  api.Gemini.com    │  │                  │
 └──────────────────┘  └──────────────────────┘  └──────────────────┘
 ```
 
@@ -192,8 +192,8 @@ An intelligent **dispute management and evidence intelligence platform** that co
   - `fraud_v2_pipeline.joblib` (V2, scikit-learn pipeline)
 - **Evaluation:** ROC-AUC, PR-AUC, precision, recall, F1
 
-### 2. **Evidence Intelligence (DeepSeek LLM)**
-- **Provider:** DeepSeek API (deepseek-chat model)
+### 2. **Evidence Intelligence (Gemini LLM)**
+- **Provider:** Gemini API (Gemini-chat model)
 - **Input:** Evidence content (text extracted from PDFs/images)
 - **Output:** JSON with evidence analysis
 - **Key Outputs:**
@@ -204,7 +204,7 @@ An intelligent **dispute management and evidence intelligence platform** that co
   - Claim validation results
   
 - **Prompt Engineering:** Defensive AI design to prevent hallucination
-- **Fallback:** Graceful degradation when DeepSeek unavailable
+- **Fallback:** Graceful degradation when Gemini unavailable
 
 ### 3. **Win Probability Model**
 - **Type:** XGBoost regressor
@@ -245,7 +245,7 @@ An intelligent **dispute management and evidence intelligence platform** that co
 ✅ Database (SQLAlchemy ORM with 11 models)
 ✅ Fraud detection (XGBoost V2 model)
 ✅ Win probability (XGBoost model)
-✅ DeepSeek LLM integration
+✅ Gemini LLM integration
 ✅ Evidence upload & storage
 ✅ AI evidence analysis
 ✅ Chargeback package generation
@@ -253,11 +253,11 @@ An intelligent **dispute management and evidence intelligence platform** that co
 
 ### What's PARTIALLY IMPLEMENTED
 ⚠️ Production monitoring (logging present, observability limited)
-⚠️ Error recovery (fallbacks for DeepSeek, limited retry logic)
+⚠️ Error recovery (fallbacks for Gemini, limited retry logic)
 ⚠️ Performance optimization (disputes load can be slow under load)
 
 ### What's NOT IMPLEMENTED
-❌ Real Razorpay webhook integration
+❌ Real Meridian webhook integration
 ❌ Production deployment configuration
 ❌ Live monitoring dashboard
 ❌ Database backups/replication
@@ -275,7 +275,7 @@ An intelligent **dispute management and evidence intelligence platform** that co
 3. **Time Savings:** Auto-organized evidence and formatted response
 4. **Better Outcomes:** AI guidance improves evidence quality → higher win rate
 
-### For Razorpay
+### For Meridian
 1. **Higher Quality Submissions:** Better evidence organization
 2. **Faster Resolution:** Less back-and-forth with merchants
 3. **Better Merchant Retention:** Merchants feel supported
@@ -292,21 +292,21 @@ An intelligent **dispute management and evidence intelligence platform** that co
 
 ## 30-SECOND JURY EXPLANATION
 
-"We built an intelligent dispute management system that helps merchants win chargebacks by providing AI-powered evidence guidance. Our system analyzes transactions for fraud risk, helps merchants organize evidence completeness, and predicts win probability. The core innovation is using DeepSeek LLM to audit merchant evidence for completeness and validity — preventing weak submissions and improving Razorpay's chargeback win rate."
+"We built an intelligent dispute management system that helps merchants win chargebacks by providing AI-powered evidence guidance. Our system analyzes transactions for fraud risk, helps merchants organize evidence completeness, and predicts win probability. The core innovation is using Gemini LLM to audit merchant evidence for completeness and validity — preventing weak submissions and improving Meridian's chargeback win rate."
 
 ---
 
 ## 2-MINUTE TECHNICAL EXPLANATION
 
 ### Problem
-Merchants face chargebacks with no visibility into what evidence is needed or whether their submissions will succeed. Razorpay loses chargeback disputes due to incomplete or poorly organized merchant evidence.
+Merchants face chargebacks with no visibility into what evidence is needed or whether their submissions will succeed. Meridian loses chargeback disputes due to incomplete or poorly organized merchant evidence.
 
 ### Solution Architecture
 **Three-tier ML/AI system:**
 
 1. **Transaction Risk Layer:** XGBoost fraud model analyzes incoming transactions, flags high-risk ones for evidence review
 
-2. **Evidence Intelligence Layer:** DeepSeek LLM receives extracted evidence text (from PDFs/images via PyPDF/OCR), analyzes completeness, detects contradictions, validates claims
+2. **Evidence Intelligence Layer:** Gemini LLM receives extracted evidence text (from PDFs/images via PyPDF/OCR), analyzes completeness, detects contradictions, validates claims
 
 3. **Decision Support Layer:** Win probability model combines fraud score + evidence quality to predict dispute outcome
 
@@ -341,7 +341,7 @@ Merchants face chargebacks with no visibility into what evidence is needed or wh
 - Real-world dispute management workflow
 
 ### Weaknesses ⚠️
-- Limited live Razorpay integration (mostly simulated)
+- Limited live Meridian integration (mostly simulated)
 - Performance issues under load (dispute listing laggy)
 - Minimal production monitoring/observability
 - Limited test coverage for frontend
@@ -349,14 +349,14 @@ Merchants face chargebacks with no visibility into what evidence is needed or wh
 
 ### Jury Concerns (Likely)
 - How does it scale with thousands of disputes?
-- What happens when DeepSeek API fails?
+- What happens when Gemini API fails?
 - How does LLM evidence analysis accuracy compare to manual review?
-- Is there real Razorpay integration or just simulated data?
+- Is there real Meridian integration or just simulated data?
 - What's the fraud model performance on real data?
 
 ### Top Improvements Before Submission
 1. Optimize dispute query performance (add indexes, pagination)
-2. Add live Razorpay webhook integration
+2. Add live Meridian webhook integration
 3. Implement comprehensive retry/fallback strategies
 4. Add real-time ML model performance monitoring
 5. Complete frontend test coverage

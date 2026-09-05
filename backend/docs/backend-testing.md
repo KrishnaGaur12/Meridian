@@ -26,12 +26,12 @@ The backend maintains an automated testing suite comprising **29 test files** wi
 | `test_backend_evidence_lifecycle_fix.py` | 10 | Evidence file upload, SHA-256 hashing, unreadable file rejection, and replacement. |
 | `test_chargeback_package.py` | 2 | Chargeback package assembly and idempotent persistence. |
 | `test_components.py` | 9 | Core components: completeness, confidence, explanation, recommendation, and reason classifier. |
-| `test_deepseek_ai_service.py` | 11 | DeepSeek LLM client communication, prompt building, response parsing, and cache invalidation. |
+| `test_Gemini_ai_service.py` | 11 | Gemini LLM client communication, prompt building, response parsing, and cache invalidation. |
 | `test_delivery_fabrication_fix.py` | 6 | Anti-hallucination verification ensuring no fabricated delivery claims when POD is missing. |
 | `test_dispute_lifecycle.py` | 1 | Dispute state transitions and deadline calculations. |
 | `test_e2e_full_package.py` | 1 | Complete end-to-end representment bundle creation. |
 | `test_e2e_workflow.py` | 1 | End-to-end dispute ingestion, analysis, and resolution workflow. |
-| `test_evidence_ai_verification.py` | 6 | DeepSeek evidence verification pipeline, fact extraction, and status persistence. |
+| `test_evidence_ai_verification.py` | 6 | Gemini evidence verification pipeline, fact extraction, and status persistence. |
 | `test_evidence_approval_and_real_ml.py` | 5 | Evidence merchant approval triggering real ML win probability recalculation. |
 | `test_evidence_engine.py` | 5 | EvidenceEngine requirements mapping against database records. |
 | `test_final_phase.py` | 6 | Final lifecycle phases: pre-arbitration, arbitration, and fraud. |

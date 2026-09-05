@@ -1,5 +1,5 @@
 # MASTER PROJECT CONTEXT & FULL-STACK ARCHITECTURE SPECIFICATION
-## Razorpay AI Risk Manager — Merchant-First AI Chargeback Operations Platform
+## Meridian AI Risk Manager — Merchant-First AI Chargeback Operations Platform
 
 > **AUTHORITATIVE MASTER CONTEXT & WORKSPACE MEMORY**  
 > *This document represents the SINGLE integrated source of truth for the entire full-stack project workspace. It governs all future AI-assisted development across Frontend, Backend, Database, REST APIs, AI/ML models, Risk Engine, Evidence Engine, and Chargeback Response logic.*
@@ -8,15 +8,15 @@
 
 ## 1. EXECUTIVE OVERVIEW & INTEGRATED FULL-STACK DECLARATION
 
-**Razorpay AI Risk Manager** is a merchant-first AI chargeback operations platform. It turns high-friction, complex payment chargeback disputes into proactive, automated AI workflows where merchants only intervene when a human decision or action is strictly required.
+**Meridian AI Risk Manager** is a merchant-first AI chargeback operations platform. It turns high-friction, complex payment chargeback disputes into proactive, automated AI workflows where merchants only intervene when a human decision or action is strictly required.
 
 ### Key Architectural Principles
 1. **AI Autopilot as Central Orchestration Engine**: Every dispute automatically runs AI analysis, assigns one of 4 merchant attention states (`ACTION_REQUIRED`, `REVIEW_RECOMMENDED`, `AI_HANDLING`, `WAITING`), and recalculates risk, evidence completeness, win probability, Next Best Action, and readiness whenever evidence or events change.
 2. **Human-in-the-Loop Submission Policy**: Even for `AI_HANDLING` cases where all evidence is complete and verified, final submission requires explicit merchant sign-off.
 3. **Explicit 3-Tier Data Architecture**:
    - `DEMO`: Seeded showcase scenarios for demonstration.
-   - `SIMULATED_RAZORPAY`: Local simulation disputes created via the Razorpay Demo page ("Razorpay-like local simulation").
-   - `REAL_RAZORPAY`: Reserved tier for future external webhook integration.
+   - `SIMULATED_Meridian`: Local simulation disputes created via the Meridian Demo page ("Meridian-like local simulation").
+   - `REAL_Meridian`: Reserved tier for future external webhook integration.
 4. **Transparent AI Activity Stream**: Logs explicit AI events ("AI completed case analysis", "AI checked 4/5 required proofs", "AI reassessed case") alongside merchant actions.
 5. **Ultra-Simple Merchant Dashboard**: Designed to answer "Do I need to do anything today?" featuring header, search bar, money at risk summary, 4 operational attention cards (`Need your action`, `Ready for your review`, `Ready to submit`, `AI handling automatically`), and compact recent activity feed. Zero ML jargon or raw JSON on main dashboard.
 6. **Expandable AI Explainability inside Dispute Workspace**: Surfaces plain business language by default ("Strong case"), with an expandable "AI Explanation" section showing supporting factors, risk factors, and model assessment metrics.
@@ -61,8 +61,8 @@ This workspace represents **ONE integrated full-stack project** split into two c
 ## 2. CONTEXT FILE LOCATION & SYNCHRONIZATION POLICY
 
 - **Authoritative Files**:
-  - Primary Backend Workspace Path: [`AI Chargeback Evidence Responce/PROJECT_CONTEXT.md`](file:///d:/Github%20Projects/Razorpay%20AI%20Risk%20Manager/AI%20Chargeback%20Evidence%20Responce/PROJECT_CONTEXT.md)
-  - Primary Frontend Workspace Path: [`AI Chargeback-Frontend/PROJECT_CONTEXT.md`](file:///d:/Github%20Projects/Razorpay%20AI%20Risk%20Manager/AI%20Chargeback-Frontend/PROJECT_CONTEXT.md)
+  - Primary Backend Workspace Path: [`AI Chargeback Evidence Responce/PROJECT_CONTEXT.md`](file:///d:/Github%20Projects/Meridian%20AI%20Risk%20Manager/AI%20Chargeback%20Evidence%20Responce/PROJECT_CONTEXT.md)
+  - Primary Frontend Workspace Path: [`AI Chargeback-Frontend/PROJECT_CONTEXT.md`](file:///d:/Github%20Projects/Meridian%20AI%20Risk%20Manager/AI%20Chargeback-Frontend/PROJECT_CONTEXT.md)
 - **Synchronization Policy**: Both workspace files represent identical copies of this master full-stack specification. Whenever an architecture, schema, API, or workflow change occurs, both copies must be updated simultaneously.
 
 ---
@@ -71,11 +71,11 @@ This workspace represents **ONE integrated full-stack project** split into two c
 
 1. **Central AI Autopilot Architecture**: Dynamic orchestration decision pipeline calculating `merchant_attention_state` (`ACTION_REQUIRED`, `REVIEW_RECOMMENDED`, `AI_HANDLING`, `WAITING`).
 2. **Human-in-the-Loop Submission Policy**: Merchants explicitly review and approve responses before local gateway boundary submission.
-3. **3-Tier Data Architecture**: `DEMO`, `SIMULATED_RAZORPAY`, `REAL_RAZORPAY` labels across all API schemas, database queries, and frontend UI components.
-4. **Razorpay Demo Local Simulation**: Dedicated simulation page (`/demo`) enabling creation of custom simulated chargebacks with automatic AI analysis and dashboard updates.
-5. **Ultra-Simple Merchant Dashboard**: Clean white Razorpay merchant layout with 4 operational cards, money at risk summary, search bar, and live activity feed.
+3. **3-Tier Data Architecture**: `DEMO`, `SIMULATED_Meridian`, `REAL_Meridian` labels across all API schemas, database queries, and frontend UI components.
+4. **Meridian Demo Local Simulation**: Dedicated simulation page (`/demo`) enabling creation of custom simulated chargebacks with automatic AI analysis and dashboard updates.
+5. **Ultra-Simple Merchant Dashboard**: Clean white Meridian merchant layout with 4 operational cards, money at risk summary, search bar, and live activity feed.
 6. **Isolated Single-Case Workspace**: Single page (`DSP_xxxx`) with 7 human-readable sections, Next Best Action "Why is AI asking me?", expandable AI Explainability, Before vs After Impact Delta, Package Inspection modal, and book-like `← Previous case | Next case →` navigation.
-7. **Local Gateway Boundary Submission**: Submissions record `Submitted — Local Gateway Boundary` without claiming live external Razorpay API calls.
+7. **Local Gateway Boundary Submission**: Submissions record `Submitted — Local Gateway Boundary` without claiming live external Meridian API calls.
 8. **100% Pytest Pass Rate**: All 102/102 backend Pytest unit and integration tests passing cleanly.
 9. **100% TypeScript Compilation**: Frontend Vite production build compiling 100% cleanly with zero errors.
 
@@ -88,8 +88,8 @@ This workspace represents **ONE integrated full-stack project** split into two c
 | **Merchant Dashboard** | `DashboardPage.tsx` | Client-side Service | `dashboardService.ts` | `disputes`, `transactions` |
 | **Disputes Registry** | `DisputesPage.tsx` | `GET /disputes` | `list_disputes_endpoint()` | `disputes`, `transactions` |
 | **File Dispute Case** | `DisputesPage.tsx` | `POST /disputes` | `create_dispute()` | `disputes`, `dispute_events` |
-| **Razorpay Simulation**| `RazorpayDemoPage.tsx` | `POST /demo/simulate-dispute` | `simulate_razorpay_dispute()` (`SIMULATED_RAZORPAY`) | `disputes`, `transactions`, `AIAutopilot` |
-| **Simulation Tx List**| `RazorpayDemoPage.tsx` | `GET /demo/available-transactions` | `list_available_transactions()` | `transactions`, `disputes` |
+| **Meridian Simulation**| `MeridianDemoPage.tsx` | `POST /demo/simulate-dispute` | `simulate_Meridian_dispute()` (`SIMULATED_Meridian`) | `disputes`, `transactions`, `AIAutopilot` |
+| **Simulation Tx List**| `MeridianDemoPage.tsx` | `GET /demo/available-transactions` | `list_available_transactions()` | `transactions`, `disputes` |
 | **Dispute Detail Workspace**| `DisputeDetailPage.tsx` | `GET /disputes/{id}` | `get_dispute_endpoint()` | `disputes`, `transactions` |
 | **Command Center Snapshot** | `DisputeDetailPage.tsx` | `GET /disputes/{id}/command-center` | `get_dispute_command_center()` | Aggregated snapshot |
 | **Next Best Action** | `DisputeDetailPage.tsx` | `GET /disputes/{id}/next-action` | `NextBestActionEngine` | Actionable guidance & why asking |
@@ -105,7 +105,7 @@ This workspace represents **ONE integrated full-stack project** split into two c
 
 ### Backend Commands
 ```powershell
-cd "d:\Github Projects\Razorpay AI Risk Manager\AI Chargeback Evidence Responce"
+cd "d:\Github Projects\Meridian AI Risk Manager\AI Chargeback Evidence Responce"
 .\.venv\Scripts\Activate.ps1
 uvicorn main:app --reload --host 127.0.0.1 --port 8000
 .\.venv\Scripts\pytest -v
@@ -113,7 +113,7 @@ uvicorn main:app --reload --host 127.0.0.1 --port 8000
 
 ### Frontend Commands
 ```powershell
-cd "d:\Github Projects\Razorpay AI Risk Manager\AI Chargeback-Frontend"
+cd "d:\Github Projects\Meridian AI Risk Manager\AI Chargeback-Frontend"
 npm run dev
 npm run build
 ```
@@ -125,4 +125,4 @@ npm run build
 - **Frontend Build Status**: Vite production build compiled 100% cleanly with ZERO TypeScript errors.
 - **AI Autopilot Engine**: Centralized attention state prioritization (`Action Required`, `Review Recommended`, `AI Handling`, `Waiting`). Continuous AI reassessment, honest Before vs After Impact Delta, Next Best Action "Why is AI asking me?", and human-in-the-loop submission sign-off.
 - **Data Integrity**: 100% real database querying preserved across all merchant views with zero cross-dispute contamination.
-- **Data Separation**: Explicit separation of `DEMO` seeded showcase data, `SIMULATED_RAZORPAY` local incoming disputes, and reserved `REAL_RAZORPAY` integration boundary.
+- **Data Separation**: Explicit separation of `DEMO` seeded showcase data, `SIMULATED_Meridian` local incoming disputes, and reserved `REAL_Meridian` integration boundary.

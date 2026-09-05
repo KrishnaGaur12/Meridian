@@ -70,9 +70,9 @@ if env_path.exists():
         pass
 
 DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "")
-DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
-DEEPSEEK_MODEL = os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
-DEEPSEEK_TIMEOUT_SECONDS = int(os.getenv("DEEPSEEK_TIMEOUT_SECONDS", "15"))
+DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai")
+DEEPSEEK_MODEL = os.getenv("DEEPSEEK_MODEL", "gemini-2.0-flash")
+DEEPSEEK_TIMEOUT_SECONDS = int(os.getenv("DEEPSEEK_TIMEOUT_SECONDS", "30"))
 AI_CACHE_TTL_SECONDS = int(os.getenv("AI_CACHE_TTL_SECONDS", "3600"))
 
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")

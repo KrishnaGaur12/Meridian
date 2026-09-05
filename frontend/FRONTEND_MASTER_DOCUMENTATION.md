@@ -1,4 +1,4 @@
-# Frontend Master Documentation: Razorpay AI Risk Manager & Merchant Dispute Platform
+# Frontend Master Documentation: Meridian AI Risk Manager & Merchant Dispute Platform
 
 > **Document Version:** 2.0.0  
 > **Target Audience:** Buildathon Jury, Product Managers, Frontend Architects, UI/UX Reviewers, Cybersecurity Auditors, and New Engineers  
@@ -10,7 +10,7 @@
 ## 1. Executive Overview
 
 ### 1.1 What the Frontend Is
-The **Razorpay AI Risk Manager Frontend** is a modern, single-page web application (SPA) designed as a **Merchant-First Dispute Operations & AI Chargeback Defense Platform**. It empowers online businesses and merchants to monitor incoming payment disputes, inspect AI/ML fraud and win-probability predictions, manage and upload documentary evidence, generate legally grounded chargeback rebuttal letters, and submit formal representation packages to payment gateways (Razorpay, card networks, and issuing banks).
+The **Meridian AI Risk Manager Frontend** is a modern, single-page web application (SPA) designed as a **Merchant-First Dispute Operations & AI Chargeback Defense Platform**. It empowers online businesses and merchants to monitor incoming payment disputes, inspect AI/ML fraud and win-probability predictions, manage and upload documentary evidence, generate legally grounded chargeback rebuttal letters, and submit formal representation packages to payment gateways (Meridian, card networks, and issuing banks).
 
 ### 1.2 Who the Users Are
 - **Primary Users:** Merchants, E-commerce Store Owners, Dispute Operations Specialists, Finance & Risk Teams.
@@ -18,12 +18,12 @@ The **Razorpay AI Risk Manager Frontend** is a modern, single-page web applicati
 
 ### 1.3 What Users Can Do
 1. **Triage Active Disputes:** View prioritized dispute queues categorized by urgency (`URGENT`, `IMPORTANT`, `READY`, `NORMAL`) and attention states (`ACTION_REQUIRED`, `REVIEW_RECOMMENDED`, `AI_HANDLING`, `WAITING`).
-2. **Inspect Dual-Model AI Intelligence:** Review real-time merchant win probabilities (`models/win_pipeline.joblib`), fraud risk scores (`models/fraud_v2_pipeline.joblib`), confidence levels, positive/negative winning factors, and DeepSeek AI reasoning vs. deterministic fallbacks.
+2. **Inspect Dual-Model AI Intelligence:** Review real-time merchant win probabilities (`models/win_pipeline.joblib`), fraud risk scores (`models/fraud_v2_pipeline.joblib`), confidence levels, positive/negative winning factors, and Gemini AI reasoning vs. deterministic fallbacks.
 3. **Execute Evidence Operations:** Upload proof documents (PDF, PNG, JPG), create structured delivery logs (carrier tracking), edit metadata, replace backing files, delete stale evidence, and inspect extracted key facts.
 4. **Enforce Human-in-the-Loop Governance:** Explicitly approve or reject evidence items before they can be compiled into a representation bundle.
 5. **Manage Defense Statements:** Customize and persist auto-generated rebuttal letters contesting cardholder claims.
 6. **Pass Automated Readiness Gates:** Verify that representation packages satisfy all gateway criteria (zero unapproved items, required evidence attached) before triggering submission.
-7. **Simulate Gateway Lifecycle:** Use the embedded and standalone Razorpay Webhook Simulators to simulate incoming chargebacks (`dispute.created`) and test bank resolution outcomes (`WON` / `LOST`).
+7. **Simulate Gateway Lifecycle:** Use the embedded and standalone Meridian Webhook Simulators to simulate incoming chargebacks (`dispute.created`) and test bank resolution outcomes (`WON` / `LOST`).
 8. **Switch Database Environments:** Instantly toggle between `DEMO` and `LIVE` database modes via the global header switcher without page reloads.
 
 ### 1.4 Major Screens
@@ -32,12 +32,12 @@ The **Razorpay AI Risk Manager Frontend** is a modern, single-page web applicati
 - **Dispute Workspace & Control Center (`/disputes/:disputeId`):** The comprehensive dispute command center with a 4-step workflow navigation: *Overview*, *Review & Control Center*, *Gateway Review*, and *Final Outcome*.
 - **History Archive (`/history`):** Historical repository of all resolved (`WON`, `LOST`, `CLOSED`) disputes.
 - **Settings & Policies (`/settings`):** Merchant profile configuration, dispute automation preferences, default refund policies, and logistics connectors.
-- **Standalone Razorpay Webhook Portal (`/webhooks`):** Specialized developer/jury testing interface to simulate real-time chargeback webhooks against live transactions.
+- **Standalone Meridian Webhook Portal (`/webhooks`):** Specialized developer/jury testing interface to simulate real-time chargeback webhooks against live transactions.
 
 ### 1.5 Relationship with the Backend
 - The frontend operates as a decoupled client communicating with the backend over HTTP REST (`axios`) and Server-Sent Events (`EventSource`).
 - The frontend injects the `X-Database-Mode` header (`DEMO` or `LIVE`) on every request.
-- The frontend relies on the backend for machine learning predictions, DeepSeek reasoning, database persistence (SQLite), and mock payment gateway transitions. When backend services are unavailable, graceful fallbacks and error states are rendered.
+- The frontend relies on the backend for machine learning predictions, Gemini reasoning, database persistence (SQLite), and mock payment gateway transitions. When backend services are unavailable, graceful fallbacks and error states are rendered.
 
 ---
 
@@ -66,7 +66,7 @@ The **Razorpay AI Risk Manager Frontend** is a modern, single-page web applicati
      │     └── 12 Core Parameters + ML Risk/Win Preview + Event Audit Stream
      │
      ├── Step 2: Review & Control Center (CaseMerchantControlCenter)
-     │     ├── AI Verdict & Win Assessment Card (DeepSeek + ML Models + Conf. Metrics)
+     │     ├── AI Verdict & Win Assessment Card (Gemini + ML Models + Conf. Metrics)
      │     ├── Evidence Management (Upload PDF/Images, Add Courier Info, Replace Files)
      │     ├── Human-in-the-Loop Review (Explicit Merchant Approval / Rejection)
      │     ├── Rebuttal Statement Editor (Custom Rebuttal Letter to Issuing Bank)
@@ -75,7 +75,7 @@ The **Razorpay AI Risk Manager Frontend** is a modern, single-page web applicati
      ├── Step 3: Gateway Submission
      │     └── Hard Representation Gate (Locks Editing, Transmits to Gateway)
      │
-     ├── Step 4: Razorpay Gateway Review
+     ├── Step 4: Meridian Gateway Review
      │     ├── Awaiting Bank & Card Network Ruling
      │     └── Simulator Option: Trigger Simulated Outcome (WON / LOST)
      │
@@ -116,7 +116,7 @@ The **Razorpay AI Risk Manager Frontend** is a modern, single-page web applicati
   [<AppLayout />] (Shell)                    [Standalone Webhook Portal]
          │                                               │
    ┌─────┴───────────────┐                               ▼
-   ▼                     ▼                   [RazorpayWebhookPage (/webhooks)]
+   ▼                     ▼                   [MeridianWebhookPage (/webhooks)]
 [<Sidebar />]      [<Header />]                          │
    │               (Mode Toggle, Search)                 │
    │                     │                               │
@@ -134,7 +134,7 @@ Dashboard  Disputes     DisputeDetail     History        │
            CaseOverviewTab    CaseMerchantControlCenter  │
                    │                     │               │
                    ▼                     ▼               │
-           CaseRazorpayReview     CaseOutcomeTab         │
+           CaseMeridianReview     CaseOutcomeTab         │
                                                          │
 ─────────────────────────────────────────────────────────┼───────────────────────────────
                      STATE & HOOKS LAYER                 │
@@ -176,17 +176,17 @@ Dashboard  Disputes     DisputeDetail     History        │
 
 ### 3.2 Architectural Component Descriptions
 - **Entry Point (`src/main.tsx`):** Bootstraps React 19 root into DOM `#root`, wrapping the application with React 19 StrictMode and React Router DOM v7 `BrowserRouter`.
-- **Global Context (`src/context/DatabaseModeContext.tsx`):** Manages `DEMO` vs `LIVE` environment mode, syncs state to `localStorage` (`razorpay_database_mode`), and automatically sets `X-Database-Mode` default headers across Axios instances.
+- **Global Context (`src/context/DatabaseModeContext.tsx`):** Manages `DEMO` vs `LIVE` environment mode, syncs state to `localStorage` (`Meridian_database_mode`), and automatically sets `X-Database-Mode` default headers across Axios instances.
 - **Layout Shell (`src/components/layout/AppLayout.tsx`):** Provides the persistent sidebar navigation, the top bar containing global dispute search and environment switchers, real-time background SSE sync hooks, and dynamic mode transition banners.
 - **In-Memory Cache & Deduping Engine (`src/services/cacheService.ts`):** High-performance cache layer that eliminates lag by deduplicating concurrent in-flight requests and maintaining TTL-based cached responses (15s–30s) with prefix-based invalidation upon user actions.
-- **Real-Time Synchronizer (`src/hooks/useRealtimeEvents.ts`):** Establishes an `EventSource` connection to `/events` (proxied to backend), listening to 8 lifecycle events (`DISPUTE_CREATED`, `ML_ANALYSIS_COMPLETED`, `DEEPSEEK_ANALYSIS_COMPLETED`, `EVIDENCE_APPROVED`, `DISPUTE_STAGE_CHANGED`, etc.) to trigger silent background UI updates.
+- **Real-Time Synchronizer (`src/hooks/useRealtimeEvents.ts`):** Establishes an `EventSource` connection to `/events` (proxied to backend), listening to 8 lifecycle events (`DISPUTE_CREATED`, `ML_ANALYSIS_COMPLETED`, `Gemini_ANALYSIS_COMPLETED`, `EVIDENCE_APPROVED`, `DISPUTE_STAGE_CHANGED`, etc.) to trigger silent background UI updates.
 
 ---
 
 ## 4. Repository Structure
 
 ```
-d:/Github Projects/AI Frontent -Razorpay project/
+d:/Github Projects/AI Frontent -Meridian project/
 ├── index.html                           # HTML5 Entry Point (Inter & JetBrains Mono fonts)
 ├── package.json                         # Project dependencies, scripts & metadata
 ├── tsconfig.json                        # Root TypeScript configuration
@@ -217,13 +217,13 @@ d:/Github Projects/AI Frontent -Razorpay project/
     │   │
     │   └── disputes/                    # Dispute Review & Control Center Components
     │       ├── AIRecommendationSection.tsx # Standalone AI decision breakdown & override modal
-    │       ├── CaseAIAnalysisTab.tsx    # Detailed ML & DeepSeek breakdown tab
+    │       ├── CaseAIAnalysisTab.tsx    # Detailed ML & Gemini breakdown tab
     │       ├── CaseHeader.tsx           # Sticky dispute summary strip with deadline alert
     │       ├── CaseMerchantControlCenter.tsx # 85KB All-in-one dispute management workspace
     │       ├── CaseMerchantReviewTab.tsx # Standalone merchant concession/contest tab
     │       ├── CaseOutcomeTab.tsx       # Final resolved outcome view with financial delta
     │       ├── CaseOverviewTab.tsx      # High-level overview, 12 params & timeline
-    │       ├── CaseRazorpayReviewTab.tsx# Gateway review stage & outcome simulation trigger
+    │       ├── CaseMeridianReviewTab.tsx# Gateway review stage & outcome simulation trigger
     │       ├── CaseSubmissionTab.tsx    # Representation submission tab with rebuttal editor
     │       ├── CaseTimeline.tsx         # Chronological vertical audit trail component
     │       ├── EvidenceSection.tsx      # Standalone modular evidence manager
@@ -246,7 +246,7 @@ d:/Github Projects/AI Frontent -Razorpay project/
     │   ├── DisputesPage.tsx             # Operational dispute queue with search & filters
     │   ├── DisputeDetailPage.tsx        # Route container for Dispute Workspace
     │   ├── HistoryPage.tsx              # Resolved disputes historical archive
-    │   ├── RazorpayWebhookPage.tsx      # Standalone live webhook simulation portal
+    │   ├── MeridianWebhookPage.tsx      # Standalone live webhook simulation portal
     │   ├── SettingsPage.tsx             # Merchant settings, policies & connectors
     │   ├── SimulatorPage.tsx            # Embedded alternative simulator page
     │   └── simulator/                   # Alternate sub-page simulator views
@@ -304,7 +304,7 @@ d:/Github Projects/AI Frontent -Razorpay project/
 2. **React Root Creation (`src/main.tsx`):** `ReactDOM.createRoot` mounts the root DOM node under `#root`.
 3. **Router Initialization:** Wraps `<App />` with `<BrowserRouter>`.
 4. **Context Provider Mount (`src/context/DatabaseModeContext.tsx`):**
-   - Reads `razorpay_database_mode` from `localStorage` (defaults to `'DEMO'`).
+   - Reads `Meridian_database_mode` from `localStorage` (defaults to `'DEMO'`).
    - Sets Axios default common header: `api.defaults.headers.common['X-Database-Mode'] = mode`.
 5. **App Layout Mount (`src/components/layout/AppLayout.tsx`):**
    - Initiates `useRealtimeRefresh` (opens SSE stream on `/events` and starts fallback heartbeat timer).
@@ -319,10 +319,10 @@ d:/Github Projects/AI Frontent -Razorpay project/
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `/` | `DashboardPage` | No (Direct) | None | `disputeService.getDisputes()` via `dashboardService` | KPI Cards, Attention Tabs, Needs Attention Cards |
 | `/disputes` | `DisputesPage` | No (Direct) | None | `disputeService.getDisputes()` | Tab Filters, Search Input, Dispute Cards |
-| `/disputes/:disputeId` | `DisputeDetailPage` | No (Direct) | `disputeId` | `getCommandCenter(id)`, `getReadiness(id)` | `CaseHeader`, `WorkflowStepNav`, `CaseMerchantControlCenter`, `CaseOverviewTab`, `CaseRazorpayReviewTab`, `CaseOutcomeTab` |
+| `/disputes/:disputeId` | `DisputeDetailPage` | No (Direct) | `disputeId` | `getCommandCenter(id)`, `getReadiness(id)` | `CaseHeader`, `WorkflowStepNav`, `CaseMerchantControlCenter`, `CaseOverviewTab`, `CaseMeridianReviewTab`, `CaseOutcomeTab` |
 | `/history` | `HistoryPage` | No (Direct) | None | `disputeService.getDisputes()` (filtered resolved) | Resolved Dispute Cards, Financial Summary |
 | `/settings` | `SettingsPage` | No (Direct) | None | Local state (Merchant Profile, Policies) | Profile Form, Preferences Checkboxes, Policy Textareas |
-| `/webhooks` | `RazorpayWebhookPage` | No (Direct) | None | `simulationService.getAvailableTransactions()` | Transaction Table, Webhook Simulation Modal, Payload Preview |
+| `/webhooks` | `MeridianWebhookPage` | No (Direct) | None | `simulationService.getAvailableTransactions()` | Transaction Table, Webhook Simulation Modal, Payload Preview |
 | `/webhook` | `Navigate` | No | None | Redirects to `/webhooks` | N/A |
 | `*` | `Navigate` | No | None | Redirects to `/` | N/A |
 
@@ -338,11 +338,11 @@ d:/Github Projects/AI Frontent -Razorpay project/
 | **Disputes Registry** | `/disputes` | Filterable list of chargebacks | `Card`, `Button`, `Skeleton` | `GET /disputes` | Filter by status (`needs_attention`, `in_review`, `resolved`), search by ID/reason, navigate to case |
 | **Case Overview** | `/disputes/:id` (Step 1) | High-level case facts & timeline | `CaseHeader`, `CaseOverviewTab`, `CaseTimeline` | `GET /disputes/:id/command-center` | Review 12 parameters, inspect timeline, proceed to Review |
 | **Merchant Control Center** | `/disputes/:id` (Step 2) | All-in-one review & evidence editor | `CaseMerchantControlCenter`, `Modal`, `Button` | `GET /disputes/:id/command-center`, `POST /evidence`, `POST /evidence/upload`, `POST /disputes/:id/submit` | Upload files, add courier info, edit metadata, approve evidence, edit rebuttal, trigger AI verification, submit package |
-| **Gateway Review** | `/disputes/:id` (Step 3) | Awaiting gateway decision | `CaseRazorpayReviewTab`, `Card`, `Button` | `POST /disputes/:id/simulate-outcome` | View gateway reference ID, simulate bank outcome |
+| **Gateway Review** | `/disputes/:id` (Step 3) | Awaiting gateway decision | `CaseMeridianReviewTab`, `Card`, `Button` | `POST /disputes/:id/simulate-outcome` | View gateway reference ID, simulate bank outcome |
 | **Final Outcome** | `/disputes/:id` (Step 4) | Resolution summary & audit log | `CaseOutcomeTab`, `Card`, `Button` | `GET /disputes/:id/command-center` | View revenue recovered/lost, inspect full audit trail |
 | **Historical Archive** | `/history` | Closed & resolved dispute log | `Card`, `Button`, `Skeleton` | `GET /disputes` | View past won/lost cases, inspect summaries |
 | **Settings & Policies** | `/settings` | Configure business policies | `Card`, `Button`, Form inputs | Client state | Edit business name, toggle AI autopilot, save refund policy |
-| **Razorpay Webhook Portal** | `/webhooks` | Live chargeback webhook simulator | `Card`, `Modal`, `Button`, `Skeleton` | `GET /webhooks/transactions`, `POST /webhooks/razorpay` | Select transaction, choose reason code, fire real webhook |
+| **Meridian Webhook Portal** | `/webhooks` | Live chargeback webhook simulator | `Card`, `Modal`, `Button`, `Skeleton` | `GET /webhooks/transactions`, `POST /webhooks/Meridian` | Select transaction, choose reason code, fire real webhook |
 
 ---
 
@@ -373,7 +373,7 @@ The `dashboardService` computes attention buckets on the client side from `dispu
 - **Queue Filters (`src/pages/DisputesPage.tsx`):**
   - `All`: Full list of disputes in active database.
   - `Needs Attention`: Disputes requiring merchant action or review.
-  - `Under Review`: Disputes submitted to Razorpay / Bank.
+  - `Under Review`: Disputes submitted to Meridian / Bank.
   - `Resolved`: Finalized Won / Lost / Closed cases.
 - **Priority Badging:** `URGENT` (Rose border/bg), `IMPORTANT` (Amber), `READY` (Emerald), `NORMAL` (Slate).
 
@@ -386,7 +386,7 @@ When a merchant opens a dispute (`/disputes/:disputeId`):
 2. **Readiness Ingestion:** `disputeService.getReadiness(disputeId)` fetches the blocking submission rules.
 3. **Interactive Control Center Mounts (`CaseMerchantControlCenter.tsx`):**
    - **Progress Stepper:** Shows 11-step backend lifecycle progression.
-   - **AI Verdict Card:** Displays win probability percentage, fraud score, recommendation (`CONTEST` vs `ACCEPT`), DeepSeek explanation, and positive/negative factors.
+   - **AI Verdict Card:** Displays win probability percentage, fraud score, recommendation (`CONTEST` vs `ACCEPT`), Gemini explanation, and positive/negative factors.
    - **Evidence Management Workspace:** Renders evidence cards with lifecycle statuses (`Verified & Approved`, `Pending Verification`, `Needs Review`, `Rejected`, `Failed`).
    - **Merchant Actions:** Merchant can approve pending evidence with one click, upload new files, add manual courier tracking, or edit descriptions.
    - **Rebuttal Letter:** Merchant can customize and persist the defense letter sent to the issuing bank.
@@ -443,7 +443,7 @@ When a merchant opens a dispute (`/disputes/:disputeId`):
 ### 13.2 Provenance of AI & ML Results
 - **Win Probability:** Computed by backend machine learning pipeline (`models/win_pipeline.joblib`) and returned in `analysis.win_probability`.
 - **Fraud Probability & Risk Decision:** Computed by backend ML model (`models/fraud_v2_pipeline.joblib`) and returned in `analysis.risk_analysis`.
-- **Reasoning & Rebuttal Generation:** Generated via DeepSeek AI API (with deterministic rule-based fallback if API is unreachable) and returned in `analysis.recommendation`.
+- **Reasoning & Rebuttal Generation:** Generated via Gemini AI API (with deterministic rule-based fallback if API is unreachable) and returned in `analysis.recommendation`.
 - **Frontend Role:** The frontend **never** executes local AI inference. It acts as an authoritative, explainable rendering and decision-support client.
 
 ---
@@ -475,7 +475,7 @@ When a merchant opens a dispute (`/disputes/:disputeId`):
 | `POST` | `/disputes/:dId/evidence/:eId/reject` | `evidenceService.rejectEvidence` | Body: `{ reason }` | Rejection confirmation |
 | `DELETE` | `/evidence/:id` | `evidenceService.deleteEvidence` | None | `{ evidence_id, deleted }` |
 | `GET` | `/webhooks/transactions` | `simulationService.getAvailableTransactions`| None | `AvailableTransactionsResponse` |
-| `POST` | `/webhooks/razorpay` | `simulationService.simulateDispute` | Body: `SimulateDisputePayload` | `SimulateDisputeResponse` |
+| `POST` | `/webhooks/Meridian` | `simulationService.simulateDispute` | Body: `SimulateDisputePayload` | `SimulateDisputeResponse` |
 | `GET` | `/events` | `useRealtimeEvents` (SSE) | None | Server-Sent Event stream |
 
 ---
@@ -494,7 +494,7 @@ When a merchant opens a dispute (`/disputes/:disputeId`):
 | Defense Rebuttal Edit     | PATCH /disputes/:id/rebuttal     | Updated rebuttal text confirmation     |
 | Hard Submission Gate      | POST /disputes/:id/submit        | { status: 'SUBMITTED', is_submitted }  |
 | Simulated Resolution      | POST /disputes/:id/simulate-out. | { outcome: 'WON'|'LOST', ... }         |
-| Webhook Simulation        | POST /webhooks/razorpay          | { dispute_id, simulation_status, ... } |
+| Webhook Simulation        | POST /webhooks/Meridian          | { dispute_id, simulation_status, ... } |
 | Realtime Sync             | GET /events                      | SSE text/event-stream                  |
 +───────────────────────────+──────────────────────────────────+────────────────────────────────────────+
 ```
@@ -510,7 +510,7 @@ When a merchant opens a dispute (`/disputes/:disputeId`):
 
 1. **Global Environment State (`DatabaseModeContext.tsx`):**
    - Controls active database mode (`DEMO` vs `LIVE`).
-   - Persisted in `localStorage` (`razorpay_database_mode`).
+   - Persisted in `localStorage` (`Meridian_database_mode`).
    - Propagated to Axios headers via `api.defaults.headers.common['X-Database-Mode']`.
 2. **Server-State & In-Memory Cache (`cacheService.ts`):**
    - Stores query results in memory with 15s to 30s TTL.
@@ -678,7 +678,7 @@ server: {
 7. **What does the disputes page show?** Filterable table/cards of chargebacks with search, priority badges, and deadline indicators.
 8. **What does dispute review show?** 4-step workflow: Overview, Control Center, Gateway Review, and Final Outcome.
 9. **How does evidence appear?** In structured cards with lifecycle status pills, metadata, and extracted intelligence facts.
-10. **How does AI verification appear?** Win probability scores, fraud risk ratings, DeepSeek reasoning narratives, and positive/negative factors.
+10. **How does AI verification appear?** Win probability scores, fraud risk ratings, Gemini reasoning narratives, and positive/negative factors.
 11. **Can merchants add evidence?** Yes, via file upload (PDF/PNG/JPG) or manual carrier tracking entry.
 12. **Can merchants edit evidence?** Yes, via the Edit Metadata modal in `CaseMerchantControlCenter.tsx`.
 13. **Can merchants delete evidence?** Yes, via the Delete Evidence confirmation modal.
@@ -697,7 +697,7 @@ server: {
 24. **What is the root component?** `App.tsx` mounted inside `main.tsx`.
 25. **What is the global layout?** `AppLayout.tsx` (Sidebar + Header + Content Outlet).
 26. **What state manager is used?** React Context (`DatabaseModeContext`) and in-memory cache (`cacheService.ts`).
-27. **Is localStorage used?** Yes, for storing `razorpay_database_mode` (`DEMO` or `LIVE`).
+27. **Is localStorage used?** Yes, for storing `Meridian_database_mode` (`DEMO` or `LIVE`).
 28. **Is sessionStorage used?** No.
 29. **Are cookies used?** No.
 30. **What HTTP client is used?** `axios` version `^1.7.9`.
@@ -725,8 +725,8 @@ server: {
 | **Approve Evidence**| `CaseMerchantControlCenter.tsx` | `POST /.../approve` | `{ success: true }` | Status -> `APPROVED` | Error alert; reverts status |
 | **Edit Rebuttal** | `CaseMerchantControlCenter.tsx` | `PATCH /disputes/:id/rebuttal` | `{ status: 'ok' }` | Updates active rebuttal | Error alert |
 | **Submit Package**| `CaseMerchantControlCenter.tsx` | `POST /disputes/:id/submit` | `DisputeSubmitResponse` | Transitions to Step 3 | Error modal alert |
-| **Simulate Outcome**| `CaseRazorpayReviewTab.tsx` | `POST /disputes/:id/simulate-outcome`| `DisputeOutcomeResponse` | Transitions to Step 4 | Error alert |
-| **Live Webhook** | `RazorpayWebhookPage.tsx` | `POST /webhooks/razorpay` | `SimulateDisputeResponse` | Displays delivery receipt | Modal error alert |
+| **Simulate Outcome**| `CaseMeridianReviewTab.tsx` | `POST /disputes/:id/simulate-outcome`| `DisputeOutcomeResponse` | Transitions to Step 4 | Error alert |
+| **Live Webhook** | `MeridianWebhookPage.tsx` | `POST /webhooks/Meridian` | `SimulateDisputeResponse` | Displays delivery receipt | Modal error alert |
 | **Realtime Sync** | `useRealtimeEvents.ts` | `GET /events` | SSE Stream | Silent background refresh | Auto-reconnect every 5s |
 
 ---
@@ -748,6 +748,6 @@ server: {
 | **Dispute Workspace Container**| `src/pages/DisputeDetailPage.tsx` | `DisputeDetailPage` | 100% Verified |
 | **Merchant Control Center** | `src/components/disputes/CaseMerchantControlCenter.tsx` | `CaseMerchantControlCenter` | 100% Verified |
 | **AI Analysis Breakdown** | `src/components/disputes/CaseAIAnalysisTab.tsx` | `CaseAIAnalysisTab` | 100% Verified |
-| **Gateway Review & Outcome**| `src/components/disputes/CaseRazorpayReviewTab.tsx`, `CaseOutcomeTab.tsx` | `CaseRazorpayReviewTab`, `CaseOutcomeTab` | 100% Verified |
-| **Standalone Webhook Portal**| `src/pages/RazorpayWebhookPage.tsx` | `RazorpayWebhookPage` | 100% Verified |
+| **Gateway Review & Outcome**| `src/components/disputes/CaseMeridianReviewTab.tsx`, `CaseOutcomeTab.tsx` | `CaseMeridianReviewTab`, `CaseOutcomeTab` | 100% Verified |
+| **Standalone Webhook Portal**| `src/pages/MeridianWebhookPage.tsx` | `MeridianWebhookPage` | 100% Verified |
 | **Formatting Utilities** | `src/utils/formatters.ts` | `formatCurrency`, `formatReasonCode`, `formatPriority` | 100% Verified |

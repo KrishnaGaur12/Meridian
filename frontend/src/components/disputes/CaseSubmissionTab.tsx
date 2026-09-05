@@ -142,7 +142,7 @@ export const CaseSubmissionTab: React.FC<CaseSubmissionTabProps> = ({
             </div>
             <div>
               <span className="text-[10px] text-slate-400 block font-mono">Gateway Boundary</span>
-              <strong className="text-indigo-700 text-xs font-mono">Razorpay Gateway API</strong>
+              <strong className="text-violet-700 text-xs font-mono">Meridian Gateway API</strong>
             </div>
           </div>
         </div>
@@ -257,7 +257,7 @@ export const CaseSubmissionTab: React.FC<CaseSubmissionTabProps> = ({
         isOpen={isReviewModalOpen}
         onClose={() => setIsReviewModalOpen(false)}
         title="Confirm Dispute Representation Submission"
-        subtitle="Review the final representation package before dispatching to Razorpay."
+        subtitle="Review the final representation package before dispatching to Gateway."
         footer={
           <>
             <Button
@@ -275,7 +275,7 @@ export const CaseSubmissionTab: React.FC<CaseSubmissionTabProps> = ({
               onClick={handleFinalSubmit}
               className="bg-indigo-600 hover:bg-indigo-700 font-bold shadow-xs"
             >
-              Confirm & Submit to Razorpay
+              Confirm & Submit to Gateway
             </Button>
           </>
         }
@@ -314,7 +314,7 @@ export const CaseSubmissionTab: React.FC<CaseSubmissionTabProps> = ({
           </div>
 
           <p className="text-slate-500 text-[11px] leading-relaxed">
-            By submitting, this representation package will be transmitted to Razorpay and forwarded to the issuing bank for formal arbitration.
+            By submitting, this representation package will be transmitted to the Gateway and forwarded to the issuing bank for formal arbitration.
           </p>
         </div>
       </Modal>

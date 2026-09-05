@@ -12,7 +12,7 @@
 ### 1.2 "No active disputes in Live mode yet"
 - **Root Cause:** When switched to **Live Mode**, the backend connects to `live_database.db`, which starts empty until webhook events are created.
 - **Resolution:**
-  1. Click **"Razorpay Webhook"** in the top navigation bar (or open `/webhooks`).
+  1. Click **"Meridian Webhook"** in the top navigation bar (or open `/webhooks`).
   2. Select an eligible captured transaction.
   3. Click **"+ Raise Simulated Dispute"** to fire a `dispute.created` webhook.
   4. Return to `/disputes` — the newly created chargeback will appear immediately.

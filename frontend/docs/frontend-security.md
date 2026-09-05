@@ -16,7 +16,7 @@
 ## 2. Token & State Persistence Audit
 
 - **`localStorage` Audit:**
-  - Key: `razorpay_database_mode`
+  - Key: `Meridian_database_mode`
   - Value: `'DEMO'` or `'LIVE'`
   - **Risk Assessment:** Zero sensitive data. No session tokens, passwords, PII, or API keys are stored in `localStorage`.
 - **`sessionStorage` Audit:** Not used.

@@ -12,7 +12,7 @@
 | **Prompt Injection Protection** | **PARTIAL** | `PromptBuilder.sanitize_context` strips internal database keys. `ClaimEvidenceValidator` rejects any generated claim that cannot be proven by database evidence facts. |
 | **PII & Cardholder Data** | **IMPLEMENTED** | Full Primary Account Numbers (PAN) are never stored; only card network and `last4` digits are retained (`src/database/models.py:74`). |
 | **CORS Configuration** | **IMPLEMENTED** | Restricted in `main.py:52-61` strictly to frontend development origins: `http://localhost:5173` and `http://127.0.0.1:5173`. |
-| **Secret Management** | **IMPLEMENTED** | Secrets (`DEEPSEEK_API_KEY`) loaded from environment variables and `.env`; redacted from logs and API serialization. |
+| **Secret Management** | **IMPLEMENTED** | Secrets (`Gemini_API_KEY`) loaded from environment variables and `.env`; redacted from logs and API serialization. |
 | **Audit Trail Immutability** | **IMPLEMENTED** | State mutations, AI reassessments, merchant approvals, and submissions write immutable event records to `dispute_events`. |
 | **Authentication / JWT** | **MISSING** | Endpoints are currently open without token authentication (internal microservice / buildathon architecture). |
 | **Rate Limiting** | **MISSING** | No rate-limiting middleware configured on API router. |
@@ -47,6 +47,6 @@ For enterprise production deployment outside the sandbox environment, the follow
 
 1. **Authentication & Authorization**: Add OAuth2 with JWT Bearer Token verification and multi-tenant merchant role access.
 2. **Rate Limiting**: Integrate `slowapi` or Redis-backed rate-limiting on `/disputes/*/submit` and `/evidence/upload`.
-3. **Webhook Verification**: Enforce Razorpay HMAC-SHA256 signature verification on `/webhooks/razorpay`.
+3. **Webhook Verification**: Enforce Meridian HMAC-SHA256 signature verification on `/webhooks/Meridian`.
 4. **Antivirus Scanning**: Add ClamAV / AWS GuardDuty container scanning for uploaded binary attachments.
 5. **Database Migration**: Deploy on managed PostgreSQL with encrypted storage at rest (AES-256) and TLS in transit.
