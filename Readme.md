@@ -3,6 +3,8 @@
 **Meridian Buildathon 2026 Submission**
 *An AI-powered dispute & fraud-risk intelligence platform for merchants*
 
+[**🎥 Watch the Video Demo**](https://drive.google.com/drive/folders/15VvWTWw6S5nqDZ7FL3e8HKCo61xu9AhY?usp=sharing)
+
 
 
 ## 1.  Executive Summary

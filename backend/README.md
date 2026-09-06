@@ -1,5 +1,7 @@
 # Meridian AI Risk Manager
 
+[**🎥 Watch the Video Demo**](https://drive.google.com/drive/folders/15VvWTWw6S5nqDZ7FL3e8HKCo61xu9AhY?usp=sharing)
+
 An intelligent, lightweight, end-to-end payment dispute and chargeback risk management system designed for high-accuracy decisioning, explainability, cross-entity document isolation, and fraud detection. Built specifically for resource-constrained environments (Intel i3 11th Gen, 8 GB RAM, CPU-only, ₹0 budget).
 
 ---
